@@ -74,6 +74,23 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+// auth routes
+$routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
+    // Login/out
+    $routes->get('login', 'AuthController::login', ['as' => 'login']);
+    $routes->post('login', 'AuthController::attemptLogin');
+    $routes->get('logout', 'AuthController::logout');
+
+    // Registration
+    $routes->get('register', 'AuthController::register', ['as' => 'register']);
+    $routes->post('register', 'AuthController::attemptRegister');
+
+    // Forgot/Resets
+    $routes->get('forgot', 'AuthController::forgotPassword', ['as' => 'forgot']);
+    $routes->post('forgot', 'AuthController::attemptForgot');
+    $routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);
+    $routes->post('reset-password', 'AuthController::attemptReset');
+});
 /**
  * --------------------------------------------------------------------
  * Additional Routing
