@@ -91,6 +91,33 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);
     $routes->post('reset-password', 'AuthController::attemptReset');
 });
+
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($routes) {
+    $routes->get('/', 'Admin::index');
+
+    $routes->group('teams', function($routes)
+	{
+		$routes->get('/', 				'TeamController::index');
+		$routes->get('new', 			'TeamController::new');
+		$routes->get('(:num)/edit', 	'TeamController::edit/$1');
+		$routes->get('(:num)', 			'TeamController::show/$1');
+		$routes->post('/', 				'TeamController::create');
+		$routes->post('(:num)/delete',	'TeamController::delete/$1');
+		$routes->post('(:num)', 		'TeamController::update/$1');
+    });
+    
+    $routes->group('users', function($routes)
+	{
+		$routes->get('/', 				'UserController::index');
+		$routes->get('new', 			'UserController::new');
+		$routes->get('(:id)/edit', 		'UserController::edit/$1');
+		$routes->get('(:id)', 			'UserController::show/$1');
+		$routes->post('/', 				'UserController::create');
+		$routes->post('(:id)/delete',	'UserController::delete/$1');
+		$routes->post('(:id)', 			'UserController::update/$1');
+	});
+});
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing
