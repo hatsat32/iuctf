@@ -110,11 +110,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
 	{
 		$routes->get('/', 				'UserController::index');
 		$routes->get('new', 			'UserController::new');
-		$routes->get('(:id)/edit', 		'UserController::edit/$1');
-		$routes->get('(:id)', 			'UserController::show/$1');
+		$routes->get('(:num)/edit', 	'UserController::edit/$1');
+		$routes->get('(:num)', 			'UserController::show/$1');
 		$routes->post('/', 				'UserController::create');
-		$routes->post('(:id)/delete',	'UserController::delete/$1');
-		$routes->post('(:id)', 			'UserController::update/$1');
+		$routes->post('(:num)/delete',	'UserController::delete/$1');
+		$routes->post('(:num)', 		'UserController::update/$1');
 	});
 });
 

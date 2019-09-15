@@ -81,7 +81,7 @@ class Auth extends \Myth\Auth\Config\Auth
 	 * If you choose to use any ARGON algorithm, then you might want to
 	 * uncomment the "ARGON2i/D Algorithm" options to suit your needs
      */
-	public $hashAlgorithm = PASSWORD_DEFAULT;
+	public $hashAlgorithm = PASSWORD_ARGON2I;
 
 	/*--------------------------------------------------------------------
 	 * ARGON2i/D Algorithm options

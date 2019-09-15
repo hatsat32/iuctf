@@ -13,14 +13,16 @@ class TeamController extends \App\Controllers\BaseController
 
 	public function index()
 	{
+		$viewData['teams'] = $this->teamModel->findAll();
 
+		return view('admin/team/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------
 	
 	public function new()
 	{
-
+		return view('admin/team/new');
 	}
 
 	//--------------------------------------------------------------------

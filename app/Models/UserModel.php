@@ -15,9 +15,8 @@ class UserModel extends Model
 	protected $useTimestamps = true;
 
 	protected $validationRules = [
-		'team_id'       => 'required|numeric',
-		'username'      => 'required|min_length[3]|alpha_numeric|is_unique[users.username]',
-		'email'         => 'required|valid_email|is_unique[users.email]',
+		'username'      => 'required|min_length[3]|alpha_numeric|is_unique[users.username,username,{username}]',
+		'email'         => 'required|valid_email|is_unique[users.email,email,{email}]',
 		'name'			=> 'required|min_length[3]|alpha_numeric_space',
 		'password_hash' => 'required',
 	];
