@@ -38,7 +38,14 @@ class UserController extends \App\Controllers\BaseController
 	
 	public function show($id = null)
 	{
-		$viewData['user'] = $this->userModel->find($id);
+		$user = $this->userModel->find($id);
+
+		if (empty($user))
+		{
+			return redirect()->to('/admin/users');
+		}
+
+		$viewData['user'] = $user;
 		$viewData['teams'] = $this->teamModel->findAll();
 
 		return view('admin/user/detail', $viewData);
@@ -81,7 +88,15 @@ class UserController extends \App\Controllers\BaseController
 	
 	public function delete($id = null)
 	{
-		
+		$result = $this->userModel->delete($id);
+
+		if (! $result)
+		{
+			$errors = $this->userModel->errors();
+			return redirect()->to("admin/users/$id");
+		}
+
+		return redirect()->to("/admin/users");
 	}
 
 	//--------------------------------------------------------------------

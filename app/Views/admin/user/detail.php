@@ -11,7 +11,7 @@
     <div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-			Challenge Ekle</div>
+			Kullanıcı Detay</div>
 		<div class="card-body">
 			<form action="/admin/users/<?= esc($user['id']) ?>" method="post">
 				<div class="form-group">
@@ -47,6 +47,12 @@
 				</div>
 				<button type="submit" class="btn btn-primary btn-block">Güncelle</button>
 			</form>
+
+			<div class="mt-4">
+				<form action="/admin/users/<?= esc($user['id']) ?>/delete" method="post">
+					<button type="submit" class="btn btn-danger btn-block">Sil</button>
+				</form>
+			</div>
 		</div>
 	</div>
 <?= $this->endSection() ?>
