@@ -104,6 +104,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
 		$routes->post('/', 				'TeamController::create');
 		$routes->post('(:num)/delete',	'TeamController::delete/$1');
 		$routes->post('(:num)', 		'TeamController::update/$1');
+		$routes->post('(:num)/authcode','TeamController::changeAuthCode/$1');
     });
     
     $routes->group('users', function($routes)

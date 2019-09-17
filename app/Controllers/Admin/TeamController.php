@@ -36,7 +36,9 @@ class TeamController extends \App\Controllers\BaseController
 
 	public function show($id = null)
 	{
-		
+		$team = $this->teamModel->find($id);
+		$viewData['team'] = $team;
+		return view('admin/team/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -49,13 +51,12 @@ class TeamController extends \App\Controllers\BaseController
 			'is_banned'	=> '0',
 			'auth_code'	=> bin2hex(random_bytes(32)),
 		];
-		
+
 		$result = $this->teamModel->insert($data);
 
 		if (! $result)
 		{
 			$errors = $this->teamModel->errors();
-			var_dump($errors);die();
 			return redirect()->to('/admin/teams/new');
 		}
 
@@ -66,15 +67,50 @@ class TeamController extends \App\Controllers\BaseController
 
 	public function delete($id = null)
 	{
-		
+		$result = $this->teamModel->delete($id);
+
+		if (! $result)
+		{
+			$viewData['errors'] = $this->teamModel->errors();
+			return redirect()->to("/admin/teams/$id", $viewData);
+		}
+
+		return redirect()->to('/admin/teams');
 	}
 
 	//--------------------------------------------------------------------
 
 	public function update($id = null)
 	{
-		
+		$team = $this->teamModel->find($id);
+		$data = [
+			'name' => $this->request->getPost('name'),
+		];
+
+		$result = $this->teamModel->update($id, $data);
+		if (! $result)
+		{
+			$viewData['errors'] = $this->teamModel->errors();
+			return redirect()->to("/admin/teams/$id", $viewData);
+		}
+		return redirect()->to("/admin/teams/$id");
 	}
 
 	//--------------------------------------------------------------------
+
+	public function changeAuthCode($id = null)
+	{
+		$data = [
+			'auth_code'	=> bin2hex(random_bytes(32)),
+		];
+
+		$result = $this->teamModel->update($id, $data);
+
+		if (! $result)
+		{
+			$viewData['errors'] = $this->teamModel->errors();
+			return redirect()->to("/admin/teams/$id", $viewData);
+		}
+		return redirect()->to("/admin/teams/$id");
+	}
 }

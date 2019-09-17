@@ -21,7 +21,8 @@
                 <table class="table table-bordered" id="users-table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>team_id</th>
+                            <th>ID</th>
+                            <th>Takım</th>
                             <th>username</th>
                             <th>name</th>
                             <th>email</th>
@@ -33,6 +34,7 @@
                     <tbody>
 					<?php foreach($users as $user): ?>
                         <tr>
+                            <td><?= esc($user["id"]) ?></td>
                             <td><?= esc($user["team_id"]) ?></td>
                             <td><?= esc($user["username"]) ?></td>
                             <td><?= esc($user["name"]) ?></td>
