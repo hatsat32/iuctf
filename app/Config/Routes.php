@@ -117,6 +117,17 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
 		$routes->post('(:num)/delete',	'UserController::delete/$1');
 		$routes->post('(:num)', 		'UserController::update/$1');
 	});
+
+	$routes->group('categories', function($routes)
+	{
+		$routes->get('/', 				'CategoryController::index');
+		$routes->get('new', 			'CategoryController::new');
+		$routes->get('(:num)/edit', 	'CategoryController::edit/$1');
+		$routes->get('(:num)', 			'CategoryController::show/$1');
+		$routes->post('/', 				'CategoryController::create');
+		$routes->post('(:num)/delete',	'CategoryController::delete/$1');
+		$routes->post('(:num)', 		'CategoryController::update/$1');
+	});
 });
 
 /**
