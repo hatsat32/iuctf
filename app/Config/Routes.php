@@ -128,6 +128,17 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
 		$routes->post('(:num)/delete',	'CategoryController::delete/$1');
 		$routes->post('(:num)', 		'CategoryController::update/$1');
 	});
+
+	$routes->group('challenges', function($routes)
+	{
+		$routes->get('/', 				'ChallengeController::index');
+		$routes->get('new', 			'ChallengeController::new');
+		$routes->get('(:num)/edit', 	'ChallengeController::edit/$1');
+		$routes->get('(:num)', 			'ChallengeController::show/$1');
+		$routes->post('/', 				'ChallengeController::create');
+		$routes->post('(:num)/delete',	'ChallengeController::delete/$1');
+		$routes->post('(:num)', 		'ChallengeController::update/$1');
+	});
 });
 
 /**

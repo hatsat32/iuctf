@@ -4,7 +4,8 @@ use \App\Models\CategoryModel;
 
 class CategoryController extends \App\Controllers\BaseController
 {
-    protected $categoryModel = null;
+	protected $categoryModel = null;
+
 	public function __construct()
 	{
 		$this->categoryModel = new CategoryModel();
@@ -14,7 +15,7 @@ class CategoryController extends \App\Controllers\BaseController
 
 	public function index()
 	{
-        $viewData['categories'] = $this->categoryModel->findAll();
+		$viewData['categories'] = $this->categoryModel->findAll();
 		return view('admin/category/index', $viewData);
 	}
 
@@ -36,8 +37,8 @@ class CategoryController extends \App\Controllers\BaseController
 
 	public function show($id = null)
 	{
-        $viewData['category'] = $this->categoryModel->find($id);
-        return view('/admin/category/detail', $viewData);
+		$viewData['category'] = $this->categoryModel->find($id);
+		return view('/admin/category/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -45,20 +46,20 @@ class CategoryController extends \App\Controllers\BaseController
 	public function create()
 	{
 		$data = [
-            'name'          => $this->request->getPost('name'),
-            'description'   => $this->request->getPost('description'),
-        ];
+			'name'          => $this->request->getPost('name'),
+			'description'   => $this->request->getPost('description'),
+		];
 
-        $result = $this->categoryModel->insert($data);
+		$result = $this->categoryModel->insert($data);
 
-        if (! $result)
-        {
-            $errors = $this->categoryModel->errors();
-            var_dump($errors);die();
-            return redirect()->to('/admin/categories/new');
-        }
+		if (! $result)
+		{
+			$errors = $this->categoryModel->errors();
+			var_dump($errors);die();
+			return redirect()->to('/admin/categories/new');
+		}
 
-        return redirect()->to('/admin/categories');
+		return redirect()->to('/admin/categories');
 	}
 
 	//--------------------------------------------------------------------
