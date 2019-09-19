@@ -92,4 +92,58 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-chart-area"></i>
+			Flagler</div>
+		<div class="card-body">
+			<form action="/admin/challenges/<?= $challenge['id'] ?>/flags" method="post">
+				<div class="form-row">
+					<div class="col-3">
+						<select name="type" class="form-control" id="is_active">
+							<option value="static">Stetic</option>
+							<option value="regex">Regex</option>
+						</select>
+					</div>
+					<div class="col-6">
+						<div class="col">
+							<input type="text" class="form-control" name="content" placeholder="Flag">
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="col">
+							<button type="submit" class="btn btn-primary btn-block">Ekle</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="table-responsive mt-4">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Content</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($flags as $flag): ?>
+						<tr>
+							<td><?= esc($flag["type"]) ?></td>
+							<td><?= esc($flag["content"]) ?></td>
+							<td>
+								<form action="/admin/challenges/<?= $challenge['id'] ?>/flags/<?= esc($flag['id']) ?>/delete" method="post">
+									<input type="hidden" name="flag" value=" <?= esc($flag['id']) ?>">
+									<button class="btn btn-danger btn-block" type="submit">Delete</button>
+								</form>
+							</td>
+						</tr>
+					<?php endforeach ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 <?= $this->endSection() ?>

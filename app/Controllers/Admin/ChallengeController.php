@@ -2,6 +2,7 @@
 
 use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
+use \App\Models\FlagModel;
 
 class ChallengeController extends \App\Controllers\BaseController
 {
@@ -11,6 +12,7 @@ class ChallengeController extends \App\Controllers\BaseController
 	{
 		$this->challengeModel = new ChallengeModel();
 		$this->categoryModel = new CategoryModel();
+		$this->flagModel = new FlagModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -42,6 +44,7 @@ class ChallengeController extends \App\Controllers\BaseController
 	{
 		$challenge = $this->challengeModel->find($id);
 		$viewData['categories']	= $this->categoryModel->findAll();
+		$viewData['flags'] = $this->flagModel->where('challenge_id', $id)->findAll();
 		$viewData['challenge'] = $challenge;
 		return view('admin/challenge/detail', $viewData);
 	}

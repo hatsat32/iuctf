@@ -139,6 +139,17 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
 		$routes->post('(:num)/delete',	'ChallengeController::delete/$1');
 		$routes->post('(:num)', 		'ChallengeController::update/$1');
 	});
+
+	$routes->group('challenges/(:num)/flags', function($routes)
+	{
+		$routes->get('/', 				'FlagController::index$1');
+		$routes->get('new', 			'FlagController::new$1');
+		$routes->get('(:num)/edit', 	'FlagController::edit/$1/$2');
+		$routes->get('(:num)', 			'FlagController::show/$1/$2');
+		$routes->post('/', 				'FlagController::create/$1');
+		$routes->post('(:num)/delete',	'FlagController::delete/$1/$2');
+		$routes->post('(:num)', 		'FlagController::update/$1/$2');
+	});
 });
 
 /**
