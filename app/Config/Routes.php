@@ -74,6 +74,7 @@ $routes->setAutoRoute(false);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+
 // auth routes
 $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     // Login/out
@@ -92,7 +93,15 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->post('reset-password', 'AuthController::attemptReset');
 });
 
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($routes) {
+
+$routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'], function($routes) {
+	$routes->get('challenges',			'UserController::challenges');
+	$routes->get('challenges/(:num)',	'UserController::challenges/$1');
+	$routes->post('challenges/(:num)',	'UserController::flagSubmit/$1');
+});
+
+
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function($routes) {
     $routes->get('/', 'Admin::index');
 
     $routes->group('teams', function($routes)

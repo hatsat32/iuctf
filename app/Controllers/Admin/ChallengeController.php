@@ -109,7 +109,7 @@ class ChallengeController extends \App\Controllers\BaseController
 		if (! $result)
 		{
 			$viewData['errors'] = $this->challengeModel->errors();
-			return redirect()->to("/admin/challenges/$id", $viewData);
+			return redirect()->to("/admin/challenges/$id");
 		}
 		return redirect()->to("/admin/challenges/$id");
 	}
