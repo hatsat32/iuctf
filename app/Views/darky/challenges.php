@@ -2,31 +2,27 @@
 
 <?=$this->section('content')?>
 
-	<div class="col-md-4">
-		<div class="m-4">
-			<ul class="tree">
-				<?php foreach ($categories as $category): ?>
-					<li><?=esc($category['name'])?>
-						<ul>
-							<?php if (isset($category['challenges']) === true): ?>
-								<?php foreach ($category['challenges'] as $ch): ?>
-									<li>
-										<a class="text-danger" href="/challenges/<?=$ch['id']?>"><?=esc($ch['name'])?> (<?=esc($ch['point'])?>)</a>
-									</li>
-								<?php endforeach?>
-							<?php endif?>
-						</ul>
-					</li>
-				<?php endforeach?>
-			</ul>
-		</div>
+	<div class="col-md-4 my-2">
+		<?php foreach ($categories as $category): ?>
+			<?php if (isset($category['challenges']) === true): ?>
+				<div class="card border-secondary mb-3">
+					<h4 class="card-header"><?=esc($category['name'])?></h4>
+					<div class="list-group list-group-flush">
+						<?php foreach ($category['challenges'] as $ch): ?>
+							<a href="/challenges/<?=$ch['id']?>" class="list-group-item list-group-item-action <?= in_array($ch['id'], $solves)? 'text-success':'text-danger' ?>">
+								<?=esc($ch['name'])?> (<?=esc($ch['point'])?>)</a>
+						<?php endforeach?>
+					</div>
+				</div>
+			<?php endif?>
+		<?php endforeach?>
 	</div>
 
 
 	<div class="col-md-8">
 		<?php if(isset($challenge)): ?>
 			<div class="card m-4">
-				<h3 class="card-header"><?= esc($challenge['name']) ?></h3>
+				<h3 class="card-header <?= in_array($challenge['id'], $solves)? 'bg-success':'bg-danger' ?>"><?= esc($challenge['name']) ?></h3>
 				<div class="card-body">
 					<p class="card-text"><?= esc($challenge['description']) ?></p>
 				</div>
@@ -35,13 +31,27 @@
 					<li class="list-group-item text-info"><?= esc($challenge['point']) ?> Point</li>
 				</ul>
 
+				<?php if(session()->has('result')): ?>
+					<?php if (session('result') === true): ?>
+						<div class="alert alert-dismissible alert-success m-2">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							Doğru cevap.
+						</div>
+					<?php else: ?>
+						<div class="alert alert-dismissible alert-danger m-2">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							Yanlış cevap.
+						</div>
+					<?php endif ?>
+				<?php endif ?>
+
 				<div class="card-footer text-muted">
 					<div class="w-100">
 						<form class="" action="/challenges/<?= esc($challenge['id']) ?>" method="post">
 							<div class="form-row">
 								<div class="col-9">
 									<input type="text" name="flag" class="form-control" placeholder="Flag gir">
-									<input type="hidden" name="ch-id" class="ch-id">
+									<input type="hidden" name="ch-id">
 								</div>
 								<div class="col-3">
 									<button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -54,39 +64,5 @@
 		<?php endif ?>
 	</div>
 
-	<style>
-		ul.tree, ul.tree ul {
-			list-style: none;
-			margin: 10px;
-			padding: 0;
-		}
-		ul.tree ul {
-			margin-left: 20px;
-		}
-		ul.tree li {
-			margin: 0;
-			padding: 0 7px;
-			line-height: 20px;
-			color: #369;
-			font-weight: bold;
-			border-left:1px solid rgb(250,250,250);
-		}
-		ul.tree li:last-child {
-			border-left:none;
-		}
-		ul.tree li:before {
-			position:relative;
-			top:-0.3em;
-			height:2em;
-			width:20px;
-			color:white;
-			border-bottom:1px solid rgb(250,250,250);
-			content:"";
-			display:inline-block;
-			left:-7px;
-		}
-		ul.tree li:last-child:before {
-			border-left:1px solid rgb(250,250,250);
-		}
-	</style>
+
 <?=$this->endSection()?>

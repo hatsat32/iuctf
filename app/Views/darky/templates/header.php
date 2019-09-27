@@ -15,12 +15,26 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="nav-item">
-					<a class="nav-link" href="/login">Giriş</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/register">Kaydol</a>
-				</li>
+				<?php if(logged_in()): ?>
+					<li class="nav-item">
+						<a class="nav-link" href="/profile">Profil</a>
+					</li>
+					<?php if(in_groups('admin')): ?>
+						<li class="nav-item">
+							<a class="nav-link" href="/admin">Admin</a>
+						</li>
+					<?php endif ?>
+					<li class="nav-item">
+						<a class="nav-link" href="/logout">Çıkış yap</a>
+					</li>
+				<?php else: ?>
+					<li class="nav-item">
+						<a class="nav-link" href="/login">Giriş</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/register">Kaydol</a>
+					</li>
+				<?php endif ?>
             </ul>
 		</div>
 	</div>

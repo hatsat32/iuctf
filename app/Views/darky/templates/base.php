@@ -20,7 +20,7 @@
 
 	<style>
 		body {
-			font-family: monospace;
+			/* font-family: monospace; */
 		}
 	</style>
 

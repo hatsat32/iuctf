@@ -13,6 +13,7 @@ class UserController extends \App\Controllers\BaseController
 		$this->challengeModel = new ChallengeModel();
 		$this->categorygeModel = new CategoryModel();
 		$this->flagModel = new FlagModel();
+		$this->solvesModel = new SolvesModel();
 
 		$this->auth = Services::authentication();
 		$this->authorize = Services::authorization();
@@ -24,6 +25,7 @@ class UserController extends \App\Controllers\BaseController
 	{
 		$challenges = $this->challengeModel->findAll();
 		$categories = $this->categorygeModel->findAll();
+		$viewData['solves'] = $this->solvesModel->where('team_id', user()->team_id)->findColumn('challenge_id') ?? [];
 
 		foreach ($categories as $c_key => $c_val) {
 			$arr = array_filter($challenges, function($challenge) use ($c_val) {
@@ -64,15 +66,34 @@ class UserController extends \App\Controllers\BaseController
 
 		if($result)
 		{
-			$solvesModel = new SolvesModel();
-
 			$data = [
 				'challenge_id'	=> $challengeID,
-				'user_id'		=> $this->auth->id(),
-				'team_id'		=> "1",
+				'team_id'		=> user()->team_id,
 			];
 
-			$db_result = $solvesModel->insert($data);
+			$solved_before = $this->solvesModel->where($data)->find();
+			
+			if(empty($solved_before))
+			{
+				$data['user_id'] = $this->auth->id();
+				$db_result = $this->solvesModel->insert($data);
+				
+				if($db_result)
+				{
+					return redirect()->to("/challenges/$challengeID")->with('result', $result);
+				}
+				else
+				{
+					//
+				}
+			}
+
+			return redirect()->to("/challenges/$challengeID")->with('result', $result);
+		}
+		else
+		{
+			return redirect()->to("/challenges/$challengeID")->with('result', $result);
 		}
 	}
+	//--------------------------------------------------------------------
 }

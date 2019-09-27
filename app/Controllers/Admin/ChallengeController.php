@@ -69,7 +69,7 @@ class ChallengeController extends \App\Controllers\BaseController
 		{
 			$viewData['errors'] 	= $this->challengeModel->errors();
 			$viewData['categories']	= $this->categoryModel->findAll();
-			return view('admin/challenge/new', $viewData);
+			return redirect()->to('/admin/challenges/new')->withInput();
 		}
 
 		return redirect()->to('/admin/challenges');
