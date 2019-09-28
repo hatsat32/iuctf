@@ -14,6 +14,10 @@ class AuthController extends Controller
 	 */
 	protected $config;
 
+	protected $helpers = [
+		'auth',
+	];
+
 	/**
 	 * @var \CodeIgniter\Session\Session
 	 */

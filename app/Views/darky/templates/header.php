@@ -17,6 +17,9 @@
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(logged_in()): ?>
 					<li class="nav-item">
+						<a class="nav-link" href="/team">Takım</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="/profile">Profil</a>
 					</li>
 					<?php if(in_groups('admin')): ?>

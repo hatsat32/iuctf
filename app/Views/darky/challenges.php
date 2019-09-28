@@ -2,6 +2,16 @@
 
 <?=$this->section('content')?>
 
+<?php if (user()->team_id === null): ?>
+	<div class="alert alert-danger m-2" role="alert">
+		<h3 class="alert-heading">DİKKAT</h3>
+		<p>Yarışmaya Katılmak için bir takım bul</p>
+		<hr>
+		<a class="alert-link" href="/team">Takım bölümünü ziyaret et</a>
+	</div>
+<?php endif ?>
+
+<div class="row">
 	<div class="col-md-4 my-2">
 		<?php foreach ($categories as $category): ?>
 			<?php if (isset($category['challenges']) === true): ?>
@@ -63,6 +73,6 @@
 			</div>
 		<?php endif ?>
 	</div>
-
+</div>
 
 <?=$this->endSection()?>

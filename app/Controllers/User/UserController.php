@@ -76,15 +76,20 @@ class UserController extends \App\Controllers\BaseController
 			if(empty($solved_before))
 			{
 				$data['user_id'] = $this->auth->id();
-				$db_result = $this->solvesModel->insert($data);
-				
+
+				if (user()->team_id !== null)
+				{
+					$db_result = $this->solvesModel->insert($data);
+				}
+
 				if($db_result)
 				{
 					return redirect()->to("/challenges/$challengeID")->with('result', $result);
 				}
 				else
 				{
-					//
+					$errors = $this->solvesModel->errors();
+					return redirect()->to("/challenges/$challengeID")->with('result', $result)->with('errors', $errors);
 				}
 			}
 

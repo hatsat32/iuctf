@@ -13,9 +13,7 @@
 	<?= $this->include('darky/templates/header') ?>
 
 	<div class="container">
-		<div class="row">
-			<?= $this->renderSection("content") ?>
-		</div>
+		<?= $this->renderSection("content") ?>
 	</div>
 
 	<style>
