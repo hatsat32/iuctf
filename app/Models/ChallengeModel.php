@@ -15,7 +15,7 @@ class ChallengeModel extends Model
         'category_id'   => 'numeric',
         'name'          => 'required|min_length[2]',
         'point'         => 'required|numeric',
-        'description'   => 'required|alpha_numeric_space',
+        'description'   => 'required',
         'max_attempts'  => 'numeric',
         'type'          => 'required|in_list[static,dynamic]',
         'is_active'     => 'required|in_list[0,1]',
