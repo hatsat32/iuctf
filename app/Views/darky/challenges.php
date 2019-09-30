@@ -31,7 +31,7 @@
 
 	<div class="col-md-8">
 		<?php if(isset($challenge)): ?>
-			<div class="card m-4">
+			<div class="card m-2">
 				<h3 class="card-header <?= in_array($challenge['id'], $solves)? 'bg-success':'bg-danger' ?>"><?= esc($challenge['name']) ?></h3>
 				<div class="card-body">
 					<p class="card-text"><?= esc($challenge['description']) ?></p>

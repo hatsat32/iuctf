@@ -121,4 +121,26 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
+
+	public function addAdmin($user_id = null)
+	{
+		$authorize = \Myth\Auth\Config\Services::authorization();
+
+		$authorize->addUserToGroup($user_id, 'admin');
+
+		return redirect()->to("/admin/users/$user_id");
+	}
+
+	//--------------------------------------------------------------------
+
+	public function rmAdmin($user_id = null)
+	{
+		$authorize = \Myth\Auth\Config\Services::authorization();
+
+		$authorize->removeUserFromGroup($user_id, 'admin');
+
+		return redirect()->to("/admin/users/$user_id");
+	}
+
+	//--------------------------------------------------------------------
 }
