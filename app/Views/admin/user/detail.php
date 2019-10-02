@@ -49,20 +49,23 @@
 			</form>
 
 			<div class="mt-4">
-				<form action="/admin/users/<?= esc($user['id']) ?>/delete" method="post">
+				<form action="/admin/users/<?= esc($user['id']) ?>/delete" method="post"
+						onsubmit="return confirm('Kullanıcıyı silmek istediğine eminmisin??')">
 					<button type="submit" class="btn btn-danger btn-block">Sil</button>
 				</form>
 			</div>
 
 			<?php if(Myth\Auth\Config\Services::authorization()->inGroup('admin', $user['id'])): ?>
 				<div class="mt-4">
-					<form action="/admin/users/<?= esc($user['id']) ?>/rmadmin" method="post">
+					<form action="/admin/users/<?= esc($user['id']) ?>/rmadmin" method="post"
+							onsubmit="return confirm('Admin grubundan silmek istediğine eminmisin')">
 						<button type="submit" class="btn btn-info btn-block">Admin Grubundan Sil</button>
 					</form>
 				</div>
 			<?php else: ?>
 				<div class="mt-4">
-					<form action="/admin/users/<?= esc($user['id']) ?>/addadmin" method="post">
+					<form action="/admin/users/<?= esc($user['id']) ?>/addadmin" method="post"
+							onsubmit="return confirm('Admin grubuna eklemek istediğine eminmisin')">
 						<button type="submit" class="btn btn-info btn-block">Admin Grubuna Ekle</button>
 					</form>
 				</div>

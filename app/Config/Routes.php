@@ -102,6 +102,8 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->get('team',		'TeamController::index');
 	$routes->post('createteam',	'TeamController::createTeam');
 	$routes->post('jointeam',	'TeamController::joinTeam');
+
+	$routes->get('scoreboard',	'UserController::scoreboard');
 });
 
 
@@ -164,6 +166,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('/', 				'FlagController::create/$1');
 		$routes->post('(:num)/delete',	'FlagController::delete/$1/$2');
 		$routes->post('(:num)', 		'FlagController::update/$1/$2');
+	});
+
+	$routes->group('config', function($routes)
+	{
+		$routes->get('/', 	'ConfigController::index');
 	});
 });
 

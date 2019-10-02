@@ -4,6 +4,7 @@ use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
 use \App\Models\FlagModel;
 use \App\Models\SolvesModel;
+use \App\Models\TeamModel;
 use Myth\Auth\Config\Services;
 
 class UserController extends \App\Controllers\BaseController
@@ -14,6 +15,7 @@ class UserController extends \App\Controllers\BaseController
 		$this->categorygeModel = new CategoryModel();
 		$this->flagModel = new FlagModel();
 		$this->solvesModel = new SolvesModel();
+		$this->teamModel = new TeamModel();
 
 		$this->auth = Services::authentication();
 		$this->authorize = Services::authorization();
@@ -100,5 +102,31 @@ class UserController extends \App\Controllers\BaseController
 			return redirect()->to("/challenges/$challengeID")->with('result', $result);
 		}
 	}
+	//--------------------------------------------------------------------
+
+	public function scoreboard()
+	{
+		/*
+		SELECT teams.name, SUM(challenges.point) 
+		FROM challenges, solves, teams 
+		WHERE teams.id=solves.team_id AND solves.challenge_id = challenges.id
+		GROUP BY name
+		*/
+
+		$db = db_connect();
+		$builder = $db->table(['teams', 'challenges', 'solves']);
+		$builder->select(['teams.name', 'SUM(challenges.point) as point']);
+		$builder->where('teams.id', 'solves.team_id', false);
+		$builder->where('solves.challenge_id', 'challenges.id', false);
+		$builder->groupBy('name');
+		$builder->orderBy('point');
+
+		// var_dump($builder->getCompiledSelect());
+		$scores = $builder->get()->getResultArray();
+		$viewData['scores'] = $scores;
+
+		return view('darky/scoreboard', $viewData);
+	}
+
 	//--------------------------------------------------------------------
 }

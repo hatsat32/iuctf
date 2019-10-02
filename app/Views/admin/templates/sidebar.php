@@ -29,4 +29,11 @@
             <span>Kullanıcılar</span>
         </a>
     </li>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="/admin/config">
+            <i class="fas fa-user"></i>
+            <span>Ayarlar</span>
+        </a>
+    </li>
 </ul>
