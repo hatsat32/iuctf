@@ -138,4 +138,25 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
+
+	public function hash()
+	{
+		return view('darky/hash');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function gethash()
+	{
+		if (empty($this->request->getPost('hash')))
+		{
+			return view('darky/hash');
+		}
+
+		$hash =  hash('sha256', $this->request->getPost('hash'));
+
+		return view('darky/hash', ['hash' => $hash]);
+	}
+
+	//--------------------------------------------------------------------
 }

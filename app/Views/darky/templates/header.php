@@ -16,6 +16,9 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/notifications">Duyurular</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/hash">Hash</a>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(logged_in()): ?>

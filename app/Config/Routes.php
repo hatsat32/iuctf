@@ -109,6 +109,9 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->get('profile',		'ProfileController::index');
 	$routes->post('profile',	'ProfileController::updateProfile');
 	$routes->post('profile/change-password',	'ProfileController::updatePassword');
+
+	$routes->get('hash',	'UserController::hash');
+	$routes->post('hash',	'UserController::gethash');
 });
 
 
