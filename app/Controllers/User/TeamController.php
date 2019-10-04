@@ -25,7 +25,7 @@ class TeamController extends \App\Controllers\BaseController
 			return view('darky/team', $viewData);
 		}
 
-		$team = $this->teamModel->find(user()->team_id);
+		$team = $this->teamModel->asObject('App\Entities\Team')->find(user()->team_id);
 		$team_members = $this->userModel->where('team_id', user()->team_id)->findAll();
 
 		$viewData['team'] = $team;
@@ -57,7 +57,7 @@ class TeamController extends \App\Controllers\BaseController
 		if ((! $team_id) && (! $result))
 		{
 			$errors = $this->teamModel->errors();
-			return redirect()->to('/createteam')->withInput();
+			return redirect()->to('/createteam')->withInput()->with('errors', $errors);
 		}
 
 		return redirect()->to('/team');

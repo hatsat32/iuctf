@@ -58,15 +58,15 @@
         <tbody>
             <tr>
                 <th>Takım Lideri</th>
-                <td><?= esc($team['leader_id']) ?></td>
+                <td><?= esc($team->leader()['username']) ?></td>
             </tr>
             <tr>
                 <th>Takım İsmi</th>
-                <td><?= esc($team['name']) ?></td>
+                <td><?= esc($team->name) ?></td>
             </tr>
             <tr>
                 <th>Takım Kodu</th>
-                <td><?= esc($team['auth_code']) ?></td>
+                <td><?= esc($team->auth_code) ?></td>
             </tr>
         </tbody>
     </table> 
