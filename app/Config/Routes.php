@@ -104,6 +104,10 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->post('jointeam',	'TeamController::joinTeam');
 
 	$routes->get('scoreboard',	'UserController::scoreboard');
+
+	$routes->get('profile',		'ProfileController::index');
+	$routes->post('profile',	'ProfileController::updateProfile');
+	$routes->post('profile/change-password',	'ProfileController::updatePassword');
 });
 
 
