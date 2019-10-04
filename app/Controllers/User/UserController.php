@@ -129,4 +129,13 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
+
+	public function notifications()
+	{
+		$notificationModel = new \App\Models\NotificationModel();
+		$viewData['notifications'] = $notificationModel->findAll();
+		return view('darky/notifications', $viewData);
+	}
+
+	//--------------------------------------------------------------------
 }

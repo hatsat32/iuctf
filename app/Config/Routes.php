@@ -103,7 +103,8 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->post('createteam',	'TeamController::createTeam');
 	$routes->post('jointeam',	'TeamController::joinTeam');
 
-	$routes->get('scoreboard',	'UserController::scoreboard');
+	$routes->get('scoreboard',		'UserController::scoreboard');
+	$routes->get('notifications',	'UserController::notifications');
 
 	$routes->get('profile',		'ProfileController::index');
 	$routes->post('profile',	'ProfileController::updateProfile');
@@ -170,6 +171,17 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('/', 				'FlagController::create/$1');
 		$routes->post('(:num)/delete',	'FlagController::delete/$1/$2');
 		$routes->post('(:num)', 		'FlagController::update/$1/$2');
+	});
+
+	$routes->group('notifications', function($routes)
+	{
+		$routes->get('/', 				'NotificationController::index');
+		$routes->get('new', 			'NotificationController::new');
+		$routes->get('(:num)/edit', 	'NotificationController::edit/$1');
+		$routes->get('(:num)', 			'NotificationController::show/$1');
+		$routes->post('/', 				'NotificationController::create');
+		$routes->post('(:num)/delete',	'NotificationController::delete/$1');
+		$routes->post('(:num)', 		'NotificationController::update/$1');
 	});
 
 	$routes->group('config', function($routes)
