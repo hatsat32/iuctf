@@ -119,7 +119,7 @@ class UserController extends \App\Controllers\BaseController
 		$builder->where('teams.id', 'solves.team_id', false);
 		$builder->where('solves.challenge_id', 'challenges.id', false);
 		$builder->groupBy('name');
-		$builder->orderBy('point');
+		$builder->orderBy('point', 'DESC');
 
 		// var_dump($builder->getCompiledSelect());
 		$scores = $builder->get()->getResultArray();
@@ -133,7 +133,9 @@ class UserController extends \App\Controllers\BaseController
 	public function notifications()
 	{
 		$notificationModel = new \App\Models\NotificationModel();
-		$viewData['notifications'] = $notificationModel->findAll();
+		$viewData['notifications'] = $notificationModel
+									->orderBy('created_at', 'DESC')
+									->findAll();
 		return view('darky/notifications', $viewData);
 	}
 
