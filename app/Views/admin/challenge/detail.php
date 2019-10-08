@@ -87,6 +87,7 @@
 
 			<div class="mt-4">
 				<form action="/admin/challenges/<?= esc($challenge['id']) ?>/delete" method="post">
+					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block">Sil</button>
 				</form>
 			</div>
@@ -99,6 +100,7 @@
 			Flagler</div>
 		<div class="card-body">
 			<form action="/admin/challenges/<?= $challenge['id'] ?>/flags" method="post">
+				<?= csrf_field() ?>
 				<div class="form-row">
 					<div class="col-3">
 						<select name="type" class="form-control" id="is_active">
@@ -135,6 +137,7 @@
 							<td><?= esc($flag["content"]) ?></td>
 							<td>
 								<form action="/admin/challenges/<?= $challenge['id'] ?>/flags/<?= esc($flag['id']) ?>/delete" method="post">
+									<?= csrf_field() ?>
 									<input type="hidden" name="flag" value=" <?= esc($flag['id']) ?>">
 									<button class="btn btn-danger btn-block" type="submit">Delete</button>
 								</form>

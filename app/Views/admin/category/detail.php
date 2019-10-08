@@ -14,6 +14,7 @@
 			Takım Ekle</div>
 		<div class="card-body">
 			<form action="/admin/categories/<?= esc($category['id']) ?>" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="id">ID</label>
 					<input disabled class="form-control" id="id" value="<?= esc($category['id']) ?>">
@@ -39,6 +40,7 @@
 
 			<div class="mt-4">
 				<form action="/admin/categories/<?= esc($category['id']) ?>/delete" method="post">
+					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block">Sil</button>
 				</form>
 			</div>

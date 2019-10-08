@@ -14,6 +14,7 @@
 			Kullanıcı Detay</div>
 		<div class="card-body">
 			<form action="/admin/users/<?= esc($user['id']) ?>" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="username">Kullanıcı adı giriniz</label>
 					<input type="text" name="username" class="form-control" id="username" placeholder="Kullanıcı adı"
@@ -51,6 +52,7 @@
 			<div class="mt-4">
 				<form action="/admin/users/<?= esc($user['id']) ?>/delete" method="post"
 						onsubmit="return confirm('Kullanıcıyı silmek istediğine eminmisin??')">
+					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block">Sil</button>
 				</form>
 			</div>
@@ -59,6 +61,7 @@
 				<div class="mt-4">
 					<form action="/admin/users/<?= esc($user['id']) ?>/rmadmin" method="post"
 							onsubmit="return confirm('Admin grubundan silmek istediğine eminmisin')">
+						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-info btn-block">Admin Grubundan Sil</button>
 					</form>
 				</div>
@@ -66,6 +69,7 @@
 				<div class="mt-4">
 					<form action="/admin/users/<?= esc($user['id']) ?>/addadmin" method="post"
 							onsubmit="return confirm('Admin grubuna eklemek istediğine eminmisin')">
+						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-info btn-block">Admin Grubuna Ekle</button>
 					</form>
 				</div>

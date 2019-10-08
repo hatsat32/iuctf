@@ -14,6 +14,7 @@
 			Kategori Ekle</div>
 		<div class="card-body">
 			<form action="/admin/categories" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="name">Kategori İsmi</label>
 					<input type="text" name="name" class="form-control" id="name" placeholder="Kategori İsmi">

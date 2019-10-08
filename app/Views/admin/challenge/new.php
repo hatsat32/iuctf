@@ -25,6 +25,7 @@
 			<?php endif; ?>
 
 			<form action="/admin/challenges" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="category_id">Kategori Seçiniz</label>
 					<select name="category_id" class="form-control" id="category_id">

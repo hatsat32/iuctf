@@ -14,6 +14,7 @@
                 Takım Oluştur</div>
             <div class="card-body">
                 <form action="/createteam" method="post">
+                    <?= csrf_field() ?>
                     <div class="form-group">
                         <label for="name">İsmi Giriniz</label>
                         <input type="name" name="name" class="form-control" id="name" placeholder="Takım İsmi">
@@ -29,6 +30,7 @@
                 Takıma Katıl</div>
             <div class="card-body">
                 <form action="/jointeam" method="post">
+                    <?= csrf_field() ?>
                     <div class="form-group">
                         <label for="auth_code">Takım Kodunu Giriniz</label>
                         <input type="text" name="auth_code" class="form-control" id="auth_code" placeholder="Takım Kodu">

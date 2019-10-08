@@ -14,6 +14,7 @@
 			Challenge Ekle</div>
 		<div class="card-body">
 			<form action="/admin/users" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="username">Kullanıcı adı giriniz</label>
 					<input type="text" name="username" class="form-control" id="username" placeholder="Kullanıcı adı">

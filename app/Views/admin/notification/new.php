@@ -23,6 +23,7 @@
 			<?php endif ?>
 
 			<form action="/admin/notifications" method="post">
+				<?= csrf_field() ?>
                 <div class="form-group">
 					<label for="title">Başlık</label>
 					<input type="text" name="title" class="form-control" id="title" placeholder="Başlık" value="<?= old('title') ?>">

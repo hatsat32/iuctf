@@ -25,6 +25,7 @@
 			<?php endif ?>
 
 			<form action="/profile" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="username">Kullanıcı adı giriniz</label>
 					<input type="text" name="username" class="form-control" id="username" placeholder="Kullanıcı adı"
@@ -65,6 +66,7 @@
 			<?php endif ?>
 
 			<form action="/profile/change-password" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="password-old">Eski Parola</label>
 					<input type="password" name="password-old" class="form-control" id="password-old" placeholder="Eski Parola">

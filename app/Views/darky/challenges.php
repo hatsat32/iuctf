@@ -58,6 +58,7 @@
 				<div class="card-footer text-muted">
 					<div class="w-100">
 						<form class="" action="/challenges/<?= esc($challenge['id']) ?>" method="post">
+							<?= csrf_field() ?>
 							<div class="form-row">
 								<div class="col-9">
 									<input type="text" name="flag" class="form-control" placeholder="Flag gir">

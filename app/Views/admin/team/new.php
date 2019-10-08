@@ -14,6 +14,7 @@
 			Takım Ekle</div>
 		<div class="card-body">
 			<form action="/admin/teams/" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="leader_id">Lider ID</label>
 					<input type="number" name="leader_id" class="form-control" id="leader_id" placeholder="Lider ID">

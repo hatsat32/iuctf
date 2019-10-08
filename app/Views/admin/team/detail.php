@@ -14,6 +14,7 @@
 			Takım Ekle</div>
 		<div class="card-body">
 			<form action="/admin/teams/<?= esc($team['id']) ?>" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="team_id">Takım ID</label>
 					<input disabled class="form-control" id="team_id" value="<?= esc($team['id']) ?>">
@@ -43,12 +44,14 @@
 
 			<div class="mt-4">
 				<form action="/admin/teams/<?= esc($team['id']) ?>/delete" method="post">
+					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block">Sil</button>
 				</form>
 			</div>
 
 			<div class="mt-4">
 				<form action="/admin/teams/<?= esc($team['id']) ?>/authcode" method="post">
+					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-info btn-block">Auth Kod Değiştir</button>
 				</form>
 			</div>

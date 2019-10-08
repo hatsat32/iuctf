@@ -24,6 +24,7 @@
 			<?php endif ?>
 
 			<form action="/admin/notifications/<?= $notification->id ?>" method="post">
+				<?= csrf_field() ?>
                 <div class="form-group">
 					<label for="title">Başlık</label>
 					<input type="text" name="title" class="form-control" id="title" placeholder="Başlık" value="<?= $notification->title ?>">
@@ -40,6 +41,7 @@
 	<div class="mt-4">
 		<form action="/admin/notifications/<?= esc($notification->id) ?>/delete" method="post"
 				onsubmit="return confirm('Duyuruyu silmek istediğine eminmisin??')">
+			<?= csrf_field() ?>
 			<button type="submit" class="btn btn-danger btn-block">Sil</button>
 		</form>
 	</div>

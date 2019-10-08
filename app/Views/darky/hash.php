@@ -7,6 +7,7 @@
     </div>
 
 	<form action="/hash" method="post">
+		<?= csrf_field() ?>
 		<div class="form-group">
 			<label class="col-form-label col-form-label-lg" for="hash">Hash Al</label>
 			<input type="text" name="hash" class="form-control form-control-lg" id="hash" placeholder="hash">
