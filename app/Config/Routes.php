@@ -189,7 +189,9 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 
 	$routes->group('config', function($routes)
 	{
-		$routes->get('/', 	'ConfigController::index');
+		$routes->get('/', 					'ConfigController::index', ['as' => 'admin-config']);
+		$routes->post('competition-timer', 	'ConfigController::competitionTimer');
+		$routes->post('competition-times', 	'ConfigController::competitionTimes');
 	});
 });
 

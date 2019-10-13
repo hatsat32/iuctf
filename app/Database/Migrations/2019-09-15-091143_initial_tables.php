@@ -9,8 +9,8 @@ class InitialTables extends Migration
 		// config
 		$this->forge->addField([
 			'id' 	=> ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
-			'key'	=> ['type' => 'varchar', 'constraint' => '50'],
-			'value' => ['type' => 'varchar', 'constraint' => '100'],
+			'key'	=> ['type' => 'varchar', 'constraint' => '50', 'unique' => true],
+			'value' => ['type' => 'varchar', 'constraint' => '100', 'null' => true],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
 		]);
