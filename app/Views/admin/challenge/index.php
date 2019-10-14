@@ -5,11 +5,11 @@
 		<li class="breadcrumb-item">
 			<a href="#">Dashboard</a>
 		</li>
-		<li class="breadcrumb-item active">Sorular</li>
+		<li class="breadcrumb-item active"><?= lang('General.challenges') ?></li>
 	</ol>
 
 	<div class="my-4">
-		<a class="btn btn-primary btn-block" href="/admin/challenges/new">Ekle</a>
+		<a class="btn btn-primary btn-block" href="/admin/challenges/new"><?= lang('General.add') ?></a>
 	</div>
 
 	<!-- DataTables Example -->
@@ -22,12 +22,12 @@
 				<table class="table table-bordered" id="challenges-table" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>Kategori</th>
-							<th>name</th>
-							<th>Puan</th>
-							<th>Aktif</th>
-							<th>Detay</th>
+							<th><?= lang('General.id') ?></th>
+							<th><?= lang('General.category') ?></th>
+							<th><?= lang('General.name') ?></th>
+							<th><?= lang('General.point') ?></th>
+							<th><?= lang('admin/Challenge.status') ?></th>
+							<th><?= lang('General.detail') ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -38,7 +38,11 @@
 							<td><?= esc($challenge["name"]) ?></td>
 							<td><?= esc($challenge["point"]) ?></td>
 							<td><?= esc($challenge["is_active"]) ?></td>
-							<td><a class="btn btn-info btn-block" href="/admin/challenges/<?= esc($challenge["id"]) ?>">Detay</a></td>
+							<td>
+								<a class="btn btn-info btn-block" href="/admin/challenges/<?= esc($challenge["id"]) ?>">
+									<?= lang('General.detail') ?>
+								</a>
+							</td>
 						</tr>
 					<?php endforeach ?>
 					</tbody>

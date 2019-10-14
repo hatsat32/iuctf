@@ -5,33 +5,33 @@
         <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Kullanıcı Detay</li>
+        <li class="breadcrumb-item active"><?= lang('admin/User.userDetail') ?></li>
     </ol>
 
     <div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-			Kullanıcı Detay</div>
+			<?= lang('admin/User.userDetail') ?></div>
 		<div class="card-body">
 			<form action="/admin/users/<?= esc($user['id']) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
-					<label for="username">Kullanıcı adı giriniz</label>
+					<label for="username"><?= lang('admin/User.enterUsername') ?></label>
 					<input type="text" name="username" class="form-control" id="username" placeholder="Kullanıcı adı"
                             value="<?= esc($user['username']) ?>">
 				</div>
                 <div class="form-group">
-					<label for="email">Email Giriniz</label>
+					<label for="email"><?= lang('admin/User.enterEmail') ?></label>
 					<input type="email" name="email" class="form-control" id="email" placeholder="Emailiniz"
                             value="<?= esc($user['email']) ?>">
 				</div>
                 <div class="form-group">
-					<label for="name">İsim Giriniz</label>
+					<label for="name"><?= lang('General.name') ?></label>
 					<input type="text" name="name" class="form-control" id="name" placeholder="İsminiz"
                             value="<?= esc($user['name']) ?>">
 				</div>
                 <div class="form-group">
-					<label for="team_id">Takım Seçiniz</label>
+					<label for="team_id"><?= lang('admin/User.selectTeam') ?></label>
 					<select name="team_id" class="form-control" id="team_id">
                         <?php foreach($teams as $team): ?>
                             <option <?= $user['team_id']===$team['id'] ? "selected":"" ?> value="<?= esc($team["id"]) ?>"><?= esc($team["name"]) ?></option>
@@ -39,21 +39,21 @@
                     </select>
 				</div>
                 <div class="form-group">
-					<label for="password">Parola Giriniz</label>
+					<label for="password"><?= lang('admin/User.enterPassword') ?></label>
 					<input type="password" name="password" class="form-control" id="password" placeholder="Parola">
 				</div>
                 <div class="form-group">
-					<label for="password-confirm">Parola Tekrar</label>
+					<label for="password-confirm"><?= lang('admin/User.confirmPassword') ?></label>
 					<input type="password" name="password-confirm" class="form-control" id="password-confirm" placeholder="Parola tekrar">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Güncelle</button>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/User.updateUser') ?></button>
 			</form>
 
 			<div class="mt-4">
 				<form action="/admin/users/<?= esc($user['id']) ?>/delete" method="post"
 						onsubmit="return confirm('Kullanıcıyı silmek istediğine eminmisin??')">
 					<?= csrf_field() ?>
-					<button type="submit" class="btn btn-danger btn-block">Sil</button>
+					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.deleteUser') ?></button>
 				</form>
 			</div>
 
@@ -62,7 +62,7 @@
 					<form action="/admin/users/<?= esc($user['id']) ?>/rmadmin" method="post"
 							onsubmit="return confirm('Admin grubundan silmek istediğine eminmisin')">
 						<?= csrf_field() ?>
-						<button type="submit" class="btn btn-info btn-block">Admin Grubundan Sil</button>
+						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.unmakeAdmin') ?></button>
 					</form>
 				</div>
 			<?php else: ?>
@@ -70,7 +70,7 @@
 					<form action="/admin/users/<?= esc($user['id']) ?>/addadmin" method="post"
 							onsubmit="return confirm('Admin grubuna eklemek istediğine eminmisin')">
 						<?= csrf_field() ?>
-						<button type="submit" class="btn btn-info btn-block">Admin Grubuna Ekle</button>
+						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.makeAdmin') ?></button>
 					</form>
 				</div>
 			<?php endif ?>

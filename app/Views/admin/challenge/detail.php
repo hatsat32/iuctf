@@ -6,18 +6,18 @@
 			<a href="/admin">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="/admin/challenges">Sorular</a>
+			<a href="/admin/challenges"><?= lang('General.challenges') ?></a>
 		</li>
 		<li class="breadcrumb-item">
 			<a href="/admin/challenges/<?= $challenge['id'] ?>"/><?= $challenge['name'] ?></a>
 		</li>
-		<li class="breadcrumb-item active">Düzenle</li>
+		<li class="breadcrumb-item active"><?= lang('General.edit') ?></li>
 	</ol>
 
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-			Soru Düzenle</div>
+			<?= lang('admin/Challenge.editChallenge') ?></div>
 		<div class="card-body">
 			<form action="/admin/challenges/<?= $challenge['id'] ?>" method="post">
 				<div class="form-group">
@@ -25,7 +25,7 @@
 					<input disabled class="form-control" id="id" value="<?= esc($challenge['id']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="category_id">Kategori Seçiniz</label>
+					<label for="category_id"><?= lang('admin/Challenge.selectCategory') ?></label>
 					<select name="category_id" class="form-control" id="category_id">
 						<?php foreach($categories as $category): ?>
 							<option <?= $challenge['id']===$category['id'] ? 'selected':'' ?> value="<?= esc($category['id']) ?>">
@@ -35,60 +35,60 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="name">Soru İsmi Giriniz</label>
-					<input type="name" name="name" class="form-control" id="name" placeholder="İsim giriniz" value="<?= esc($challenge['name']) ?>">
+					<label for="name"><?= lang('admin/Challenge.challengeName') ?></label>
+					<input type="name" name="name" class="form-control" id="name" value="<?= esc($challenge['name']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="description">Açıklama</label>
-					<textarea class="form-control" name="description" id="description" rows="3" placeholder="Açıklama giriniz"><?= esc($challenge['description']) ?></textarea>
+					<label for="description"><?= lang('General.description') ?></label>
+					<textarea class="form-control" name="description" id="description" rows="3"><?= esc($challenge['description']) ?></textarea>
 				</div>
 				<div class="form-group">
-					<label for="point">Puan</label>
-					<input type="number" name="point" class="form-control" id="point" placeholder="Puan" value="<?= esc($challenge['point']) ?>">
+					<label for="point"><?= lang('General.point') ?></label>
+					<input type="number" name="point" class="form-control" id="point" value="<?= esc($challenge['point']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="max_attempts">Max Deneme Sayısı</label>
-					<input type="number" name="max_attempts" class="form-control" id="max_attempts" placeholder="Max deneme sayısı" value="<?= esc($challenge['max_attempts']) ?>">
+					<label for="max_attempts"><?= lang('admin/Challenge.maxAttempt') ?></label>
+					<input type="number" name="max_attempts" class="form-control" id="max_attempts" value="<?= esc($challenge['max_attempts']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="type">Tip</label>
+					<label for="type"><?= lang('admin/Challenge.type') ?></label>
 					<select name="type" class="form-control" id="type">
 						<?php if($challenge['type'] === 'static'): ?>
-							<option selected value="static">Statik</option>
-							<option value="dynamic">Dinamik</option>
+							<option selected value="static"><?= lang('admin/Challenge.static') ?></option>
+							<option value="dynamic"><?= lang('admin/Challenge.dynamic') ?></option>
 						<?php else: ?>
-							<option value="static">Statik</option>
-							<option selected value="dynamic">Dinamik</option>
+							<option value="static"><?= lang('admin/Challenge.static') ?></option>
+							<option selected value="dynamic"><?= lang('admin/Challenge.dynamic') ?></option>
 						<?php endif; ?>
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="is_active">Tip</label>
+					<label for="is_active"><?= lang('admin/Challenge.status') ?></label>
 					<select name="is_active" class="form-control" id="is_active">
 						<?php if($challenge['is_active'] === '0'): ?>
-							<option selected value="0">Pasif</option>
-							<option value="1">Aktif</option>
+							<option selected value="0"><?= lang('admin/Challenge.passive') ?></option>
+							<option value="1"><?= lang('admin/Challenge.active') ?></option>
 						<?php else: ?>
-							<option value="0">Pasif</option>
-							<option selected value="1">Aktif</option>
+							<option value="0"><?= lang('admin/Challenge.passive') ?></option>
+							<option selected value="1"><?= lang('admin/Challenge.active') ?></option>
 						<?php endif; ?>
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="created_at">Eklendi</label>
+					<label for="created_at"><?= lang('General.createdAt') ?></label>
 					<input disabled class="form-control" id="created_at" value="<?= esc($challenge['created_at']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="updated_at">Güncellendi</label>
+					<label for="updated_at"><?= lang('General.updatedAt') ?></label>
 					<input disabled class="form-control" id="updated_at" value="<?= esc($challenge['updated_at']) ?>">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Güncelle</button>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Challenge.updateChallenge') ?></button>
 			</form>
 
 			<div class="mt-4">
 				<form action="/admin/challenges/<?= esc($challenge['id']) ?>/delete" method="post">
 					<?= csrf_field() ?>
-					<button type="submit" class="btn btn-danger btn-block">Sil</button>
+					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Challenge.deleteChallenge') ?></button>
 				</form>
 			</div>
 		</div>
@@ -97,15 +97,15 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-			Flagler</div>
+			<?= lang('admin/Challenge.flags') ?></div>
 		<div class="card-body">
 			<form action="/admin/challenges/<?= $challenge['id'] ?>/flags" method="post">
 				<?= csrf_field() ?>
 				<div class="form-row">
 					<div class="col-3">
 						<select name="type" class="form-control" id="is_active">
-							<option value="static">Stetic</option>
-							<option value="regex">Regex</option>
+							<option value="static"><?= lang('admin/Challenge.static') ?></option>
+							<option value="regex"><?= lang('admin/Challenge.regex') ?></option>
 						</select>
 					</div>
 					<div class="col-6">
@@ -115,7 +115,7 @@
 					</div>
 					<div class="col-3">
 						<div class="col">
-							<button type="submit" class="btn btn-primary btn-block">Ekle</button>
+							<button type="submit" class="btn btn-primary btn-block"><?= lang('General.add') ?></button>
 						</div>
 					</div>
 				</div>
@@ -125,21 +125,21 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>Type</th>
-							<th>Content</th>
-							<th>Delete</th>
+							<th><?= lang('admin/Challenge.type') ?></th>
+							<th><?= lang('admin/Challenge.content') ?></th>
+							<th><?= lang('General.delete') ?></th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php foreach($flags as $flag): ?>
 						<tr>
-							<td><?= esc($flag["type"]) ?></td>
+							<td><?= lang("admin/Challenge.{$flag['type']}") ?></td>
 							<td><?= esc($flag["content"]) ?></td>
 							<td>
 								<form action="/admin/challenges/<?= $challenge['id'] ?>/flags/<?= esc($flag['id']) ?>/delete" method="post">
 									<?= csrf_field() ?>
 									<input type="hidden" name="flag" value=" <?= esc($flag['id']) ?>">
-									<button class="btn btn-danger btn-block" type="submit">Delete</button>
+									<button class="btn btn-danger btn-block" type="submit"><?= lang('General.delete') ?></button>
 								</form>
 							</td>
 						</tr>

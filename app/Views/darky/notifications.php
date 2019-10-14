@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 
 	<div class="my-4 text-center">
-		<h2>Duyurular</h2>
+		<h2><?= lang('General.notifications') ?></h2>
 	</div>
 
 	<?php foreach($notifications as $notf): ?>

@@ -3,12 +3,12 @@
 <?= $this->section('content') ?>
 
 	<div class="my-4 text-center">
-		<h1>Profile</h1>
+		<h1><?= lang('Home.profile') ?></h1>
 	</div>
 
 	<div class="row">
 		<div class="col-sm-6">
-			<h3>Bilgileri Güncelle</h3>
+			<h3><?= lang('Home.updateInfo') ?></h3>
 
 			<?php if (session()->has('profile-success')) : ?>
 				<div class="alert alert-success mb-0">	
@@ -27,30 +27,50 @@
 			<form action="/profile" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
-					<label for="username">Kullanıcı adı giriniz</label>
-					<input type="text" name="username" class="form-control" id="username" placeholder="Kullanıcı adı"
+					<label for="username"><?= lang('Home.enterUsername') ?></label>
+					<input type="text" name="username" class="form-control" id="username"
 					value="<?= esc($user['username']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="email">Email Giriniz</label>
-					<input type="email" name="email" class="form-control" id="email" placeholder="Emailiniz"
+					<label for="email"><?= lang('Home.enterEmail') ?></label>
+					<input type="email" name="email" class="form-control" id="email"
 					value="<?= esc($user['email']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="name">İsim Giriniz</label>
-					<input type="text" name="name" class="form-control" id="name" placeholder="İsminiz"
+					<label for="name"><?= lang('Home.enterName') ?></label>
+					<input type="text" name="name" class="form-control" id="name"
 					value="<?= esc($user['name']) ?>">
 				</div>
 				<div class="form-group">
-					<label for="password-present">Eski Parola</label>
-					<input type="password" name="password" class="form-control" id="password-present" placeholder="Eski Parola">
+					<label for="password-present"><?= lang('General.password') ?></label>
+					<input type="password" name="password" class="form-control" id="password-present">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Güncelle</button>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
 			</form>
+
+			<div class="my-4">
+				<form action="/language" method="get" id="language-form">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="language"><?= lang('General.language') ?></label>
+						</div>
+						<select class="custom-select" id="language" name="language">
+							<?php foreach(config('Iuctf')->locales as $lang => $language): ?>
+							<option <?= session('language')==$lang ? 'selected':'' ?> value="<?= $lang ?>"><?= $language ?></option>
+							<?php endforeach ?>
+						</select>
+					</div>
+				</form>
+			</div>
+			<script>
+				$("#language").change(function() {
+					$("#language-form").submit();
+				});
+			</script>
 		</div>
 
 		<div class="col-sm-6">
-			<h3>Parola Güncelle</h3>
+			<h3><?= lang('Home.updatePassword') ?></h3>
 			<?php if (session()->has('success')) : ?>
 				<div class="alert alert-success mb-0">	
 					<?= session('success') ?>
@@ -68,18 +88,18 @@
 			<form action="/profile/change-password" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
-					<label for="password-old">Eski Parola</label>
-					<input type="password" name="password-old" class="form-control" id="password-old" placeholder="Eski Parola">
+					<label for="password-old"><?= lang('General.password') ?></label>
+					<input type="password" name="password-old" class="form-control" id="password-old">
 				</div>
 				<div class="form-group">
-					<label for="password">Yeni Parola</label>
-					<input type="password" name="password" class="form-control" id="password" placeholder="Yeni Parola">
+					<label for="password"><?= lang('Home.newPassword') ?></label>
+					<input type="password" name="password" class="form-control" id="password">
 				</div>
 				<div class="form-group">
-					<label for="password-confirm">Yeni Parola Tekrar</label>
-					<input type="password" name="password-confirm" class="form-control" id="password-confirm" placeholder="Parola Tekrar">
+					<label for="password-confirm"><?= lang('Home.confirmNewPass') ?></label>
+					<input type="password" name="password-confirm" class="form-control" id="password-confirm">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Parola Güncelle</button>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('Home.updatePassword') ?></button>
 			</form>
 		</div>
 	</div>

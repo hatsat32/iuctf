@@ -5,13 +5,13 @@
         <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Duyuru Ekle</li>
+        <li class="breadcrumb-item active"><?= lang('admin/Notification.addNotification') ?></li>
     </ol>
 
     <div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-			Duyuru Ekle</div>
+			<?= lang('admin/Notification.addNotification') ?></div>
 		<div class="card-body">
 		
 			<?php if (session()->has('errors')) : ?>
@@ -25,14 +25,14 @@
 			<form action="/admin/notifications" method="post">
 				<?= csrf_field() ?>
                 <div class="form-group">
-					<label for="title">Başlık</label>
-					<input type="text" name="title" class="form-control" id="title" placeholder="Başlık" value="<?= old('title') ?>">
+					<label for="title"><?= lang('General.title') ?></label>
+					<input type="text" name="title" class="form-control" id="title" value="<?= old('title') ?>">
 				</div>
                 <div class="form-group">
-					<label for="content">Açıklama</label>
-					<textarea class="form-control" name="content" id="content" rows="5" placeholder="Açıklama giriniz"><?= old('content') ?></textarea>
+					<label for="content"><?= lang('General.description') ?></label>
+					<textarea class="form-control" name="content" id="content" rows="5"><?= old('content') ?></textarea>
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Ekle</button>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Notification.addNotification') ?></button>
 			</form>
 		</div>
 	</div>

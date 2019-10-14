@@ -5,29 +5,29 @@
 		<li class="breadcrumb-item">
 			<a href="#">Dashboard</a>
 		</li>
-		<li class="breadcrumb-item active">Kategoriler</li>
+		<li class="breadcrumb-item active"><?= lang('General.categories') ?></li>
 	</ol>
 
 	<div class="my-4">
-		<a class="btn btn-primary btn-block" href="/admin/categories/new">Ekle</a>
+		<a class="btn btn-primary btn-block" href="/admin/categories/new"><?= lang('General.add') ?></a>
 	</div>
 
 <!-- DataTables Example -->
 <div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-user-friends"></i>
-			Kategoriler</div>
+			<?= lang('admin/Category.categories') ?></div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="teams-table" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>name</th>
-							<th>Açıklama</th>
-							<th>Oluşturuldu</th>
-							<th>Güncellendi</th>
-							<th>Detay</th>
+							<th><?= lang('General.id') ?></th>
+							<th><?= lang('General.name') ?></th>
+							<th><?= lang('General.description') ?></th>
+							<th><?= lang('General.createdAt') ?></th>
+							<th><?= lang('General.updatedAt') ?></th>
+							<th><?= lang('General.detail') ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -38,14 +38,17 @@
 							<td><?= esc($cat["description"]) ?></td>
 							<td><?= esc($cat["created_at"]) ?></td>
 							<td><?= esc($cat["updated_at"]) ?></td>
-							<td><a class="btn btn-info btn-block" href="/admin/categories/<?= esc($cat["id"]) ?>">Detay</a></td>
+							<td>
+								<a class="btn btn-info btn-block" href="/admin/categories/<?= esc($cat["id"]) ?>">
+									<?= lang('General.detail') ?>
+								</a>
+							</td>
 						</tr>
 					<?php endforeach ?>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 	</div>
 
 	<script>

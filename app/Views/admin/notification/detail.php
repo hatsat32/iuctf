@@ -6,13 +6,13 @@
         <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Duyuru Düzenle</li>
+        <li class="breadcrumb-item active"><?= lang('admin/Notification.editNotification') ?></li>
     </ol>
 
     <div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-			Duyuru Düzenle</div>
+			<?= lang('admin/Notification.editNotification') ?></div>
 		<div class="card-body">
 		
 			<?php if (session()->has('errors')) : ?>
@@ -26,24 +26,24 @@
 			<form action="/admin/notifications/<?= $notification->id ?>" method="post">
 				<?= csrf_field() ?>
                 <div class="form-group">
-					<label for="title">Başlık</label>
-					<input type="text" name="title" class="form-control" id="title" placeholder="Başlık" value="<?= $notification->title ?>">
+					<label for="title"><?= lang('General.title') ?></label>
+					<input type="text" name="title" class="form-control" id="title" value="<?= $notification->title ?>">
 				</div>
                 <div class="form-group">
-					<label for="content">Açıklama</label>
-					<textarea class="form-control" name="content" id="content" rows="5" placeholder="Açıklama giriniz"><?= $notification->content ?></textarea>
+					<label for="content"><?= lang('General.description') ?></label>
+					<textarea class="form-control" name="content" id="content" rows="5"><?= $notification->content ?></textarea>
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Notification.updateNotification') ?></button>
 			</form>
+			
+			<div class="mt-4">
+				<form action="/admin/notifications/<?= esc($notification->id) ?>/delete" method="post"
+							onsubmit="return confirm('Duyuruyu silmek istediğine eminmisin??')">
+					<?= csrf_field() ?>
+					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Notification.deleteNotification') ?></button>
+				</form>
+			</div>
 		</div>
-	</div>
-
-	<div class="mt-4">
-		<form action="/admin/notifications/<?= esc($notification->id) ?>/delete" method="post"
-				onsubmit="return confirm('Duyuruyu silmek istediğine eminmisin??')">
-			<?= csrf_field() ?>
-			<button type="submit" class="btn btn-danger btn-block">Sil</button>
-		</form>
 	</div>
 
 <?= $this->endSection() ?>

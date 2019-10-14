@@ -4,10 +4,10 @@
 
 <?php if (user()->team_id === null): ?>
 	<div class="alert alert-danger m-2" role="alert">
-		<h3 class="alert-heading">DİKKAT</h3>
-		<p>Yarışmaya Katılmak için bir takım bul</p>
+		<h3 class="alert-heading"><?= lang('Home.watchOut') ?></h3>
+		<p><?= lang('Home.findTeamToComp') ?></p>
 		<hr>
-		<a class="alert-link" href="/team">Takım bölümünü ziyaret et</a>
+		<a class="alert-link" href="/team"><?= lang('Home.visitTeamPage') ?></a>
 	</div>
 <?php endif ?>
 
@@ -45,12 +45,12 @@
 					<?php if (session('result') === true): ?>
 						<div class="alert alert-dismissible alert-success m-2">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							Doğru cevap.
+							<?= lang('Home.rightAnswer') ?>
 						</div>
 					<?php else: ?>
 						<div class="alert alert-dismissible alert-danger m-2">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							Yanlış cevap.
+							<?= lang('Home.wrongAnswer') ?>
 						</div>
 					<?php endif ?>
 				<?php endif ?>
@@ -65,7 +65,7 @@
 									<input type="hidden" name="ch-id">
 								</div>
 								<div class="col-3">
-									<button type="submit" class="btn btn-primary btn-block">Submit</button>
+									<button type="submit" class="btn btn-primary btn-block"><?= lang('Home.submit') ?></button>
 								</div>
 							</div>
 						</form>

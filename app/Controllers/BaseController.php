@@ -43,6 +43,11 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.:
 		// $this->session = \Config\Services::session();
+
+		if (session()->has('language'))
+		{
+			$request->setLocale(session('language'));
+		}
 	}
 
 }

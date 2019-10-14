@@ -3,15 +3,15 @@
 <?=$this->section('content')?>
 
     <div class="my-4 text-center">
-        <h1>Scoreboard</h1>
+        <h1><?= lang('Home.scoreboard') ?></h1>
     </div>
 
     <div class="m-2">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Takım Adı</th>
-                    <th scope="col">Puan</th>
+                    <th scope="col"><?= lang('Home.teamName') ?></th>
+                    <th scope="col"><?= lang('General.point') ?></th>
                 </tr>
             </thead>
             <tbody>
