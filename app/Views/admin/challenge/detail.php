@@ -1,6 +1,7 @@
 <?= $this->extend("admin/templates/base") ?>
 
 <?= $this->section('content') ?>
+
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
 			<a href="/admin">Dashboard</a>
@@ -121,6 +122,8 @@
 				</div>
 			</form>
 
+			<hr>
+
 			<div class="table-responsive mt-4">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
@@ -149,4 +152,70 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-chart-area"></i>
+			<?= lang('General.hints') ?></div>
+		<div class="card-body">
+			<form action="/admin/challenges/<?= $challenge['id'] ?>/hints" method="post">
+				<?= csrf_field() ?>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label for="is_active_hint"><?= lang('admin/Hint.isActive') ?></label>
+						<select name="is_active" class="form-control" id="is_active_hint">
+							<option value="0"><?= lang('General.passive') ?></option>
+							<option value="1"><?= lang('General.active') ?></option>
+						</select>
+					</div>
+					<div class="form-group col-6">
+						<label for="cost"><?= lang('admin/Hint.cost') ?></label>
+						<input type="number" class="form-control" name="cost" id="cost">
+					</div>
+				</div>
+				<div class="form-group form-row">
+					<div class="col-12">
+						<label for="content_hint"><?= lang('admin/Hint.content') ?></label>
+						<textarea class="form-control" name="content" id="content_hint" rows="3"></textarea>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('General.add') ?></button>
+			</form>
+			
+			<?php foreach($hints as $hint): ?>
+				<hr>
+				<form action="/admin/challenges/<?= $challenge['id'] ?>/hints/<?= $hint['id'] ?>" method="post">
+					<?= csrf_field() ?>
+					<div class="form-row">
+						<div class="form-group col-6">
+							<select name="is_active" class="form-control" id="is_active_hint">
+								<?php if($hint['is_active'] == '0'): ?>
+									<option selected value="0"><?= lang('General.passive') ?></option>
+									<option value="1"><?= lang('General.active') ?></option>
+								<?php else: ?>
+									<option value="0"><?= lang('General.passive') ?></option>
+									<option selected value="1"><?= lang('General.active') ?></option>
+								<?php endif ?>
+							</select>
+						</div>
+						<div class="form-group col-6">
+							<input type="number" class="form-control" name="cost" id="cost" value="<?= $hint['cost'] ?>">
+						</div>
+					</div>
+					<div class="form-group form-row">
+						<div class="col-12">
+							<textarea class="form-control" name="content" id="content_hint" rows="3"><?= $hint['content'] ?></textarea>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
+				</form>
+
+				<form class="my-2" action="/admin/challenges/<?= $challenge['id'] ?>/hints/<?= $hint['id'] ?>/delete" method="post">
+					<?= csrf_field() ?>
+					<button type="submit" class="btn btn-danger btn-block"><?= lang('General.delete') ?></button>
+				</form>
+			<?php endforeach ?>
+		</div>
+	</div>
+
 <?= $this->endSection() ?>

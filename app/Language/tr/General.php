@@ -12,6 +12,8 @@ return [
 	'detail'		=> 'Detay',
 	'createdAt'		=> 'Oluşturulma Zamanı',
 	'updatedAt'		=> 'Güncellenme Zamanı',
+	'active'		=> 'Aktif',
+	'passive'		=> 'Pasif',
 
 	'team'			=> 'Takım',
 	'teams'			=> 'Takımlar',
@@ -26,6 +28,8 @@ return [
 	'notifications'	=> 'Duyurular',
 	'title'			=> 'Başlık',
 	'point'			=> 'Puan',
+	'hint'			=> 'İpucu',
+	'hints'			=> 'İpuçları',
 
 	'username'		=> 'Kullanıcı Adı',
 	'email'			=> 'Email',

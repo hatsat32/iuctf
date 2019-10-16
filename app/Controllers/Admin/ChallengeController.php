@@ -3,6 +3,7 @@
 use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
 use \App\Models\FlagModel;
+use \App\Models\HintModel;
 
 class ChallengeController extends \App\Controllers\BaseController
 {
@@ -42,9 +43,11 @@ class ChallengeController extends \App\Controllers\BaseController
 
 	public function show($id = null)
 	{
+		$hintModel = new HintModel();
 		$challenge = $this->challengeModel->find($id);
 		$viewData['categories']	= $this->categoryModel->findAll();
 		$viewData['flags'] = $this->flagModel->where('challenge_id', $id)->findAll();
+		$viewData['hints'] = $hintModel->where('challenge_id', $id)->findAll();
 		$viewData['challenge'] = $challenge;
 		return view('admin/challenge/detail', $viewData);
 	}

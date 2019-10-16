@@ -177,6 +177,17 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'FlagController::update/$1/$2');
 	});
 
+	$routes->group('challenges/(:num)/hints', function($routes)
+	{
+		$routes->get('/', 				'HintController::index$1');
+		$routes->get('new', 			'HintController::new$1');
+		$routes->get('(:num)/edit', 	'HintController::edit/$1/$2');
+		$routes->get('(:num)', 			'HintController::show/$1/$2');
+		$routes->post('/', 				'HintController::create/$1');
+		$routes->post('(:num)/delete',	'HintController::delete/$1/$2');
+		$routes->post('(:num)', 		'HintController::update/$1/$2');
+	});
+
 	$routes->group('notifications', function($routes)
 	{
 		$routes->get('/', 				'NotificationController::index');

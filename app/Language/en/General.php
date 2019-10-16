@@ -12,6 +12,8 @@ return [
 	'detail'		=> 'Detail',
 	'createdAt'		=> 'Created At',
 	'updatedAt'		=> 'Updated At',
+	'active'		=> 'Active',
+	'passive'		=> 'Passive',
 
 	'team'			=> 'Team',
 	'teams'			=> 'Teams',
@@ -26,6 +28,8 @@ return [
 	'notifications'	=> 'Notifications',
 	'title'			=> 'Title',
 	'point'			=> 'Point',
+	'hint'			=> 'Hint',
+	'hints'			=> 'Hints',
 
 	'username'		=> 'Username',
 	'email'			=> 'Email',
