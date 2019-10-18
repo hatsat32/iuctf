@@ -52,7 +52,7 @@ class InitialTables extends Migration
         ]);
 
 		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('team_id','teams','id');
+		$this->forge->addForeignKey('team_id', 'teams', 'id');
         $this->forge->addUniqueKey('email');
         $this->forge->addUniqueKey('username');
         $this->forge->createTable('users', true);
@@ -175,7 +175,7 @@ class InitialTables extends Migration
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('category_id','categories','id');
+		$this->forge->addForeignKey('category_id', 'categories', 'id');
 		$this->forge->createTable('challenges');
 
 
@@ -187,9 +187,9 @@ class InitialTables extends Migration
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('challenge_id','challenges','id');
-		$this->forge->addForeignKey('user_id','users','id');
-		$this->forge->addForeignKey('team_id','teams','id');
+		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
+		$this->forge->addForeignKey('user_id', 'users', 'id');
+		$this->forge->addForeignKey('team_id', 'teams', 'id');
 		$this->forge->createTable('solves');
 
 
@@ -203,9 +203,9 @@ class InitialTables extends Migration
 			'type' 			=> ['type' => 'ENUM', 'constraint' => ['0', '1']],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
-		$this->forge->addForeignKey('challenge_id','challenges','id');
-		$this->forge->addForeignKey('user_id','users','id');
-		$this->forge->addForeignKey('team_id','teams','id');
+		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
+		$this->forge->addForeignKey('user_id', 'users', 'id');
+		$this->forge->addForeignKey('team_id', 'teams', 'id');
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('submits');
 
@@ -218,14 +218,14 @@ class InitialTables extends Migration
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
 		]);
-		$this->forge->addForeignKey('challenge_id','challenges','id');
+		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('flags');
 
 
 		$this->forge->addField([
-			'id' 		=> ['type' => 'INT','unsigned' => true,'auto_increment' => true],
-			'title' 	=> ['type' => 'varchar','constraint' => '100'],
+			'id' 		=> ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
+			'title' 	=> ['type' => 'varchar', 'constraint' => '100'],
 			'content' 	=> ['type' => 'text'],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
@@ -243,7 +243,7 @@ class InitialTables extends Migration
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
 		]);
-		$this->forge->addForeignKey('challenge_id','challenges','id');
+		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('hints');
 
@@ -256,9 +256,9 @@ class InitialTables extends Migration
 			'challenge_id'	=> ['type' => 'INT', 'unsigned' => true],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
-		$this->forge->addForeignKey('hint_id','hints','id');
-		$this->forge->addForeignKey('user_id','users','id');
-		$this->forge->addForeignKey('team_id','teams','id');
+		$this->forge->addForeignKey('hint_id', 'hints', 'id');
+		$this->forge->addForeignKey('user_id', 'users', 'id');
+		$this->forge->addForeignKey('team_id', 'teams', 'id');
 		$this->forge->addUniqueKey(['hint_id', 'team_id']);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('hint_unlocks');
@@ -272,7 +272,7 @@ class InitialTables extends Migration
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('challenge_id','challenges','id');
+		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
 		$this->forge->createTable('files');
 
 
@@ -284,7 +284,7 @@ class InitialTables extends Migration
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('user_id','users','id');
+		$this->forge->addForeignKey('user_id', 'users', 'id');
 		$this->forge->createTable('tracking');
 
 
@@ -298,7 +298,7 @@ class InitialTables extends Migration
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('challenge_id','challenges','id');
+		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
 		$this->forge->createTable('dynamic_challenges');
 	}
 
