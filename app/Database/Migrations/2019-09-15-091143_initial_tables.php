@@ -198,9 +198,9 @@ class InitialTables extends Migration
 			'challenge_id' 	=> ['type' => 'INT', 'unsigned' => true],
 			'user_id' 		=> ['type' => 'INT', 'unsigned' => true],
 			'team_id' 		=> ['type' => 'INT', 'unsigned' => true],
-			'ip' 			=> ['type' => 'varchar', 'constraint' => '15'],
+			'ip' 			=> ['type' => 'varchar', 'constraint' => '45'],
 			'provided' 		=> ['type' => 'varchar', 'constraint' => '100'],
-			'type' 			=> ['type' => 'ENUM','constraint' => ['0', '1'],'default' => '0'],
+			'type' 			=> ['type' => 'ENUM', 'constraint' => ['0', '1']],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addForeignKey('challenge_id','challenges','id');

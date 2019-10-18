@@ -77,6 +77,17 @@ class UserController extends \App\Controllers\BaseController
 			}
 		}
 
+		$submitModel = new \App\Models\SubmitModel();
+		$data = [
+			'challenge_id'  => $challengeID,
+			'user_id'		=> user()->id,
+			'team_id'		=> user()->team_id,
+			'ip'			=> $this->request->getIPAddress(),
+			'provided'		=> $submited_flag,
+			'type'			=> $result ? '1':'0',
+		];
+		$submitModel->insert($data);
+
 		if($result)
 		{
 			$data = [
