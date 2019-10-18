@@ -249,15 +249,17 @@ class InitialTables extends Migration
 
 
 		$this->forge->addField([
-			'id' 		=> ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
-			'hint_id' 	=> ['type' => 'INT', 'unsigned' => true],
-			'user_id' 	=> ['type' => 'INT', 'unsigned' => true],
-			'team_id' 	=> ['type' => 'INT', 'unsigned' => true],
+			'id' 			=> ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
+			'hint_id'		=> ['type' => 'INT', 'unsigned' => true],
+			'user_id' 		=> ['type' => 'INT', 'unsigned' => true],
+			'team_id' 		=> ['type' => 'INT', 'unsigned' => true],
+			'challenge_id'	=> ['type' => 'INT', 'unsigned' => true],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addForeignKey('hint_id','hints','id');
 		$this->forge->addForeignKey('user_id','users','id');
 		$this->forge->addForeignKey('team_id','teams','id');
+		$this->forge->addUniqueKey(['hint_id', 'team_id']);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('hint_unlocks');
 

@@ -100,6 +100,8 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->get('challenges/(:num)',	'UserController::challenges/$1');
 	$routes->post('challenges/(:num)',	'UserController::flagSubmit/$1');
 
+	$routes->post('challenges/(:num)/hints/(:num)',	'UserController::hint/$1/$2');
+
 	$routes->get('team',		'TeamController::index');
 	$routes->post('createteam',	'TeamController::createTeam');
 	$routes->post('jointeam',	'TeamController::joinTeam');

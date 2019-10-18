@@ -19,7 +19,7 @@
 					<h4 class="card-header"><?=esc($category['name'])?></h4>
 					<div class="list-group list-group-flush">
 						<?php foreach ($category['challenges'] as $ch): ?>
-							<a href="/challenges/<?=$ch['id']?>" class="list-group-item list-group-item-action <?= in_array($ch['id'], $solves)? 'text-success':'text-danger' ?>">
+							<a href="/challenges/<?=$ch['id']?>" class="list-group-item list-group-item-action p-2 <?= in_array($ch['id'], $solves)? 'text-success':'text-danger' ?>">
 								<?=esc($ch['name'])?> (<?=esc($ch['point'])?>)</a>
 						<?php endforeach?>
 					</div>
@@ -33,13 +33,35 @@
 		<?php if(isset($challenge)): ?>
 			<div class="card m-2">
 				<h3 class="card-header <?= in_array($challenge['id'], $solves)? 'bg-success':'bg-danger' ?>"><?= esc($challenge['name']) ?></h3>
+				<h3 class="card-title text-center text-info my-2"><?= esc($challenge['point']).' '.lang('General.point')?></h3>
+
 				<div class="card-body">
-					<p class="card-text"><?= esc($challenge['description']) ?></p>
+					<p class="card-text lead"><?= esc($challenge['description']) ?></p>
 				</div>
 
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item text-info"><?= esc($challenge['point']) ?> Point</li>
-				</ul>
+				
+				<?php if(! empty($hints)): ?>
+					<div class="">
+						<?php foreach($hints as $hint): ?>
+							<ul class="list-group list-group-flush">
+								<?php if(in_array($hint['id'], $hints_unlocks)): ?>
+								<li class="list-group-item text-info">
+									<?= esc($hint['content']) ?>
+								</li>
+								<?php else: ?>
+								<li class="list-group-item text-info">
+									<form action="/challenges/<?= $challenge['id'] ?>/hints/<?= $hint['id'] ?>" method="post">
+										<?= csrf_field() ?>
+										<button class="btn btn-primary btn-block" type="submit">
+											<?= lang('Home.hintUnlock').' ('.$hint['cost'].' '.lang('General.point').')' ?>
+										</button>
+									</form>
+								</li>
+								<?php endif ?>
+							</ul>
+						<?php endforeach ?>
+					</div>
+				<?php endif ?>
 
 				<?php if(session()->has('result')): ?>
 					<?php if (session('result') === true): ?>

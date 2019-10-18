@@ -33,6 +33,7 @@ return [
 	'watchOut'			=> 'Watch Out !!!',
 	'findTeamToComp'	=> 'Fint a team to join competition!',
 	'visitTeamPage'		=> 'Visit Team Page',
+	'hintUnlock'		=> 'Unlock Hint',
 
 	'getHash'			=> 'Get Hash',
 ];

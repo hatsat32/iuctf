@@ -5,6 +5,8 @@ use \App\Models\CategoryModel;
 use \App\Models\FlagModel;
 use \App\Models\SolvesModel;
 use \App\Models\TeamModel;
+use \App\Models\HintModel;
+use \App\Models\HintUnlockModel;
 use Myth\Auth\Config\Services;
 
 class UserController extends \App\Controllers\BaseController
@@ -16,6 +18,7 @@ class UserController extends \App\Controllers\BaseController
 		$this->flagModel = new FlagModel();
 		$this->solvesModel = new SolvesModel();
 		$this->teamModel = new TeamModel();
+		$this->hintModel = new HintModel();
 
 		$this->auth = Services::authentication();
 		$this->authorize = Services::authorization();
@@ -42,9 +45,17 @@ class UserController extends \App\Controllers\BaseController
 
 		$viewData['categories'] = $categories;
 
-		if($id !== null)
+		if ($id !== null)
 		{
-			$viewData['challenge'] = $challenges = $this->challengeModel->find($id);
+			$viewData['challenge'] = $this->challengeModel->find($id);
+			$viewData['hints'] = $this->hintModel
+								->where('challenge_id', $id)
+								->where('is_active', "1")
+								->orderBy('id')
+								->findAll();
+			$viewData['hints_unlocks'] = (new HintUnlockModel())
+										->where('challenge_id', $id)
+										->findColumn('hint_id') ?? [];
 		}
 		
 		return view('darky/challenges', $viewData);
@@ -158,6 +169,29 @@ class UserController extends \App\Controllers\BaseController
 		$hash =  hash('sha256', $this->request->getPost('hash'));
 
 		return view('darky/hash', ['hash' => $hash]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function hint($challengeID = null, $hintID = null)
+	{
+		$hintUnlockModel = new HintUnlockModel();
+
+		$data = [
+			'hint_id'		=> $hintID,
+			'user_id'		=> user()->id,
+			'team_id'		=> user()->team_id,
+			'challenge_id'	=> $challengeID,
+		];
+
+		$result = $hintUnlockModel->insert($data);
+
+		if (! $result)
+		{
+			
+		}
+
+		return redirect()->to("/challenges/$challengeID");
 	}
 
 	//--------------------------------------------------------------------
