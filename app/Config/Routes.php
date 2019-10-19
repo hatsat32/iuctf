@@ -207,6 +207,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('competition-timer', 	'ConfigController::competitionTimer');
 		$routes->post('competition-times', 	'ConfigController::competitionTimes');
 	});
+
+	$routes->group('logs', function($routes)
+	{
+		$routes->get('submits', 	'LogController::submits', ['as' => 'admin-log-flag']);
+		$routes->get('login', 		'LogController::login', ['as' => 'admin-log-login']);
+	});
 });
 
 /**
