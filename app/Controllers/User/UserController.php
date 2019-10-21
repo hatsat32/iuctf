@@ -69,11 +69,23 @@ class UserController extends \App\Controllers\BaseController
 		$submited_flag = $this->request->getPost('flag');
 
 		$result = false;
-		foreach ($flags as $flag) {
-			if($flag['content'] === $submited_flag)
+		foreach ($flags as $flag)
+		{
+			if ($flag['type'] === 'static')
 			{
-				$result = true;
-				break;
+				if ($flag['content'] === $submited_flag)
+				{
+					$result = true;
+					break;
+				}
+			}
+			else if ($flag['type'] === 'regex')
+			{
+				if (preg_match("/{$flag['content']}/", $submited_flag))
+				{
+					$result = true;
+					break;
+				}
 			}
 		}
 

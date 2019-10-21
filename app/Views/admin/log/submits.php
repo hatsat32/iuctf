@@ -15,22 +15,28 @@
 							<th><?= lang('General.challenge') ?></th>
 							<th><?= lang('General.user') ?></th>
 							<th><?= lang('General.team') ?></th>
-							<th><?= lang('General.ip') ?></th>
-							<th><?= lang('General.provided') ?></th>
-							<th><?= lang('General.type') ?></th>
+							<th><?= lang('admin/Log.ip') ?></th>
+							<th><?= lang('admin/Log.provided') ?></th>
+							<th><?= lang('admin/Log.type') ?></th>
 							<th><?= lang('General.createdAt') ?></th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php foreach($submits as $submit): ?>
 						<tr>
-							<td><?= esc($submit["id"]) ?></td>
-							<td><?= esc($submit["chname"]) ?></td>
-							<td><?= esc($submit["username"]) ?></td>
-							<td><?= esc($submit["tname"]) ?></td>
-							<td><?= esc($submit["ip"]) ?></td>
-							<td><?= esc($submit["provided"]) ?></td>
-							<td><?= esc($submit["type"]) ?></td>
+							<td><?= esc($submit['id']) ?></td>
+							<td><?= esc($submit['chname']) ?></td>
+							<td><?= esc($submit['username']) ?></td>
+							<td><?= esc($submit['tname']) ?></td>
+							<td><?= esc($submit['ip']) ?></td>
+							<td><?= esc($submit['provided']) ?></td>
+							<td>
+								<?php if ($submit['type'] === '0'): ?>
+									<i class="fas fa-times text-danger"></i>
+								<?php else: ?>
+									<i class="fas fa-check text-success"></i>
+								<?php endif ?>
+							</td>
 							<td><?= esc($submit["created_at"]) ?></td>
 						</tr>
 					<?php endforeach ?>
