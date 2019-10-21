@@ -11,6 +11,9 @@ return [
 	'teams'				=> 'Takımlar',
 	'users'				=> 'Kullanıcılar',
 	'notifications'		=> 'Duyurular',
+	'logs'				=> 'Loglar',
+	'loginLogs'			=> 'Giriş Logları',
+	'flagSubmits'		=> 'Bayrak Logları',
 	'settings'			=> 'Ayarlar',
 
 	// footer

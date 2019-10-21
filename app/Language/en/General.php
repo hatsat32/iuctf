@@ -35,4 +35,7 @@ return [
 	'email'			=> 'Email',
 	'password'		=> 'Password',
 	'language'		=> 'Language',
+
+	'firstPage'		=> 'First Page',
+	'lastPage'		=> 'Last Page',
 ];

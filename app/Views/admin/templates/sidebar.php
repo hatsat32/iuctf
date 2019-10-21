@@ -38,11 +38,11 @@
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<i class="fas fa-file-alt"></i>
-			<span>Logs</span>
+			<span><?= lang('admin/Templates.logs') ?></span>
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-			<a class="dropdown-item" href="/admin/logs/submits">Flag Submits</a>
-			<a class="dropdown-item" href="/admin/logs/login">Login</a>
+			<a class="dropdown-item" href="/admin/logs/submits"><?= lang('admin/Templates.flagSubmits') ?></a>
+			<a class="dropdown-item" href="/admin/logs/login"><?= lang('admin/Templates.loginLogs') ?></a>
 		</div>
 	</li>
 	<li class="nav-item active">

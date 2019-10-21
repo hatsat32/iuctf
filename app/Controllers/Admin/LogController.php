@@ -34,7 +34,7 @@ class LogController extends \App\Controllers\BaseController
 								->orderBy('submits.created_at', 'DESC');
 
 		$viewData = [
-			'submits'	=> $query->paginate(2),
+			'submits'	=> $query->paginate(100),
 			'pager'		=> $query->pager,
 		];
 

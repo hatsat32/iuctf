@@ -11,6 +11,9 @@ return [
 	'teams'				=> 'Teams',
 	'users'				=> 'Users',
 	'notifications'		=> 'Notifications',
+	'logs'				=> 'Logs',
+	'loginLogs'			=> 'Login Logs',
+	'flagSubmits'		=> 'Flag Logs',
 	'settings'			=> 'Settings',
 
 	// footer

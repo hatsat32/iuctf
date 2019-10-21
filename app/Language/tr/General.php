@@ -35,4 +35,7 @@ return [
 	'email'			=> 'Email',
 	'password'		=> 'Parola',
 	'language'		=> 'Dil',
+
+	'firstPage'		=> 'İlk Sayfa',
+	'lastPage'		=> 'Son Sayfa',
 ];

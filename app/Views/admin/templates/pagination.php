@@ -4,7 +4,7 @@
 	<ul class="pagination justify-content-center pagination-lg">
 		<?php if ($pager->hasPrevious()) : ?>
 			<li class="page-item">
-				<a class="page-link" href="<?= $pager->getFirst() ?>">First</a>
+				<a class="page-link" href="<?= $pager->getFirst() ?>"><?= lang('General.firstPage') ?></a>
 			</li>
 
 			<li class="page-item">
@@ -23,7 +23,7 @@
 				<a class="page-link" href="<?= $pager->getNext() ?>">&raquo;</a>
 			</li>
 			<li class="page-item">
-				<a class="page-link" href="<?= $pager->getLast() ?>">Last</a>
+				<a class="page-link" href="<?= $pager->getLast() ?>"><?= lang('General.lastPage') ?></a>
 			</li>
 		<?php endif ?>
 	</ul>
