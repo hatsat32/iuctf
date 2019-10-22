@@ -63,6 +63,15 @@
 					</div>
 				<?php endif ?>
 
+				<?php if(! empty($firstblood)): ?>
+					<div class="card-footer">
+						<div class="row">
+							<div class="col-sm-6 text-danger"><?= lang('Home.firstBlood') ?></div>
+							<div class="col-sm-6 text-success"><?= esc($firstblood['name']) ?></div>
+						</div>
+					</div>
+				<?php endif ?>
+
 				<?php if(session()->has('result')): ?>
 					<?php if (session('result') === true): ?>
 						<div class="alert alert-dismissible alert-success m-2">

@@ -34,6 +34,7 @@ return [
 	'findTeamToComp'	=> 'Fint a team to join competition!',
 	'visitTeamPage'		=> 'Visit Team Page',
 	'hintUnlock'		=> 'Unlock Hint',
+	'firstBlood'		=> 'First Blood',
 
 	'getHash'			=> 'Get Hash',
 ];

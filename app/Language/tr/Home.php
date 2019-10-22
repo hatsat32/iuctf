@@ -35,6 +35,7 @@ return [
 	'findTeamToComp'	=> 'Yarışmaya katılmak için bir takım bul!',
 	'visitTeamPage'		=> 'Takım sayfasını ziyaret et',
 	'hintUnlock'		=> 'İpucunu Aç',
+	'firstBlood'		=> 'İlk Kan',
 
 	'getHash'			=> 'Hash Al',
 ];

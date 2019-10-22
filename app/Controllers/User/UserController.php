@@ -56,6 +56,13 @@ class UserController extends \App\Controllers\BaseController
 			$viewData['hints_unlocks'] = (new HintUnlockModel())
 										->where('challenge_id', $id)
 										->findColumn('hint_id') ?? [];
+			$viewData['firstblood'] = $this->solvesModel
+										->select(['teams.name', 'solves.created_at'])
+										->from('teams')
+										->where('challenge_id', $id)
+										->where('solves.team_id', 'teams.id', false)
+										->orderBy('solves.created_at')
+										->first();
 		}
 		
 		return view('darky/challenges', $viewData);
