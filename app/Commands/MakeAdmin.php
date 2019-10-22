@@ -21,11 +21,17 @@ class MakeAdmin extends BaseCommand
 		$db = db_connect();
 		$auth  = Services::authorization();
 
+		if ($auth->group('admin') === null)
+		{
+			CLI::write('No Group Named "admin". Exiting!!!', 'light_red');
+			exit(1);
+		}
+
 		// consume or prompt for group name
 		$identity = array_shift($params);
 		if (empty($identity))
 		{
-			$identity = CLI::prompt('Email', null, 'required');
+			$identity = CLI::prompt('Username OR Email', null, 'required');
 		}
 
 		$users = new UserModel();
