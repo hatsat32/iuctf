@@ -6,6 +6,11 @@ use Myth\Auth\Config\Services;
 
 class Home extends BaseController
 {
+	protected $challengeModel;
+	protected $categorygeModel;
+	protected $auth;
+	protected $authorize;
+
 	public function __construct()
 	{
 		$this->challengeModel = new ChallengeModel();
@@ -24,7 +29,6 @@ class Home extends BaseController
 
 	public function language()
 	{
-		$langPath = $this->request->uri->getPath();
 		$language = $this->request->getGet('language');
 
 		$rules = [
@@ -37,7 +41,7 @@ class Home extends BaseController
 
 		$session = session();
 		$session->set('language', $language);
-		
+
 		return redirect()->back();
 	}
 }

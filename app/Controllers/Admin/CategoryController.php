@@ -30,7 +30,7 @@ class CategoryController extends \App\Controllers\BaseController
 
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -55,7 +55,6 @@ class CategoryController extends \App\Controllers\BaseController
 		if (! $result)
 		{
 			$errors = $this->categoryModel->errors();
-			var_dump($errors);die();
 			return redirect()->to('/admin/categories/new');
 		}
 
@@ -81,7 +80,6 @@ class CategoryController extends \App\Controllers\BaseController
 
 	public function update($id = null)
 	{
-		$team = $this->categoryModel->find($id);
 		$data = [
 			'name'          => $this->request->getPost('name'),
 			'description'   => $this->request->getPost('description'),

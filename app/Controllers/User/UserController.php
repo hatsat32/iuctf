@@ -11,6 +11,16 @@ use Myth\Auth\Config\Services;
 
 class UserController extends \App\Controllers\BaseController
 {
+	private $challengeModel;
+	private $categorygeModel;
+	private $flagModel;
+	private $solvesModel;
+	private $teamModel;
+	private $hintModel;
+
+	private $auth;
+	private $authorize;
+
 	public function __construct()
 	{
 		$this->challengeModel = new ChallengeModel();
@@ -64,7 +74,7 @@ class UserController extends \App\Controllers\BaseController
 										->orderBy('solves.created_at')
 										->first();
 		}
-		
+
 		return view('darky/challenges', $viewData);
 	}
 
@@ -112,7 +122,7 @@ class UserController extends \App\Controllers\BaseController
 		];
 
 		$solved_before = $this->solvesModel->where($data)->find();
-		
+
 		if (empty($solved_before) && user()->team_id !== null)
 		{
 			$data['user_id'] = $this->auth->id();
@@ -137,8 +147,8 @@ class UserController extends \App\Controllers\BaseController
 	public function scoreboard()
 	{
 		/*
-		SELECT teams.name, SUM(challenges.point) 
-		FROM challenges, solves, teams 
+		SELECT teams.name, SUM(challenges.point)
+		FROM challenges, solves, teams
 		WHERE teams.id=solves.team_id AND solves.challenge_id = challenges.id
 		GROUP BY name
 		*/
@@ -207,7 +217,8 @@ class UserController extends \App\Controllers\BaseController
 
 		if (! $result)
 		{
-			
+			$errors = $hintUnlockModel->errors();
+			return redirect()->to("/challenges/$challengeID")->with('errors', $errors);
 		}
 
 		return redirect()->to("/challenges/$challengeID");

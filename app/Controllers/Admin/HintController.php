@@ -4,7 +4,7 @@ use \App\Models\HintModel;
 
 class HintController extends \App\Controllers\BaseController
 {
-	protected $challengeModel = null;
+	private $hintModel;
 
 	public function __construct()
 	{
@@ -15,28 +15,28 @@ class HintController extends \App\Controllers\BaseController
 
 	public function index()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function new()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function show($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------

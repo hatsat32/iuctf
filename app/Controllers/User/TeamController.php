@@ -6,6 +6,12 @@ use Myth\Auth\Config\Services;
 
 class TeamController extends \App\Controllers\BaseController
 {
+	private $teamModel;
+	private $userModel;
+
+	private $auth;
+	private $authorize;
+
 	public function __construct()
 	{
 		$this->teamModel = new TeamModel();
@@ -16,7 +22,7 @@ class TeamController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function index()
 	{
 		if (user()->team_id === null)
@@ -73,9 +79,9 @@ class TeamController extends \App\Controllers\BaseController
 		}
 
 		$auth_code = $this->request->getPost('auth_code');
-		
+
 		$team = $this->teamModel->where('auth_code', $auth_code)->first();
-		
+
 		$result = $this->userModel->update(user()->id, ['team_id'=> $team['id']]);
 
 		if (! $result)

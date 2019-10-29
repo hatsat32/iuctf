@@ -5,6 +5,9 @@ use \App\Models\TeamModel;
 
 class UserController extends \App\Controllers\BaseController
 {
+	private $userModel;
+	private $teamModel;
+
 	public function __construct()
 	{
 		$this->userModel = new UserModel();
@@ -20,7 +23,7 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function new()
 	{
 		$viewData['teams'] = $this->teamModel->findAll();
@@ -28,14 +31,14 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function show($id = null)
 	{
 		$user = $this->userModel->find($id);
@@ -52,7 +55,7 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function create()
 	{
 		$data = [
@@ -85,7 +88,7 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function delete($id = null)
 	{
 		$result = $this->userModel->delete($id);
@@ -100,15 +103,15 @@ class UserController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function update($id = null)
 	{
 		$user = $this->userModel->find($id);
 		$data = [
-			'username' => $this->request->getPost('username'),
-			'email' => $this->request->getPost('email'),
-			'name' => $this->request->getPost('name'),
-			'team_id' => $this->request->getPost('team_id'),
+			'username'	=> $this->request->getPost('username'),
+			'email'		=> $this->request->getPost('email'),
+			'name'		=> $this->request->getPost('name'),
+			'team_id'	=> $this->request->getPost('team_id'),
 		];
 
 		$result = $this->userModel->update($id, $data);

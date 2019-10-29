@@ -4,6 +4,8 @@ use \App\Models\TeamModel;
 
 class TeamController extends \App\Controllers\BaseController
 {
+	private $teamModel;
+
 	public function __construct()
 	{
 		$this->teamModel = new TeamModel();
@@ -29,7 +31,7 @@ class TeamController extends \App\Controllers\BaseController
 
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------

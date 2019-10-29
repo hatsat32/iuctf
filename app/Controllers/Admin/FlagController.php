@@ -4,7 +4,7 @@ use \App\Models\FlagModel;
 
 class FlagController extends \App\Controllers\BaseController
 {
-	protected $challengeModel = null;
+	private $flagModel;
 
 	public function __construct()
 	{
@@ -15,28 +15,28 @@ class FlagController extends \App\Controllers\BaseController
 
 	public function index()
 	{
-        
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function new()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function show($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -65,7 +65,7 @@ class FlagController extends \App\Controllers\BaseController
 	public function delete($challengeID = null, $flagID = null)
 	{
         $result = $this->flagModel->delete($flagID);
-        
+
         if (! $result)
         {
             $errors = $this->flagModel->errors();
@@ -79,6 +79,6 @@ class FlagController extends \App\Controllers\BaseController
 
 	public function update($id = null)
 	{
-		
+
 	}
 }

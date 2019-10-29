@@ -4,6 +4,9 @@ use \App\Models\ConfigModel;
 
 class ConfigController extends \App\Controllers\BaseController
 {
+	private $configModel;
+	private $validation;
+
 	public function __construct()
 	{
 		$this->configModel = new ConfigModel();
@@ -56,7 +59,7 @@ class ConfigController extends \App\Controllers\BaseController
 
 	public function competitionTimes()
 	{
-		var_dump($_POST);
+		
 	}
 
 	//--------------------------------------------------------------------
@@ -70,7 +73,7 @@ class ConfigController extends \App\Controllers\BaseController
 
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -84,7 +87,7 @@ class ConfigController extends \App\Controllers\BaseController
 
 	public function create()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------

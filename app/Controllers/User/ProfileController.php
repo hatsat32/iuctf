@@ -7,6 +7,12 @@ use Myth\Auth\Config\Services;
 
 class ProfileController extends \App\Controllers\BaseController
 {
+	private $teamModel;
+	private $userModel;
+
+	private $auth;
+	private $authorize;
+
 	public function __construct()
 	{
 		$this->teamModel = new TeamModel();
@@ -17,7 +23,7 @@ class ProfileController extends \App\Controllers\BaseController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function index()
 	{
 		$viewData['user'] = $this->userModel->find(user_id());

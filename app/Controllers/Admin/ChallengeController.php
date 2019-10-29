@@ -7,7 +7,9 @@ use \App\Models\HintModel;
 
 class ChallengeController extends \App\Controllers\BaseController
 {
-	protected $challengeModel = null;
+	protected $challengeModel;
+	protected $categoryModel;
+	protected $flagModel;
 
 	public function __construct()
 	{
@@ -36,7 +38,7 @@ class ChallengeController extends \App\Controllers\BaseController
 
 	public function edit($id = null)
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -65,7 +67,7 @@ class ChallengeController extends \App\Controllers\BaseController
 			'type'			=> $this->request->getPost('type'),
 			'is_active'		=> $this->request->getPost('is_active'),
 		];
-		
+
 		$result = $this->challengeModel->insert($data);
 
 		if (! $result)
@@ -97,15 +99,14 @@ class ChallengeController extends \App\Controllers\BaseController
 
 	public function update($id = null)
 	{
-		$team = $this->challengeModel->find($id);
 		$data = [
-			'category_id' => $this->request->getPost('category_id'),
-			'name' => $this->request->getPost('name'),
-			'description' => $this->request->getPost('description'),
-			'point' => $this->request->getPost('point'),
-			'max_attempts' => $this->request->getPost('max_attempts'),
-			'type' => $this->request->getPost('type'),
-			'is_active' => $this->request->getPost('is_active'),
+			'category_id'	=> $this->request->getPost('category_id'),
+			'name'			=> $this->request->getPost('name'),
+			'description'	=> $this->request->getPost('description'),
+			'point'			=> $this->request->getPost('point'),
+			'max_attempts'	=> $this->request->getPost('max_attempts'),
+			'type'			=> $this->request->getPost('type'),
+			'is_active'		=> $this->request->getPost('is_active'),
 		];
 
 		$result = $this->challengeModel->update($id, $data);
