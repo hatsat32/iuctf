@@ -24,4 +24,5 @@ return [
 	'flags'				=> 'Flags',
 	'regex'				=> 'Regex',
 	'content'			=> 'Content',
+	'browse'			=> 'Browse',
 ];

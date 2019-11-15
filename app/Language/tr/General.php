@@ -30,6 +30,8 @@ return [
 	'point'			=> 'Puan',
 	'hint'			=> 'İpucu',
 	'hints'			=> 'İpuçları',
+	'file'			=> 'Dosya',
+	'files'			=> 'Dosyalar',
 
 	'username'		=> 'Kullanıcı Adı',
 	'email'			=> 'Email',

@@ -190,6 +190,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'HintController::update/$1/$2');
 	});
 
+	$routes->group('challenges/(:num)/files', function($routes)
+	{
+		$routes->post('/',				'FileController::create/$1');
+		$routes->post('(:num)/delete',	'FileController::delete/$1/$2');
+	});
+
 	$routes->group('notifications', function($routes)
 	{
 		$routes->get('/', 				'NotificationController::index');

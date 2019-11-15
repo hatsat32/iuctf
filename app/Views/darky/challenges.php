@@ -1,6 +1,6 @@
-<?=$this->extend("darky/templates/base")?>
+<?= $this->extend("darky/templates/base") ?>
 
-<?=$this->section('content')?>
+<?= $this->section('content') ?>
 
 <?php if (user()->team_id === null): ?>
 	<div class="alert alert-danger m-2" role="alert">
@@ -39,7 +39,20 @@
 					<p class="card-text lead"><?= esc($challenge['description']) ?></p>
 				</div>
 
-				
+				<?php if(! empty($files)): ?>
+					<div>
+						<h4 class="card-title text-center"><?= lang('General.files') ?></h4>
+						<ul class="list-group list-group-flush">
+							<?php foreach($files as $file): ?>
+								<li class="list-group-item text-info">
+									
+									<a href="/uploads/<?= esc($file['location']) ?>"><?= esc($file['location']) ?></a>
+								</li>
+							<?php endforeach ?>
+						</ul>
+					</div>
+				<?php endif ?>
+
 				<?php if(! empty($hints)): ?>
 					<div class="">
 						<?php foreach($hints as $hint): ?>
@@ -107,4 +120,4 @@
 	</div>
 </div>
 
-<?=$this->endSection()?>
+<?= $this->endSection() ?>

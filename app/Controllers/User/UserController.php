@@ -7,6 +7,8 @@ use \App\Models\SolvesModel;
 use \App\Models\TeamModel;
 use \App\Models\HintModel;
 use \App\Models\HintUnlockModel;
+use \App\Models\FileModel;
+
 use Myth\Auth\Config\Services;
 
 class UserController extends \App\Controllers\BaseController
@@ -29,6 +31,7 @@ class UserController extends \App\Controllers\BaseController
 		$this->solvesModel = new SolvesModel();
 		$this->teamModel = new TeamModel();
 		$this->hintModel = new HintModel();
+		$this->fileModel = new FileModel();
 
 		$this->auth = Services::authentication();
 		$this->authorize = Services::authorization();
@@ -73,6 +76,7 @@ class UserController extends \App\Controllers\BaseController
 										->where('solves.team_id', 'teams.id', false)
 										->orderBy('solves.created_at')
 										->first();
+			$viewData['files'] = $this->fileModel->where('challenge_id', $id)->findAll();
 		}
 
 		return view('darky/challenges', $viewData);

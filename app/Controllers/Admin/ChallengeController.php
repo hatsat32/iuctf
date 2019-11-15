@@ -4,18 +4,17 @@ use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
 use \App\Models\FlagModel;
 use \App\Models\HintModel;
+use \App\Models\FileModel;
 
 class ChallengeController extends \App\Controllers\BaseController
 {
 	protected $challengeModel;
 	protected $categoryModel;
-	protected $flagModel;
 
 	public function __construct()
 	{
 		$this->challengeModel = new ChallengeModel();
 		$this->categoryModel = new CategoryModel();
-		$this->flagModel = new FlagModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -46,11 +45,15 @@ class ChallengeController extends \App\Controllers\BaseController
 	public function show($id = null)
 	{
 		$hintModel = new HintModel();
-		$challenge = $this->challengeModel->find($id);
+		$fileModel = new FileModel();
+		$flagModel = new FlagModel();
+	
+		$viewData['challenge'] = $this->challengeModel->find($id);
 		$viewData['categories']	= $this->categoryModel->findAll();
-		$viewData['flags'] = $this->flagModel->where('challenge_id', $id)->findAll();
+		$viewData['flags'] = $flagModel->where('challenge_id', $id)->findAll();
 		$viewData['hints'] = $hintModel->where('challenge_id', $id)->findAll();
-		$viewData['challenge'] = $challenge;
+		$viewData['files'] = $fileModel->where('challenge_id', $id)->findAll();
+	
 		return view('admin/challenge/detail', $viewData);
 	}
 

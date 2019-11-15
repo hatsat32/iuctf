@@ -30,6 +30,8 @@ return [
 	'point'			=> 'Point',
 	'hint'			=> 'Hint',
 	'hints'			=> 'Hints',
+	'file'			=> 'File',
+	'files'			=> 'Files',
 
 	'username'		=> 'Username',
 	'email'			=> 'Email',

@@ -218,4 +218,55 @@
 		</div>
 	</div>
 
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-chart-area"></i>
+			<?= lang('General.files') ?></div>
+		<div class="card-body">
+			<form action="/admin/challenges/<?= $challenge['id'] ?>/files" method="post" enctype="multipart/form-data">
+				<?= csrf_field() ?>
+				<div class="form-row">
+					<div class="col-8">
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="file" name="file">
+							<label class="custom-file-label form-control" for="file"><?= lang('admin/Challenge.browse') ?></label>
+						</div>
+					</div>
+					<div class="col-4">
+						<button type="submit" class="btn btn-primary btn-block"><?= lang('General.add') ?></button>
+					</div>
+				</div>
+			</form>
+
+			<hr>
+
+			<div class="table-responsive mt-4">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th><?= lang('General.file') ?></th>
+							<th><?= lang('General.delete') ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($files as $file): ?>
+						<tr>
+							<td>
+								<a href="/uploads/<?= $file['location'] ?>"><?= $file['location'] ?></a>
+							</td>
+							<td>
+								<form action="/admin/challenges/<?= $challenge['id'] ?>/files/<?= $file['id'] ?>/delete" method="post">
+									<?= csrf_field() ?>
+									<input type="hidden" name="file" value=" <?= esc($file['id']) ?>">
+									<button class="btn btn-danger btn-block" type="submit"><?= lang('General.delete') ?></button>
+								</form>
+							</td>
+						</tr>
+					<?php endforeach ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
 <?= $this->endSection() ?>

@@ -24,4 +24,5 @@ return [
 	'flags'				=> 'Flagler',
 	'regex'				=> 'Regex',
 	'content'			=> 'İçerik',
+	'browse'			=> 'Dosya Seç',
 ];
