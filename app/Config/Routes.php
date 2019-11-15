@@ -142,6 +142,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('/', 				'UserController::create');
 		$routes->post('(:num)/delete',	'UserController::delete/$1');
 		$routes->post('(:num)', 		'UserController::update/$1');
+		$routes->post('(:num)/change-password',	'UserController::changePassword/$1');
 		$routes->post('(:num)/addadmin', 'UserController::addAdmin/$1');
 		$routes->post('(:num)/rmadmin', 'UserController::rmAdmin/$1');
 	});

@@ -125,6 +125,29 @@ class UserController extends \App\Controllers\BaseController
 
 	//--------------------------------------------------------------------
 
+	public function changePassword($user_id = null)
+	{
+		$authUserModel = new \Myth\Auth\Models\UserModel();
+		$user = user();
+
+		$rules = [
+			'password'			=> 'required|strong_password',
+			'password-confirm'	=> 'required|matches[password]',
+		];
+
+		if (! $this->validate($rules))
+		{
+			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+		}
+
+		$user->password = $this->request->getPost('password');
+		$authUserModel->save($user);
+
+		return redirect()->back()->with('success', 'Password updated successfully');
+	}
+
+	//--------------------------------------------------------------------
+
 	public function addAdmin($user_id = null)
 	{
 		$authorize = \Myth\Auth\Config\Services::authorization();
