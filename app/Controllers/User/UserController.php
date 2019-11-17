@@ -68,6 +68,7 @@ class UserController extends \App\Controllers\BaseController
 								->findAll();
 			$viewData['hints_unlocks'] = (new HintUnlockModel())
 										->where('challenge_id', $id)
+										->where('team_id', user()->team_id)
 										->findColumn('hint_id') ?? [];
 			$viewData['firstblood'] = $this->solvesModel
 										->select(['teams.name', 'solves.created_at'])
@@ -146,29 +147,39 @@ class UserController extends \App\Controllers\BaseController
 
 		return redirect()->to("/challenges/$challengeID")->with('result', $result);
 	}
+
 	//--------------------------------------------------------------------
 
 	public function scoreboard()
 	{
-		/*
-		SELECT teams.name, SUM(challenges.point)
-		FROM challenges, solves, teams
-		WHERE teams.id=solves.team_id AND solves.challenge_id = challenges.id
-		GROUP BY name
-		*/
+		/**
+		 * I know this is not good solution.
+		 * but i cant find any better solution for yet!
+		 * when i find, i update this function.
+		 * for now let function run this way.
+		 */
+
+		$sql = "
+		select teams.name, (SUM(challenges.point) - costs.s) AS point, max(solves.id)
+		from teams
+		inner join solves on solves.team_id = teams.id
+		inner join challenges on challenges.id = solves.challenge_id
+		left join (
+			SELECT teams.name, IFNULL(SUM(hints.cost),0) as s
+			FROM teams
+				left join hint_unlocks on teams.id = hint_unlocks.team_id
+				left join hints on hints.id = hint_unlocks.hint_id
+			GROUP BY name 
+		) as costs on costs.name = teams.name
+		GROUP by teams.name
+		ORDER BY `point` DESC, `solves`.`id` DESC
+		";
 
 		$db = db_connect();
-		$builder = $db->table(['teams', 'challenges', 'solves']);
-		$builder->select(['teams.name', 'SUM(challenges.point) as point']);
-		$builder->where('teams.id', 'solves.team_id', false);
-		$builder->where('solves.challenge_id', 'challenges.id', false);
-		$builder->groupBy('name');
-		$builder->orderBy('point', 'DESC');
+		$query = $db->query($sql);
+		$scores = $query->getResultArray();
 
-		// var_dump($builder->getCompiledSelect());
-		$scores = $builder->get()->getResultArray();
 		$viewData['scores'] = $scores;
-
 		return view('darky/scoreboard', $viewData);
 	}
 
