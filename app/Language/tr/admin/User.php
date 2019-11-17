@@ -16,4 +16,6 @@ return [
 
 	'unmakeAdmin'		=> 'Admin Grubuna Ekle',
 	'makeAdmin'			=> 'Admin Grubundan Çıkar',
+
+	'pickATeam'			=> 'Bir Takım Seçebilirsin',
 ];

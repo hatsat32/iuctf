@@ -16,4 +16,6 @@ return [
 
 	'unmakeAdmin'		=> 'Add To Admin Group',
 	'makeAdmin'			=> 'Remove From Admin Group',
+
+	'pickATeam'			=> 'You Can Pick A Team',
 ];

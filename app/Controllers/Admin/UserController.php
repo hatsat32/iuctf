@@ -63,7 +63,12 @@ class UserController extends \App\Controllers\BaseController
 			'email' => $this->request->getPost('email'),
 			'name' => $this->request->getPost('name'),
 			'team_id' => $this->request->getPost('team_id'),
-			'password_hash' => password_hash($this->request->getPost('password'), PASSWORD_ARGON2I),
+			'password_hash' => password_hash(
+				base64_encode(
+					hash('sha384', $this->request->getPost('password'), true)
+				),
+				PASSWORD_ARGON2I
+			),
 		];
 
 		$rules = array_merge($this->userModel->getValidationRules(['only' => ['email', 'username']]), [
@@ -73,12 +78,12 @@ class UserController extends \App\Controllers\BaseController
 
 		if (! $this->validate($rules))
 		{
-			return redirect()->back()->withInput()->with('errors', $this->userModel->errors());
+			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
 		$result = $this->userModel->insert($data);
 
-		if ($result)
+		if (! $result)
 		{
 			return redirect()->back()->withInput()->with('errors', $this->userModel->errors());
 		}
