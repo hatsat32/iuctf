@@ -4,6 +4,13 @@ use CodeIgniter\Model;
 
 class ChallengeModel extends Model
 {
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->setValidationLabels();
+	}
+
 	protected $table      = 'challenges';
 	protected $primaryKey = 'id';
 
@@ -16,11 +23,16 @@ class ChallengeModel extends Model
         'name'          => 'required|min_length[2]',
         'point'         => 'required|numeric',
         'description'   => 'required',
-        'max_attempts'  => 'numeric',
+        'max_attempts'  => ['rules' => 'numeric'],
         'type'          => 'required|in_list[static,dynamic]',
         'is_active'     => 'required|in_list[0,1]',
 	];
 	
 	protected $validationMessages = [];
 	protected $skipValidation = false;
+
+	protected function setValidationLabels()
+	{
+		$this->validationRules['max_attempts']['label'] = lang('admin/Challenge.maxAttempt');
+	}
 }

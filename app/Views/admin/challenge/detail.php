@@ -21,6 +21,7 @@
 			<?= lang('admin/Challenge.editChallenge') ?></div>
 		<div class="card-body">
 			<form action="/admin/challenges/<?= $challenge['id'] ?>" method="post">
+				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="id">ID</label>
 					<input disabled class="form-control" id="id" value="<?= esc($challenge['id']) ?>">

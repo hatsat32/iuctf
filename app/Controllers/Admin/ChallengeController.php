@@ -13,6 +13,13 @@ class ChallengeController extends \App\Controllers\BaseController
 
 	public function __construct()
 	{
+		
+	}
+
+	public function initController($request, $response, $logger)
+	{
+		parent::initController($request, $response, $logger);
+
 		$this->challengeModel = new ChallengeModel();
 		$this->categoryModel = new CategoryModel();
 	}
@@ -66,7 +73,7 @@ class ChallengeController extends \App\Controllers\BaseController
 			'name'			=> $this->request->getPost('name'),
 			'description'	=> $this->request->getPost('description'),
 			'point'			=> $this->request->getPost('point'),
-			'max_attempts'	=> $this->request->getPost('max_attempts'),
+			'max_attempts'	=> empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
 			'type'			=> $this->request->getPost('type'),
 			'is_active'		=> $this->request->getPost('is_active'),
 		];
@@ -107,7 +114,7 @@ class ChallengeController extends \App\Controllers\BaseController
 			'name'			=> $this->request->getPost('name'),
 			'description'	=> $this->request->getPost('description'),
 			'point'			=> $this->request->getPost('point'),
-			'max_attempts'	=> $this->request->getPost('max_attempts'),
+			'max_attempts'	=> empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
 			'type'			=> $this->request->getPost('type'),
 			'is_active'		=> $this->request->getPost('is_active'),
 		];
