@@ -25,4 +25,9 @@ return [
 	'regex'				=> 'Regex',
 	'content'			=> 'İçerik',
 	'browse'			=> 'Dosya Seç',
+
+	'noCategoryWarning'	=> [
+		'title' => "Uyarı",
+		'content'	=> 'Hiç kategori yok. Git ve yeni bir tane oluştur!'
+	],
 ];

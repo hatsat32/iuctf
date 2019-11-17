@@ -25,4 +25,9 @@ return [
 	'regex'				=> 'Regex',
 	'content'			=> 'Content',
 	'browse'			=> 'Browse',
+
+	'noCategoryWarning'	=> [
+		'title' => "Warning",
+		'content'	=> 'There is no category. Go and create a new one!'
+	],
 ];

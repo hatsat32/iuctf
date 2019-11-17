@@ -25,6 +25,13 @@
 				<?php endforeach ?>
 			<?php endif; ?>
 
+			<?php if(empty($categories)) : ?>
+				<div class="alert alert-warning" role="alert">
+					<h4 class="alert-heading"><?= lang('admin/Challenge.noCategoryWarning')["title"] ?></h4>
+					<p class="mb-0"><?= lang('admin/Challenge.noCategoryWarning')["content"] ?></p>
+				</div>
+			<?php endif; ?>
+
 			<form action="/admin/challenges" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
