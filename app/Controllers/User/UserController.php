@@ -25,6 +25,15 @@ class UserController extends \App\Controllers\BaseController
 
 	public function __construct()
 	{
+
+	}
+
+	//--------------------------------------------------------------------
+
+	public function initController($request, $response, $logger)
+	{
+		parent::initController($request, $response, $logger);
+
 		$this->challengeModel = new ChallengeModel();
 		$this->categorygeModel = new CategoryModel();
 		$this->flagModel = new FlagModel();
@@ -78,6 +87,12 @@ class UserController extends \App\Controllers\BaseController
 										->orderBy('solves.created_at')
 										->first();
 			$viewData['files'] = $this->fileModel->where('challenge_id', $id)->findAll();
+			$viewData['solvers'] = $this->solvesModel
+										->where('teams.id', 'solves.team_id', false)
+										->select(['teams.id', 'teams.name', 'solves.created_at AS date'])
+										->where('solves.challenge_id', $id)
+										->orderBy('solves.created_at')
+										->findAll();
 		}
 
 		return view('darky/challenges', $viewData);

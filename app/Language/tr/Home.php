@@ -36,6 +36,8 @@ return [
 	'visitTeamPage'		=> 'Takım sayfasını ziyaret et',
 	'hintUnlock'		=> 'İpucunu Aç',
 	'firstBlood'		=> 'İlk Kan',
+	'solves'			=> 'Çözüm',
+	'teamName'			=> 'Takım Adı',
 
 	'getHash'			=> 'Hash Al',
 ];

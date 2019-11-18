@@ -32,6 +32,8 @@ return [
 	'hints'			=> 'İpuçları',
 	'file'			=> 'Dosya',
 	'files'			=> 'Dosyalar',
+	'date'			=> 'Tarih',
+	'time'			=> 'Zaman',
 
 	'username'		=> 'Kullanıcı Adı',
 	'email'			=> 'Email',

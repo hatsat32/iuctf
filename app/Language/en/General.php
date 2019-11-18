@@ -32,6 +32,8 @@ return [
 	'hints'			=> 'Hints',
 	'file'			=> 'File',
 	'files'			=> 'Files',
+	'date'			=> 'Date',
+	'time'			=> 'Time',
 
 	'username'		=> 'Username',
 	'email'			=> 'Email',

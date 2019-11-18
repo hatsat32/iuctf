@@ -76,14 +76,21 @@
 					</div>
 				<?php endif ?>
 
-				<?php if(! empty($firstblood)): ?>
-					<div class="card-footer">
-						<div class="row">
+				<div class="card-footer bg-dark">
+					<div class="row">
+						<div class="col-9 row">
 							<div class="col-sm-6 text-danger"><?= lang('Home.firstBlood') ?></div>
-							<div class="col-sm-6 text-success"><?= esc($firstblood['name']) ?></div>
+							<?php if(! empty($firstblood)): ?>
+								<div class="col-sm-6 text-success"><?= esc($firstblood['name']) ?></div>
+							<?php endif ?>
+						</div>
+						<div class="col-3">
+							<button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#solvers-modal">
+								<?= count($solvers).' '.lang('Home.solves') ?>
+							</button>
 						</div>
 					</div>
-				<?php endif ?>
+				</div>
 
 				<?php if(session()->has('result')): ?>
 					<?php if (session('result') === true): ?>
@@ -113,6 +120,34 @@
 								</div>
 							</div>
 						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="solvers-modal">
+				<div class="modal-dialog modal-lg modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class="table-responsive">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col"><?= lang('Home.teamName') ?></th>
+											<th scope="col"><?= lang('General.date').' - '.lang('General.time') ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($solvers as $solver) : ?>
+											<tr>
+												<td><?= esc($solver['name']) ?></td>
+												<td><?= esc($solver['date']) ?></td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

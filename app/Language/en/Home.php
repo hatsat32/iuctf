@@ -35,6 +35,8 @@ return [
 	'visitTeamPage'		=> 'Visit Team Page',
 	'hintUnlock'		=> 'Unlock Hint',
 	'firstBlood'		=> 'First Blood',
+	'solves'			=> 'Solves',
+	'teamName'			=> 'Team Name',
 
 	'getHash'			=> 'Get Hash',
 ];
