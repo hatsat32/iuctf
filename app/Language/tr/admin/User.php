@@ -14,8 +14,8 @@ return [
 	'selectTeam'		=> 'Takım Seç',
 	'confirmPassword'	=> 'Parola Doğrula',
 
-	'unmakeAdmin'		=> 'Admin Grubuna Ekle',
-	'makeAdmin'			=> 'Admin Grubundan Çıkar',
+	'makeAdmin'			=> 'Admin Grubuna Ekle',
+	'unmakeAdmin'		=> 'Admin Grubundan Çıkar',
 
 	'pickATeam'			=> 'Bir Takım Seçebilirsin',
 ];

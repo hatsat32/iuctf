@@ -14,8 +14,8 @@ return [
 	'selectTeam'		=> 'Select Team',
 	'confirmPassword'	=> 'Confirm Password',
 
-	'unmakeAdmin'		=> 'Add To Admin Group',
-	'makeAdmin'			=> 'Remove From Admin Group',
+	'makeAdmin'			=> 'Add To Admin Group',
+	'unmakeAdmin'		=> 'Remove From Admin Group',
 
 	'pickATeam'			=> 'You Can Pick A Team',
 ];
