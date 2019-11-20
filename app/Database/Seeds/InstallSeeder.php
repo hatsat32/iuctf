@@ -6,6 +6,18 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 	{
 		$data = [
 			[
+				'key'	=> 'competition_name',
+				'value'	=> NULL,
+			],
+			[
+				'key'	=> 'competition_logo',
+				'value'	=> NULL,
+			],
+			[
+				'key'	=> 'theme',
+				'value'	=> NULL,
+			],
+			[
 				'key'	=> 'competition_timer',
 				'value'	=> NULL,
 			],
