@@ -76,22 +76,27 @@ $routes->get('/', 'Home::index');
 $routes->get('/language', 'Home::language');
 
 
-// auth routes
-$routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
-    // Login/out
-    $routes->get('login', 'AuthController::login', ['as' => 'login']);
-    $routes->post('login', 'AuthController::attemptLogin');
-    $routes->get('logout', 'AuthController::logout');
+/**
+ * Myth:Auth routes
+ */
+$routes->group('', ['namespace' => 'Myth\Auth\Controllers'], function($routes) {
+	// Login/out
+	$routes->get('login', 'AuthController::login', ['as' => 'login']);
+	$routes->post('login', 'AuthController::attemptLogin');
+	$routes->get('logout', 'AuthController::logout');
 
-    // Registration
-    $routes->get('register', 'AuthController::register', ['as' => 'register']);
-    $routes->post('register', 'AuthController::attemptRegister');
+	// Registration
+	$routes->get('register', 'AuthController::register', ['as' => 'register']);
+	$routes->post('register', 'AuthController::attemptRegister');
 
-    // Forgot/Resets
-    $routes->get('forgot', 'AuthController::forgotPassword', ['as' => 'forgot']);
-    $routes->post('forgot', 'AuthController::attemptForgot');
-    $routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);
-    $routes->post('reset-password', 'AuthController::attemptReset');
+	// Activation
+	$routes->get('activate-account', 'AuthController::activateAccount', ['as' => 'activate-account']);
+
+	// Forgot/Resets
+	$routes->get('forgot', 'AuthController::forgotPassword', ['as' => 'forgot']);
+	$routes->post('forgot', 'AuthController::attemptForgot');
+	$routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);
+	$routes->post('reset-password', 'AuthController::attemptReset');
 });
 
 
