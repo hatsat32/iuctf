@@ -21,16 +21,16 @@ class UserUtilityController extends UserController
 		 */
 
 		$sql = "
-		select teams.name, (SUM(challenges.point) - costs.s) AS point, max(solves.id)
+		select teams.name, (SUM(IFNULL(challenges.point, 0)) - costs.s) AS point, max(IFNULL(solves.id,0)) AS tie
 		from teams
-		inner join solves on solves.team_id = teams.id
-		inner join challenges on challenges.id = solves.challenge_id
+		left join solves on solves.team_id = teams.id
+		left join challenges on challenges.id = solves.challenge_id
 		left join (
 			SELECT teams.name, IFNULL(SUM(hints.cost),0) as s
 			FROM teams
 				left join hint_unlocks on teams.id = hint_unlocks.team_id
 				left join hints on hints.id = hint_unlocks.hint_id
-			GROUP BY name 
+			GROUP BY name
 		) as costs on costs.name = teams.name
 		GROUP by teams.name
 		ORDER BY `point` DESC, `solves`.`id` DESC
