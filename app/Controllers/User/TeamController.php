@@ -1,10 +1,11 @@
 <?php namespace App\Controllers\User;
 
+use App\Core\UserController;
 use \App\Models\TeamModel;
 use \App\Models\UserModel;
 use Myth\Auth\Config\Services;
 
-class TeamController extends \App\Controllers\BaseController
+class TeamController extends UserController
 {
 	private $teamModel;
 	private $userModel;
@@ -12,8 +13,10 @@ class TeamController extends \App\Controllers\BaseController
 	private $auth;
 	private $authorize;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->teamModel = new TeamModel();
 		$this->userModel = new UserModel();
 
@@ -28,7 +31,7 @@ class TeamController extends \App\Controllers\BaseController
 		if (user()->team_id === null)
 		{
 			$viewData['no_team'] = true;
-			return view('darky/team', $viewData);
+			return $this->render('team', $viewData);
 		}
 
 		$team = $this->teamModel->asObject('App\Entities\Team')->find(user()->team_id);
@@ -37,7 +40,7 @@ class TeamController extends \App\Controllers\BaseController
 		$viewData['team'] = $team;
 		$viewData['team_members'] = $team_members;
 
-		return view('darky/team', $viewData);
+		return $this->render('team', $viewData);
 	}
 
 	//--------------------------------------------------------------------

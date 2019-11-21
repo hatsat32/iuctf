@@ -1,53 +1,46 @@
 <?php namespace App\Controllers\User;
 
+use App\Core\UserController;
+
 use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
-use \App\Models\FlagModel;
 use \App\Models\SolvesModel;
-use \App\Models\TeamModel;
 use \App\Models\HintModel;
 use \App\Models\HintUnlockModel;
 use \App\Models\FileModel;
+use \App\Models\FlagModel;
 
-use Myth\Auth\Config\Services;
-
-class UserController extends \App\Controllers\BaseController
+class ChallengeController extends UserController
 {
 	private $challengeModel;
 	private $categorygeModel;
-	private $flagModel;
 	private $solvesModel;
-	private $teamModel;
 	private $hintModel;
-
-	private $auth;
-	private $authorize;
-
-	public function __construct()
-	{
-
-	}
+	private $flagModel;
 
 	//--------------------------------------------------------------------
 
 	public function initController($request, $response, $logger)
 	{
 		parent::initController($request, $response, $logger);
-
-		$this->challengeModel = new ChallengeModel();
-		$this->categorygeModel = new CategoryModel();
-		$this->flagModel = new FlagModel();
-		$this->solvesModel = new SolvesModel();
-		$this->teamModel = new TeamModel();
-		$this->hintModel = new HintModel();
-		$this->fileModel = new FileModel();
-
-		$this->auth = Services::authentication();
-		$this->authorize = Services::authorization();
+		
+		$this->challengeModel	= new ChallengeModel();
+		$this->categorygeModel	= new CategoryModel();
+		$this->solvesModel		= new SolvesModel();
+		$this->hintModel		= new HintModel();
+		$this->fileModel		= new FileModel();
+		$this->flagModel		= new FlagModel();
 	}
 
 	//--------------------------------------------------------------------
 
+	public function index()
+	{
+		
+	}
+
+	//--------------------------------------------------------------------
+	
 	public function challenges($id = null)
 	{
 		$challenges = $this->challengeModel->findAll();
@@ -95,7 +88,7 @@ class UserController extends \App\Controllers\BaseController
 										->findAll();
 		}
 
-		return view('darky/challenges', $viewData);
+		return $this->render('challenges', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -145,7 +138,7 @@ class UserController extends \App\Controllers\BaseController
 
 		if (empty($solved_before) && user()->team_id !== null)
 		{
-			$data['user_id'] = $this->auth->id();
+			$data['user_id'] = user()->id;
 
 			$db_result = $this->solvesModel->insert($data);
 
@@ -161,73 +154,6 @@ class UserController extends \App\Controllers\BaseController
 		}
 
 		return redirect()->to("/challenges/$challengeID")->with('result', $result);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function scoreboard()
-	{
-		/**
-		 * I know this is not good solution.
-		 * but i cant find any better solution for yet!
-		 * when i find, i update this function.
-		 * for now let function run this way.
-		 */
-
-		$sql = "
-		select teams.name, (SUM(challenges.point) - costs.s) AS point, max(solves.id)
-		from teams
-		inner join solves on solves.team_id = teams.id
-		inner join challenges on challenges.id = solves.challenge_id
-		left join (
-			SELECT teams.name, IFNULL(SUM(hints.cost),0) as s
-			FROM teams
-				left join hint_unlocks on teams.id = hint_unlocks.team_id
-				left join hints on hints.id = hint_unlocks.hint_id
-			GROUP BY name 
-		) as costs on costs.name = teams.name
-		GROUP by teams.name
-		ORDER BY `point` DESC, `solves`.`id` DESC
-		";
-
-		$db = db_connect();
-		$query = $db->query($sql);
-		$scores = $query->getResultArray();
-
-		$viewData['scores'] = $scores;
-		return view('darky/scoreboard', $viewData);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function notifications()
-	{
-		$notificationModel = new \App\Models\NotificationModel();
-		$viewData['notifications'] = $notificationModel
-									->orderBy('created_at', 'DESC')
-									->findAll();
-		return view('darky/notifications', $viewData);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function hash()
-	{
-		return view('darky/hash');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function gethash()
-	{
-		if (empty($this->request->getPost('hash')))
-		{
-			return view('darky/hash');
-		}
-
-		$hash =  hash('sha256', $this->request->getPost('hash'));
-
-		return view('darky/hash', ['hash' => $hash]);
 	}
 
 	//--------------------------------------------------------------------

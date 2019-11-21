@@ -101,25 +101,24 @@ $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], function($routes) {
 
 
 $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'], function($routes) {
-	$routes->get('challenges',			'UserController::challenges');
-	$routes->get('challenges/(:num)',	'UserController::challenges/$1');
-	$routes->post('challenges/(:num)',	'UserController::flagSubmit/$1');
-
-	$routes->post('challenges/(:num)/hints/(:num)',	'UserController::hint/$1/$2');
+	$routes->get('challenges',						'ChallengeController::challenges');
+	$routes->get('challenges/(:num)',				'ChallengeController::challenges/$1');
+	$routes->post('challenges/(:num)',				'ChallengeController::flagSubmit/$1');
+	$routes->post('challenges/(:num)/hints/(:num)',	'ChallengeController::hint/$1/$2');
 
 	$routes->get('team',		'TeamController::index');
 	$routes->post('createteam',	'TeamController::createTeam');
 	$routes->post('jointeam',	'TeamController::joinTeam');
 
-	$routes->get('scoreboard',		'UserController::scoreboard');
-	$routes->get('notifications',	'UserController::notifications');
-
 	$routes->get('profile',		'ProfileController::index');
 	$routes->post('profile',	'ProfileController::updateProfile');
-	$routes->post('profile/change-password',	'ProfileController::updatePassword');
+	$routes->post('profile/change-password', 'ProfileController::updatePassword');
 
-	$routes->get('hash',	'UserController::hash');
-	$routes->post('hash',	'UserController::gethash');
+	$routes->get('scoreboard',		'UserUtilityController::scoreboard');
+	$routes->get('notifications',	'UserUtilityController::notifications');
+
+	$routes->get('hash',	'UserUtilityController::hash');
+	$routes->post('hash',	'UserUtilityController::gethash');
 });
 
 

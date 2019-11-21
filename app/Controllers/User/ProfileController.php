@@ -1,25 +1,28 @@
 <?php namespace App\Controllers\User;
 
+use App\Core\UserController;
 use \App\Models\TeamModel;
 use \App\Models\UserModel;
 use Myth\Auth\Config\Services;
 
 
-class ProfileController extends \App\Controllers\BaseController
+class ProfileController extends UserController
 {
 	private $teamModel;
 	private $userModel;
 
 	private $auth;
-	private $authorize;
 
-	public function __construct()
+	//--------------------------------------------------------------------
+
+	public function initController($request, $response, $logger)
 	{
-		$this->teamModel = new TeamModel();
-		$this->userModel = new UserModel();
+		parent::initController($request, $response, $logger);
 
 		$this->auth = Services::authentication();
-		$this->authorize = Services::authorization();
+
+		$this->teamModel = new TeamModel();
+		$this->userModel = new UserModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -27,7 +30,8 @@ class ProfileController extends \App\Controllers\BaseController
 	public function index()
 	{
 		$viewData['user'] = $this->userModel->find(user_id());
-		return view('darky/profile', $viewData);
+
+		return $this->render('profile', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -46,8 +50,8 @@ class ProfileController extends \App\Controllers\BaseController
 
 		$data = [
 			'username'	=> $this->request->getPost('username'),
-			'email'	=> $this->request->getPost('email'),
-			'name'	=> $this->request->getPost('name'),
+			'email'		=> $this->request->getPost('email'),
+			'name'		=> $this->request->getPost('name'),
 		];
 
 		$result = $this->userModel->update(user()->id, $data);
