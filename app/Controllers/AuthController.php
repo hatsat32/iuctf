@@ -2,7 +2,7 @@
 
 use CodeIgniter\Controller;
 use Config\Email;
-use Myth\Auth\Config\Services;
+use Config\Services;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 
@@ -13,10 +13,6 @@ class AuthController extends Controller
 	 * @var Auth
 	 */
 	protected $config;
-
-	protected $helpers = [
-		'auth',
-	];
 
 	/**
 	 * @var \CodeIgniter\Session\Session
@@ -80,14 +76,14 @@ class AuthController extends Controller
 		$login = $this->request->getPost('login');
 		$password = $this->request->getPost('password');
 		$remember = (bool)$this->request->getPost('remember');
-		
+
 		// Determine credential type
 		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-		
+
 		// Try to log them in...
 		if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember))
 		{
-			return redirect()->back()->withInput()->with('error', lang('Auth.badAttempt'));
+			return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
 		}
 
 		// Is the user being forced to reset their password?
@@ -129,8 +125,8 @@ class AuthController extends Controller
 		{
 			return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
 		}
-		
-		echo view($this->config->views['register']);
+
+		echo view($this->config->views['register'], ['config' => $this->config]);
 	}
 
 	/**
@@ -143,12 +139,13 @@ class AuthController extends Controller
 		{
 			return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
 		}
-		
+
 		$users = new UserModel();
 
 		// Validate here first, since some things,
 		// like the password, can only be validated properly here.
-		$rules = array_merge($users->getValidationRules(['only' => ['email', 'username']]), [
+		$rules = array_merge($users->getValidationRules(['only' => ['username']]), [
+			'email'		=> 'required|valid_email|is_unique[users.email]',
 			'password'	 => 'required|strong_password',
 			'pass_confirm' => 'required|matches[password]',
 		]);
@@ -161,9 +158,25 @@ class AuthController extends Controller
 		// Save the user
 		$user = new User($this->request->getPost());
 
+		$this->config->requireActivation !== false ? $user->generateActivateHash() : $user->activate();
+
 		if (! $users->save($user))
 		{
 			return redirect()->back()->withInput()->with('errors', $users->errors());
+		}
+
+		if ($this->config->requireActivation !== false)
+		{
+			$activator = Services::activator();
+			$sent = $activator->send($user);
+			
+			if (! $sent)
+			{
+				return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+			}
+
+			// Success!
+			return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
 		}
 
 		// Success!
@@ -179,7 +192,7 @@ class AuthController extends Controller
 	 */
 	public function forgotPassword()
 	{
-		echo view($this->config->views['forgot']);
+		echo view($this->config->views['forgot'], ['config' => $this->config]);
 	}
 
 	/**
@@ -213,7 +226,7 @@ class AuthController extends Controller
 
 		if (! $sent)
 		{
-			log_message('error', "Failed to send forgotten password email to: {$email}");
+			log_message('error', "Failed to send forgotten password email to: {$user->email}");
 			return redirect()->back()->withInput()->with('error', lang('Auth.unknownError'));
 		}
 
@@ -228,7 +241,8 @@ class AuthController extends Controller
 		$token = $this->request->getGet('token');
 
 		echo view($this->config->views['reset'], [
-			'token' => $token,
+			'config' => $this->config,
+			'token'  => $token,
 		]);
 	}
 
@@ -266,22 +280,61 @@ class AuthController extends Controller
 					  ->where('reset_hash', $this->request->getPost('token'))
 					  ->first();
 
-		// TODO: Get "reset_time" (ie: 60 mins) and check with "reset_start_time"
-		// to see how much time has passed since hash has been generated.
-		// Then, if time that's passed is less than "reset_time", everything's OK
-
 		if (is_null($user))
 		{
 			return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
 		}
 
+        // Reset token still valid?
+        if (! empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp())
+        {
+            return redirect()->back()->withInput()->with('error', lang('Auth.resetTokenExpired'));
+        }
+
 		// Success! Save the new password, and cleanup the reset hash.
 		$user->password 		= $this->request->getPost('password');
 		$user->reset_hash 		= null;
-		$user->reset_time 		= null;
-		$user->reset_start_time = null;
+		$user->reset_at 		= date('Y-m-d H:i:s');
+		$user->reset_expires    = null;
 		$users->save($user);
 
 		return redirect()->route('login')->with('message', lang('Auth.resetSuccess'));
+	}
+
+	/**
+	 * Activate account.
+	 */
+	public function activateAccount()
+	{
+		$users = new UserModel();
+
+		// First things first - log the activation attempt.
+		$users->logActivationAttempt(
+			$this->request->getGet('token'),
+			$this->request->getIPAddress(),
+			(string) $this->request->getUserAgent()
+		);
+
+		$throttler = Services::throttler();
+
+		if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false)
+        {
+			return Services::response()->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+        }
+
+		$user = $users->where('activate_hash', $this->request->getGet('token'))
+					  ->where('active', 0)
+					  ->first();
+
+		if (is_null($user))
+		{
+			return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+		}
+
+		$user->activate();
+
+		$users->save($user);
+
+		return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
 	}
 }

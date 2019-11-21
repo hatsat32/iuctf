@@ -7,7 +7,7 @@
     "require": {
         "php": ">=7.2",
         "codeigniter4/framework": "^4@rc",
-        "myth/auth": "v1.0-beta",
+        "myth/auth": "dev-develop",
         "codeigniter4/translations": "^4@rc"
     },
     "require-dev": {
