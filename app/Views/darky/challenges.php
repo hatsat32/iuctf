@@ -112,11 +112,11 @@
 							<?= csrf_field() ?>
 							<div class="form-row">
 								<div class="col-9">
-									<input type="text" name="flag" class="form-control" placeholder="Flag gir">
+									<input type="text" name="flag" class="form-control form-control-lg" placeholder="Flag gir">
 									<input type="hidden" name="ch-id">
 								</div>
 								<div class="col-3">
-									<button type="submit" class="btn btn-primary btn-block"><?= lang('Home.submit') ?></button>
+									<button type="submit" class="btn btn-primary btn-lg btn-block"><?= lang('Home.submit') ?></button>
 								</div>
 							</div>
 						</form>

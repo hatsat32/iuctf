@@ -28,24 +28,24 @@
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="username"><?= lang('Home.enterUsername') ?></label>
-					<input type="text" name="username" class="form-control" id="username"
+					<input type="text" name="username" class="form-control form-control-lg" id="username"
 					value="<?= esc($user['username']) ?>">
 				</div>
 				<div class="form-group">
 					<label for="email"><?= lang('Home.enterEmail') ?></label>
-					<input type="email" name="email" class="form-control" id="email"
+					<input type="email" name="email" class="form-control form-control-lg" id="email"
 					value="<?= esc($user['email']) ?>">
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('Home.enterName') ?></label>
-					<input type="text" name="name" class="form-control" id="name"
+					<input type="text" name="name" class="form-control form-control-lg" id="name"
 					value="<?= esc($user['name']) ?>">
 				</div>
 				<div class="form-group">
 					<label for="password-present"><?= lang('General.password') ?></label>
-					<input type="password" name="password" class="form-control" id="password-present">
+					<input type="password" name="password" class="form-control form-control-lg" id="password-present">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
+				<button type="submit" class="btn btn-primary btn-lg btn-block"><?= lang('General.update') ?></button>
 			</form>
 
 			<div class="my-4">
@@ -54,9 +54,9 @@
 						<div class="input-group-prepend">
 							<label class="input-group-text" for="language"><?= lang('General.language') ?></label>
 						</div>
-						<select class="custom-select" id="language" name="language">
+						<select class="custom-select custom-select-lg" id="language" name="language">
 							<?php foreach(config('Iuctf')->locales as $lang => $language): ?>
-							<option <?= session('language')==$lang ? 'selected':'' ?> value="<?= $lang ?>"><?= $language ?></option>
+								<option <?= session('language')==$lang ? 'selected':'' ?> value="<?= $lang ?>"><?= $language ?></option>
 							<?php endforeach ?>
 						</select>
 					</div>
@@ -89,17 +89,17 @@
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="password-old"><?= lang('General.password') ?></label>
-					<input type="password" name="password-old" class="form-control" id="password-old">
+					<input type="password" name="password-old" class="form-control form-control-lg" id="password-old">
 				</div>
 				<div class="form-group">
 					<label for="password"><?= lang('Home.newPassword') ?></label>
-					<input type="password" name="password" class="form-control" id="password">
+					<input type="password" name="password" class="form-control form-control-lg" id="password">
 				</div>
 				<div class="form-group">
 					<label for="password-confirm"><?= lang('Home.confirmNewPass') ?></label>
-					<input type="password" name="password-confirm" class="form-control" id="password-confirm">
+					<input type="password" name="password-confirm" class="form-control form-control-lg" id="password-confirm">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block"><?= lang('Home.updatePassword') ?></button>
+				<button type="submit" class="btn btn-primary btn-lg btn-block"><?= lang('Home.updatePassword') ?></button>
 			</form>
 		</div>
 	</div>

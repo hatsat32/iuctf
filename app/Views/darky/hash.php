@@ -16,7 +16,7 @@
 	</form>
 
 	<?php if(isset($hash)): ?>
-		<div class="my-4 alert alert-secondary text-lg">
+		<div class="my-4 alert alert-secondary text-lg text-center">
 			<code class="text-white lead"><?= esc($hash) ?></code>
 		</div>
 	<?php endif ?>
