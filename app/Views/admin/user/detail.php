@@ -50,7 +50,7 @@
 				</form>
 			</div>
 
-			<?php if(in_groups('admin')): ?>
+			<?php if(Config\Services::authorization()->inGroup('admin', $user['id'])): ?>
 				<div class="mt-4">
 					<form action="/admin/users/<?= esc($user['id']) ?>/rmadmin" method="post"
 							onsubmit="return confirm('Admin grubundan silmek istediğine eminmisin')">

@@ -31,7 +31,7 @@ return [
 	'wrongAnswer'		=> 'Wrong Answer',
 	'rightAnswer'		=> 'Right Answer',
 	'watchOut'			=> 'Watch Out !!!',
-	'findTeamToComp'	=> 'Fint a team to join competition!',
+	'findTeamToComp'	=> 'Find a team to join competition!',
 	'visitTeamPage'		=> 'Visit Team Page',
 	'hintUnlock'		=> 'Unlock Hint',
 	'firstBlood'		=> 'First Blood',
