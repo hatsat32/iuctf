@@ -44,6 +44,23 @@
 						<a class="nav-link" href="/register"><?= lang('Home.register') ?></a>
 					</li>
 				<?php endif ?>
+				<form action="/language" method="get" id="language-form">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="language"><?= lang('General.language') ?></label>
+						</div>
+						<select class="custom-select" id="language" name="language">
+							<?php foreach(config('Iuctf')->locales as $lang => $language): ?>
+								<option <?= session('language')==$lang ? 'selected':'' ?> value="<?= $lang ?>"><?= $language ?></option>
+							<?php endforeach ?>
+						</select>
+					</div>
+					<script>
+						$("#language").change(function() {
+							$("#language-form").submit();
+						});
+					</script>
+				</form>
             </ul>
 		</div>
 	</div>

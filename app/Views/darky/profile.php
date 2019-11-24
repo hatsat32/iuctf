@@ -47,26 +47,6 @@
 				</div>
 				<button type="submit" class="btn btn-primary btn-lg btn-block"><?= lang('General.update') ?></button>
 			</form>
-
-			<div class="my-4">
-				<form action="/language" method="get" id="language-form">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<label class="input-group-text" for="language"><?= lang('General.language') ?></label>
-						</div>
-						<select class="custom-select custom-select-lg" id="language" name="language">
-							<?php foreach(config('Iuctf')->locales as $lang => $language): ?>
-								<option <?= session('language')==$lang ? 'selected':'' ?> value="<?= $lang ?>"><?= $language ?></option>
-							<?php endforeach ?>
-						</select>
-					</div>
-				</form>
-			</div>
-			<script>
-				$("#language").change(function() {
-					$("#language-form").submit();
-				});
-			</script>
 		</div>
 
 		<div class="col-sm-6">
