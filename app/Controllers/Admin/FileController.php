@@ -1,15 +1,18 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\FileModel;
 
-class FileController extends \App\Controllers\BaseController
+class FileController extends AdminController
 {
 	protected $fileModel = null;
 
 	//--------------------------------------------------------------------
 	
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->fileModel = new FileModel();
 	}
 

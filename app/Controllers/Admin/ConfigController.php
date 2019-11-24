@@ -1,14 +1,17 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\ConfigModel;
 
-class ConfigController extends \App\Controllers\BaseController
+class ConfigController extends AdminController
 {
 	private $configModel;
 	private $validation;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->configModel = new ConfigModel();
 		$this->validation =  \Config\Services::validation();
 	}
@@ -23,7 +26,7 @@ class ConfigController extends \App\Controllers\BaseController
 			$viewData['config'][$row['key']] = $row['value'];
 		}
 
-		return view('admin/config/index', $viewData);
+		return $this->render('config/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------

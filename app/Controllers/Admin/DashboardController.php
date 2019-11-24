@@ -1,12 +1,14 @@
 <?php namespace App\Controllers\Admin;
 
-class Admin extends \App\Controllers\BaseController
+use App\Core\AdminController;
+
+class DashboardController extends AdminController
 {
 	//--------------------------------------------------------------------
 
 	public function index()
 	{
-		return view('admin/dashboard');
+		return $this->render('dashboard');
 	}
 
 	//--------------------------------------------------------------------

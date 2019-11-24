@@ -1,14 +1,10 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\SubmitModel;
 
-class LogController extends \App\Controllers\BaseController
+class LogController extends AdminController
 {
-	public function __construct()
-	{
-
-	}
-
 	//--------------------------------------------------------------------
 
 	public function index()
@@ -38,7 +34,7 @@ class LogController extends \App\Controllers\BaseController
 			'pager'		=> $query->pager,
 		];
 
-		return view('/admin/log/submits', $viewData);
+		return $this->render('log/submits', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -53,7 +49,7 @@ class LogController extends \App\Controllers\BaseController
 			'pager'		=> $loginModel->pager,
 		];
 
-		return view('/admin/log/logins', $viewData);
+		return $this->render('log/logins', $viewData);
 	}
 
 	//--------------------------------------------------------------------

@@ -1,13 +1,16 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\CategoryModel;
 
-class CategoryController extends \App\Controllers\BaseController
+class CategoryController extends AdminController
 {
 	protected $categoryModel = null;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->categoryModel = new CategoryModel();
 	}
 
@@ -16,14 +19,14 @@ class CategoryController extends \App\Controllers\BaseController
 	public function index()
 	{
 		$viewData['categories'] = $this->categoryModel->findAll();
-		return view('admin/category/index', $viewData);
+		return $this->render('category/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function new()
 	{
-		return view('admin/category/new');
+		return $this->render('category/new');
 	}
 
 	//--------------------------------------------------------------------
@@ -38,7 +41,7 @@ class CategoryController extends \App\Controllers\BaseController
 	public function show($id = null)
 	{
 		$viewData['category'] = $this->categoryModel->find($id);
-		return view('/admin/category/detail', $viewData);
+		return $this->render('category/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------

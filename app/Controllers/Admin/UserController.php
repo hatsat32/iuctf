@@ -1,15 +1,18 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\UserModel;
 use \App\Models\TeamModel;
 
-class UserController extends \App\Controllers\BaseController
+class UserController extends AdminController
 {
 	private $userModel;
 	private $teamModel;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->userModel = new UserModel();
 		$this->teamModel = new TeamModel();
 	}
@@ -19,7 +22,7 @@ class UserController extends \App\Controllers\BaseController
 	public function index()
 	{
 		$viewData['users'] = $this->userModel->findAll();
-		return view('admin/user/index', $viewData);
+		return $this->render('user/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -27,7 +30,7 @@ class UserController extends \App\Controllers\BaseController
 	public function new()
 	{
 		$viewData['teams'] = $this->teamModel->findAll();
-		return view('admin/user/new', $viewData);
+		return $this->render('user/new', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -51,7 +54,7 @@ class UserController extends \App\Controllers\BaseController
 		$viewData['user'] = $user;
 		$viewData['teams'] = $this->teamModel->findAll();
 
-		return view('admin/user/detail', $viewData);
+		return $this->render('user/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------

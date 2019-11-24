@@ -1,20 +1,16 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
 use \App\Models\FlagModel;
 use \App\Models\HintModel;
 use \App\Models\FileModel;
 
-class ChallengeController extends \App\Controllers\BaseController
+class ChallengeController extends AdminController
 {
 	protected $challengeModel;
 	protected $categoryModel;
-
-	public function __construct()
-	{
-		
-	}
 
 	public function initController($request, $response, $logger)
 	{
@@ -29,7 +25,7 @@ class ChallengeController extends \App\Controllers\BaseController
 	public function index()
 	{
 		$viewData['challenges'] = $this->challengeModel->findAll();
-		return view('admin/challenge/index', $viewData);
+		return $this->render('challenge/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -37,7 +33,7 @@ class ChallengeController extends \App\Controllers\BaseController
 	public function new()
 	{
 		$viewData['categories'] = $this->categoryModel->findAll();
-		return view('admin/challenge/new', $viewData);
+		return $this->render('challenge/new', $viewData);
 	}
 
 	//--------------------------------------------------------------------
@@ -61,7 +57,7 @@ class ChallengeController extends \App\Controllers\BaseController
 		$viewData['hints'] = $hintModel->where('challenge_id', $id)->findAll();
 		$viewData['files'] = $fileModel->where('challenge_id', $id)->findAll();
 	
-		return view('admin/challenge/detail', $viewData);
+		return $this->render('challenge/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------

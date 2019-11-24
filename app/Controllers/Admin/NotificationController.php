@@ -1,15 +1,18 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\NotificationModel;
 use \App\Entities\Notification;
 
 
-class NotificationController extends \App\Controllers\BaseController
+class NotificationController extends AdminController
 {
 	protected $notificationModel = null;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->notificationModel = new NotificationModel();
 	}
 
@@ -18,14 +21,14 @@ class NotificationController extends \App\Controllers\BaseController
 	public function index()
 	{
 		$viewData['notifications'] = $this->notificationModel->findAll();
-		return view('admin/notification/index', $viewData);
+		return $this->render('notification/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function new()
 	{
-		return view('admin/notification/new');
+		return $this->render('notification/new');
 	}
 
 	//--------------------------------------------------------------------
@@ -41,7 +44,7 @@ class NotificationController extends \App\Controllers\BaseController
 	{
 		$viewData['notification'] = $this->notificationModel->find($id);
 
-		return view('admin/notification/detail', $viewData);
+		return $this->render('notification/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------

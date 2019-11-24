@@ -1,13 +1,16 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\HintModel;
 
-class HintController extends \App\Controllers\BaseController
+class HintController extends AdminController
 {
 	private $hintModel;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->hintModel = new HintModel();
 	}
 

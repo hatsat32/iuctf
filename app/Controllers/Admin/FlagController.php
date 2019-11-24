@@ -1,13 +1,16 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\FlagModel;
 
-class FlagController extends \App\Controllers\BaseController
+class FlagController extends AdminController
 {
 	private $flagModel;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->flagModel = new FlagModel();
 	}
 

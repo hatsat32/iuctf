@@ -123,7 +123,7 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function($routes) {
-    $routes->get('/', 'Admin::index');
+    $routes->get('/', 'DashboardController::index');
 
     $routes->group('teams', function($routes)
 	{

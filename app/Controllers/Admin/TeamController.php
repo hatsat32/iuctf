@@ -1,11 +1,12 @@
 <?php namespace App\Controllers\Admin;
 
+use App\Core\AdminController;
 use \App\Models\TeamModel;
 use \App\Models\UserModel;
 use \App\Models\ChallengeModel;
 use \App\Models\SolvesModel;
 
-class TeamController extends \App\Controllers\BaseController
+class TeamController extends AdminController
 {
 	private $teamModel;
 	private $userModel;
@@ -26,14 +27,14 @@ class TeamController extends \App\Controllers\BaseController
 	{
 		$viewData['teams'] = $this->teamModel->findAll();
 
-		return view('admin/team/index', $viewData);
+		return $this->render('team/index', $viewData);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function new()
 	{
-		return view('admin/team/new');
+		return $this->render('team/new');
 	}
 
 	//--------------------------------------------------------------------
@@ -62,7 +63,7 @@ class TeamController extends \App\Controllers\BaseController
 			'challenges'	=> $challenges,
 		];
 
-		return view('admin/team/detail', $viewData);
+		return $this->render('team/detail', $viewData);
 	}
 
 	//--------------------------------------------------------------------
