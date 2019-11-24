@@ -45,7 +45,15 @@ class LogController extends \App\Controllers\BaseController
 
 	public function login()
 	{
-		
+		$loginModel = new \Myth\Auth\Models\LoginModel();
+		$loginModel->asArray();
+
+		$viewData = [
+			'logins'	=> $loginModel->paginate(100),
+			'pager'		=> $loginModel->pager,
+		];
+
+		return view('/admin/log/logins', $viewData);
 	}
 
 	//--------------------------------------------------------------------
