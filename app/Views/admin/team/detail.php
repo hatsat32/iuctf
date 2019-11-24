@@ -63,4 +63,38 @@
 		</div>
 	</div>
 
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-chart-area"></i>
+			<?= lang('admin/Team.teamMembers') ?></div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th><?= lang('General.id') ?></th>
+							<th><?= lang('General.username') ?></th>
+							<th><?= lang('General.name') ?></th>
+							<th><?= lang('General.email') ?></th>
+							<th><?= lang('General.detail') ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($teamMembers as $member) : ?>
+						<tr>
+							<td><?= $member['id'] ?></td>
+							<td><?= $member['username'] ?></td>
+							<td><?= $member['name'] ?></td>
+							<td><?= $member['email'] ?></td>
+							<td>
+								<a href="/admin/users/<?= $member['id'] ?>" class="btn btn-primary btn-block"><?= lang('General.detail') ?></a>
+							</td>
+						</tr>
+						<?php endforeach ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
 <?= $this->endSection() ?>

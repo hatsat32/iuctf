@@ -11,4 +11,5 @@ return [
 	'updateTeam'	=> 'Update Team',
 	'deleteTeam'	=> 'Delete Team',
 	'changeAuthCode' => 'Change Auth Code',
+	'teamMembers'	=> 'Team Members'
 ];

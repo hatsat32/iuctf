@@ -11,4 +11,5 @@ return [
 	'updateTeam'	=> 'Takım Güncelle',
 	'deleteTeam'	=> 'Takım Sil',
 	'changeAuthCode' => 'Takım Doğrulama Kodunu Değiştir',
+	'teamMembers'	=> 'Takım Üyeleri',
 ];
