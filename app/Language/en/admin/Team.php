@@ -11,5 +11,11 @@ return [
 	'updateTeam'	=> 'Update Team',
 	'deleteTeam'	=> 'Delete Team',
 	'changeAuthCode' => 'Change Auth Code',
-	'teamMembers'	=> 'Team Members'
+	'teamMembers'	=> 'Team Members',
+
+	// challenges and solves
+	'selectUser'	=> 'Select User',
+	'selectChallenge' => 'Select Challenge',
+	'markAsSolved'	=> 'Mark As Solved',
+	'solvedAt'		=> 'Solved At',
 ];

@@ -2,16 +2,22 @@
 
 use \App\Models\TeamModel;
 use \App\Models\UserModel;
+use \App\Models\ChallengeModel;
+use \App\Models\SolvesModel;
 
 class TeamController extends \App\Controllers\BaseController
 {
 	private $teamModel;
 	private $userModel;
+	private $challengeModel;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		$this->teamModel = new TeamModel();
 		$this->userModel = new UserModel();
+		$this->challengeModel = new ChallengeModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -43,10 +49,17 @@ class TeamController extends \App\Controllers\BaseController
 	{
 		$team = $this->teamModel->find($id);
 		$teamMembers = $this->userModel->where('team_id', $id)->findAll();
+		$challenges = $this->challengeModel
+				->select(['challenges.id', 'challenges.name', 'solves.id AS solves_id', 'solves.user_id AS solves_user',
+						'users.username AS solves_username','solves.created_at AS solves_at'])
+				->join('solves', 'challenges.id = solves.challenge_id', 'left')
+				->join('users', 'solves.user_id = users.id', 'left')
+				->findAll();
 
 		$viewData = [
 			'team'			=> $team,
 			'teamMembers'	=> $teamMembers,
+			'challenges'	=> $challenges,
 		];
 
 		return view('admin/team/detail', $viewData);
@@ -133,4 +146,46 @@ class TeamController extends \App\Controllers\BaseController
 		}
 		return redirect()->to("/admin/teams/$id");
 	}
+
+	//--------------------------------------------------------------------
+
+	public function markAsSolved($id = null)
+	{
+		$solvesModel = new SolvesModel();
+
+		$data = [
+			'team_id'		=> $id,
+			'challenge_id'	=> $this->request->getPost('challenge_id'),
+			'user_id'		=> $this->request->getPost('user_id'),
+		];
+
+		$result = $solvesModel->insert($data);
+
+		if (! $result)
+		{
+			$errors = $solvesModel->errors();
+			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/teams/$id");
+	}
+
+	//--------------------------------------------------------------------
+
+	public function markAsUnsolved($teamID = null, $solvesID = null)
+	{
+		$solvesModel = new SolvesModel();
+
+		$result = $solvesModel->delete($solvesID);
+
+		if (! $result)
+		{
+			$errors = $solvesModel->errors();
+			return redirect()->to("/admin/teams/$teamID")->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/teams/$teamID");
+	}
+
+	//--------------------------------------------------------------------
 }

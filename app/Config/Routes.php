@@ -135,9 +135,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)/delete',	'TeamController::delete/$1');
 		$routes->post('(:num)', 		'TeamController::update/$1');
 		$routes->post('(:num)/authcode','TeamController::changeAuthCode/$1');
-    });
-    
-    $routes->group('users', function($routes)
+
+		$routes->post('(:num)/solves', 	'TeamController::markAsSolved/$1');
+		$routes->post('(:num)/solves/(:num)/delete', 	'TeamController::markAsUnsolved/$1/$2');
+	});
+
+	$routes->group('users', function($routes)
 	{
 		$routes->get('/', 				'UserController::index');
 		$routes->get('new', 			'UserController::new');

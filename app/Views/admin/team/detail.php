@@ -97,4 +97,74 @@
 		</div>
 	</div>
 
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-chart-area"></i>
+			<?= lang('admin/Team.markAsSolved') ?></div>
+		<div class="card-body">
+			<form action="/admin/teams/<?= $team['id'] ?>/solves" method="post">
+				<?= csrf_field() ?>
+				<div class="form-row">
+					<div class="col-4">
+						<div class="form-group">
+							<select name="user_id" class="form-control" id="user_id" required>
+								<option disabled selected value><?= lang('admin/Team.selectUser') ?></option>
+								<?php foreach($teamMembers as $member) : ?>
+									<option value="<?= esc($member["id"]) ?>"><?= esc($member["username"]) ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-group">
+							<select name="challenge_id" class="form-control" id="challenge_id" required>
+								<option disabled selected value><?= lang('admin/Team.selectChallenge') ?></option>
+								<?php foreach($challenges as $challenge) : ?>
+									<?php if ($challenge['solves_id'] === null) : ?>
+										<option value="<?= esc($challenge["id"]) ?>"><?= esc($challenge["name"]) ?></option>
+									<?php endif ?>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<div class="col-4">
+						<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Team.markAsSolved') ?></button>
+					</div>
+				</div>
+			</form>
+			<hr>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th><?= lang('General.id') ?></th>
+							<th><?= lang('General.name') ?></th>
+							<th><?= lang('General.username') ?></th>
+							<th><?= lang('admin/Team.solvedAt') ?></th>
+							<th><?= lang('General.delete') ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($challenges as $challenge) : ?>
+							<?php if ($challenge['solves_id'] !== null) : ?>
+							<tr>
+								<td><?= $challenge['solves_id'] ?></td>
+								<td><?= $challenge['name'] ?></td>
+								<td><?= $challenge['solves_username'] ?></td>
+								<td><?= $challenge['solves_at'] ?></td>
+								<td>
+									<form action="/admin/teams/<?= $team['id'] ?>/solves/<?= $challenge['solves_id'] ?>/delete" method="post">
+										<?= csrf_field() ?>
+										<button class="btn btn-danger btn-block"><?= lang('General.delete') ?></button>
+									</form>
+								</td>
+							</tr>
+							<?php endif ?>
+						<?php endforeach ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
 <?= $this->endSection() ?>
