@@ -1,14 +1,17 @@
 <?php namespace App\Controllers\Admin;
 
 use \App\Models\TeamModel;
+use \App\Models\UserModel;
 
 class TeamController extends \App\Controllers\BaseController
 {
 	private $teamModel;
+	private $userModel;
 
 	public function __construct()
 	{
 		$this->teamModel = new TeamModel();
+		$this->userModel = new UserModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -39,7 +42,13 @@ class TeamController extends \App\Controllers\BaseController
 	public function show($id = null)
 	{
 		$team = $this->teamModel->find($id);
-		$viewData['team'] = $team;
+		$teamMembers = $this->userModel->where('team_id', $id)->findAll();
+
+		$viewData = [
+			'team'			=> $team,
+			'teamMembers'	=> $teamMembers,
+		];
+
 		return view('admin/team/detail', $viewData);
 	}
 
@@ -84,17 +93,26 @@ class TeamController extends \App\Controllers\BaseController
 
 	public function update($id = null)
 	{
-		$team = $this->teamModel->find($id);
+		$teamMembers = $this->userModel->where('team_id', $id)->findColumn('id') ?? [];
+
 		$data = [
-			'name' => $this->request->getPost('name'),
+			'name'		=> $this->request->getPost('name'),
+			'leader_id'	=> $this->request->getPost('leader_id'),
 		];
 
+		if (! in_array($this->request->getPost('leader_id'), $teamMembers))
+		{
+			return redirect()->to("/admin/teams/$id");
+		}
+
 		$result = $this->teamModel->update($id, $data);
+
 		if (! $result)
 		{
 			$viewData['errors'] = $this->teamModel->errors();
 			return redirect()->to("/admin/teams/$id", $viewData);
 		}
+
 		return redirect()->to("/admin/teams/$id");
 	}
 

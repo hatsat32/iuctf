@@ -26,7 +26,11 @@
 				</div>
 				<div class="form-group">
 					<label for="leader_id"><?= lang('admin/Team.leaderId') ?></label>
-					<input type="number" disabled class="form-control" id="leader_id" value="<?= esc($team['leader_id']) ?>">
+					<select name="leader_id" class="form-control" id="leader_id">
+						<?php foreach($teamMembers as $member) : ?>
+							<option <?= $member['id']===$team['leader_id'] ? "selected":"" ?> value="<?= esc($member["id"]) ?>"><?= esc($member["username"]) ?></option>
+						<?php endforeach; ?>
+					</select>
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('General.name') ?></label>
