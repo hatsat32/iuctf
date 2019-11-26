@@ -52,15 +52,15 @@ class TeamController extends AdminController
 		$teamMembers = $this->userModel->where('team_id', $id)->findAll();
 		$challenges = $this->challengeModel
 				->select(['challenges.id', 'challenges.name', 'solves.id AS solves_id', 'solves.user_id AS solves_user',
-						'users.username AS solves_username','solves.created_at AS solves_at'])
-				->join('solves', 'challenges.id = solves.challenge_id', 'left')
+						'users.username AS solves_username', 'solves.team_id AS team_id', 'solves.created_at AS solves_at'])
+				->join('solves', "(challenges.id = solves.challenge_id AND solves.team_id = $id)", 'left')
 				->join('users', 'solves.user_id = users.id', 'left')
 				->findAll();
 
 		$viewData = [
-			'team'			=> $team,
-			'teamMembers'	=> $teamMembers,
-			'challenges'	=> $challenges,
+			'team'        => $team,
+			'teamMembers' => $teamMembers,
+			'challenges'  => $challenges,
 		];
 
 		return $this->render('team/detail', $viewData);
