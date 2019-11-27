@@ -114,7 +114,7 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->post('profile',	'ProfileController::updateProfile');
 	$routes->post('profile/change-password', 'ProfileController::updatePassword');
 
-	$routes->get('scoreboard',		'UserUtilityController::scoreboard');
+	$routes->get('scoreboard',		'ScoreboardController::index');
 	$routes->get('notifications',	'UserUtilityController::notifications');
 
 	$routes->get('hash',	'UserUtilityController::hash');
