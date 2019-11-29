@@ -13,6 +13,10 @@ return [
 	'changeAuthCode' => 'Change Auth Code',
 	'teamMembers'	=> 'Team Members',
 
+	'doBan'			=> 'Ban The Team',
+	'doUnban'		=> 'Unban The Team',
+	'banned'		=> 'Your team has been banned!',
+
 	// challenges and solves
 	'selectUser'	=> 'Select User',
 	'selectChallenge' => 'Select Challenge',

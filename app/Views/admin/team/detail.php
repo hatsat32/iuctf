@@ -60,6 +60,20 @@
 					<button type="submit" class="btn btn-info btn-block"><?= lang('admin/Team.changeAuthCode') ?></button>
 				</form>
 			</div>
+
+			<div class="mt-4">
+				<?php if ($team['is_banned'] == '0') : ?>
+					<form action="/admin/teams/<?= esc($team['id']) ?>/ban" method="post">
+						<?= csrf_field() ?>
+						<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Team.doBan') ?></button>
+					</form>
+				<?php else : ?>
+					<form action="/admin/teams/<?= esc($team['id']) ?>/unban" method="post">
+						<?= csrf_field() ?>
+						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/Team.doUnban') ?></button>
+					</form>
+				<?php endif ?>
+			</div>
 		</div>
 	</div>
 

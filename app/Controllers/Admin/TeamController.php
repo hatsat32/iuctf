@@ -189,4 +189,52 @@ class TeamController extends AdminController
 	}
 
 	//--------------------------------------------------------------------
+
+	public function ban($id = null)
+	{
+		$result = $this->teamModel->update($id, ['is_banned' => '1']);
+
+		if (! $result)
+		{
+			$errors = $this->teamModel->errors();
+			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+		}
+
+		// ban all the users
+		$result = $this->userModel->where('team_id', $id)->set('status', 'banned')->update();
+
+		if (! $result)
+		{
+			$errors = $this->userModel->errors();
+			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/teams/$id");
+	}
+
+	//--------------------------------------------------------------------
+
+	public function unBan($id = null)
+	{
+		$result = $this->teamModel->update($id, ['is_banned' => '0']);
+
+		if (! $result)
+		{
+			$errors = $this->teamModel->errors();
+			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+		}
+
+		// unban all the users
+		$result = $this->userModel->where('team_id', $id)->set(['status' => null])->update();
+
+		if (! $result)
+		{
+			$errors = $this->userModel->errors();
+			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/teams/$id");
+	}
+
+	//--------------------------------------------------------------------
 }

@@ -79,7 +79,7 @@ $routes->get('/language', 'Home::language');
 /**
  * Myth:Auth routes
  */
-$routes->group('', ['namespace' => 'Myth\Auth\Controllers'], function($routes) {
+$routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
 	// Login/out
 	$routes->get('login', 'AuthController::login', ['as' => 'login']);
 	$routes->post('login', 'AuthController::attemptLogin');
@@ -123,9 +123,9 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function($routes) {
-    $routes->get('/', 'DashboardController::index');
+	$routes->get('/', 'DashboardController::index');
 
-    $routes->group('teams', function($routes)
+	$routes->group('teams', function($routes)
 	{
 		$routes->get('/', 				'TeamController::index');
 		$routes->get('new', 			'TeamController::new');
@@ -134,7 +134,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('/', 				'TeamController::create');
 		$routes->post('(:num)/delete',	'TeamController::delete/$1');
 		$routes->post('(:num)', 		'TeamController::update/$1');
+
 		$routes->post('(:num)/authcode','TeamController::changeAuthCode/$1');
+		$routes->post('(:num)/ban',		'TeamController::ban/$1');
+		$routes->post('(:num)/unban',	'TeamController::unBan/$1');
 
 		$routes->post('(:num)/solves', 	'TeamController::markAsSolved/$1');
 		$routes->post('(:num)/solves/(:num)/delete', 	'TeamController::markAsUnsolved/$1/$2');
@@ -152,6 +155,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)/change-password',	'UserController::changePassword/$1');
 		$routes->post('(:num)/addadmin', 'UserController::addAdmin/$1');
 		$routes->post('(:num)/rmadmin', 'UserController::rmAdmin/$1');
+		$routes->post('(:num)/ban',     'UserController::ban/$1');
+		$routes->post('(:num)/unban',   'UserController::unban/$1');
 	});
 
 	$routes->group('categories', function($routes)

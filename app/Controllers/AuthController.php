@@ -5,6 +5,7 @@ use Config\Email;
 use Config\Services;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
+use App\Models\TeamModel;
 
 class AuthController extends Controller
 {
@@ -79,6 +80,17 @@ class AuthController extends Controller
 
 		// Determine credential type
 		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+		// if user or team has been banned, kick them out!
+		if ($user = $this->auth->validate([$type => $login, 'password' => $password], true))
+		{
+			$team = (new TeamModel())->find($user->team_id);
+
+			if ($team['is_banned'] == '1')
+			{
+				return redirect()->back()->withInput()->with('error', lang('admin/Team.banned'));
+			}
+		}
 
 		// Try to log them in...
 		if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember))

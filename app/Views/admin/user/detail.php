@@ -67,6 +67,20 @@
 					</form>
 				</div>
 			<?php endif ?>
+
+			<div class="mt-4">
+				<?php if ($user['status'] == 'banned') : ?>
+					<form action="/admin/users/<?= esc($user['id']) ?>/unban" method="post">
+						<?= csrf_field() ?>
+						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.doUnBan') ?></button>
+					</form>
+				<?php else : ?>
+					<form action="/admin/users/<?= esc($user['id']) ?>/ban" method="post">
+						<?= csrf_field() ?>
+						<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.doBan') ?></button>
+					</form>
+				<?php endif ?>
+			</div>
 		</div>
 	</div>
 

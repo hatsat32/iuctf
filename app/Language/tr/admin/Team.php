@@ -13,6 +13,10 @@ return [
 	'changeAuthCode' => 'Takım Doğrulama Kodunu Değiştir',
 	'teamMembers'	=> 'Takım Üyeleri',
 
+	'doBan'			=> 'Takımı Engelle',
+	'doUnban'		=> 'Takımın Engelini Kaldır',
+	'banned'		=> 'Takımın engellendi!',
+
 	// challenges and solves
 	'selectUser'	=> 'Yarışmacı Seç',
 	'selectChallenge' => 'Soru Seç',

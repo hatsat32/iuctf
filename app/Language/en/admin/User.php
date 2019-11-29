@@ -6,6 +6,8 @@ return [
 	'deleteUser'		=> 'Delete User',
 	'updateUser'		=> 'Update User',
 	'userDetail'		=> 'User Detail',
+	'doBan'				=> 'Ban The User',
+	'doUnBan'			=> 'Unban The User',
 
 	'enterUsername'		=> 'Enter Username',
 	'enterEmail'		=> 'Enter Email',

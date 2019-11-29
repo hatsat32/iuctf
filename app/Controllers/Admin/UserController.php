@@ -1,8 +1,8 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use \App\Models\UserModel;
-use \App\Models\TeamModel;
+use App\Models\UserModel;
+use App\Models\TeamModel;
 
 class UserController extends AdminController
 {
@@ -136,7 +136,7 @@ class UserController extends AdminController
 	public function changePassword($user_id = null)
 	{
 		$authUserModel = new \Myth\Auth\Models\UserModel();
-		$user = user();
+		$user = $authUserModel->find($user_id);
 
 		$rules = [
 			'password'			=> 'required|strong_password',
@@ -174,6 +174,44 @@ class UserController extends AdminController
 		$authorize->removeUserFromGroup($user_id, 'admin');
 
 		return redirect()->to("/admin/users/$user_id");
+	}
+
+	//--------------------------------------------------------------------
+
+	public function ban($id = null)
+	{
+		$authUserModel = new \Myth\Auth\Models\UserModel();
+		$user = $authUserModel->find($id);
+
+		$user->ban('');
+		$result = $authUserModel->save($user);
+
+		if (! $result)
+		{
+			$errors = $this->authUserModel->errors();
+			return redirect()->to("/admin/users/$id")->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/users/$id");
+	}
+
+	//--------------------------------------------------------------------
+
+	public function unBan($id = null)
+	{
+		$authUserModel = new \Myth\Auth\Models\UserModel();
+		$user = $authUserModel->find($id);
+
+		$user->unBan();
+		$result = $authUserModel->save($user);
+
+		if (! $result)
+		{
+			$errors = $this->authUserModel->errors();
+			return redirect()->to("/admin/users/$id")->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/users/$id");
 	}
 
 	//--------------------------------------------------------------------

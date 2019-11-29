@@ -6,6 +6,8 @@ return [
 	'deleteUser'		=> 'Kullanıcı Sil',
 	'updateUser'		=> 'Kullanıcı Güncelle',
 	'userDetail'		=> 'Kullanıcı Detay',
+	'doBan'				=> 'Kullanıcıyı Engelle',
+	'doUnBan'			=> 'Kullanıcının Engelini Kaldır',
 
 	'enterUsername'		=> 'Kullanıcı Adı Gir',
 	'enterEmail'		=> 'Email Gir',
