@@ -22,4 +22,6 @@ class TeamModel extends Model
 	
 	protected $validationMessages = [];
 	protected $skipValidation = false;
+	protected $useSoftDeletes = true;
+	protected $useTimestamps = true;
 }

@@ -35,9 +35,9 @@ class ScoreboardController extends UserController
 				->join('solves', 'solves.challenge_id = challenges.id', 'left')
 				->join('teams', 'teams.id = solves.team_id', 'left')
 				->where('teams.is_banned', '0')
+				->where('teams.deleted_at', null)
 				->groupBy('challenges.id')
 				->findAll();
-
 		$teamScores = $this->teamModel
 				->select(['teams.id', 'teams.name', ])->selectSum('hints.cost', 'cost_sum')->selectMax('solves.id', 'lastsolve')
 				->join('hint_unlocks', 'teams.id = hint_unlocks.team_id', 'left')
@@ -45,11 +45,13 @@ class ScoreboardController extends UserController
 				->join('solves', 'solves.team_id = teams.id', 'left')
 				->groupBy('teams.id')
 				->where('teams.is_banned', '0')
+				->where('teams.deleted_at', null)
 				->findAll();
 		$solves = $this->solvesModel
 				->select(['solves.*'])
 				->join('teams', 'solves.team_id = teams.id', 'left')
 				->where('teams.is_banned', '0')
+				->where('teams.deleted_at', null)
 				->findAll();
 
 		foreach ($challenges as $ch => $challenge)

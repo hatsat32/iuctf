@@ -26,6 +26,7 @@ class InitialTables extends Migration
 			'is_banned' => ['type' => 'ENUM', 'constraint' => ['0', '1'], 'default' => '0'],
 			'created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 			'updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP',
+			'deleted_at TIMESTAMP NOT NULL default NULL on update CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('teams');
