@@ -34,7 +34,7 @@ class TeamController extends UserController
 			return $this->render('team', $viewData);
 		}
 
-		$team = $this->teamModel->asObject('App\Entities\Team')->find(user()->team_id);
+		$team = $this->teamModel->find(user()->team_id);
 		$team_members = $this->userModel->where('team_id', user()->team_id)->findAll();
 
 		$viewData['team'] = $team;
@@ -85,7 +85,13 @@ class TeamController extends UserController
 
 		$team = $this->teamModel->where('auth_code', $auth_code)->first();
 
-		$result = $this->userModel->update(user()->id, ['team_id'=> $team['id']]);
+		if ($team === null)
+		{
+			#FIXME add warning for no team found
+			return redirect()->to('/team');
+		}
+
+		$result = $this->userModel->update(user()->id, ['team_id'=> $team->id]);
 
 		if (! $result)
 		{

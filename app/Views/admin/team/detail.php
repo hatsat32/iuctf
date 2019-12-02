@@ -14,61 +14,61 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Team.editTeam') ?></div>
 		<div class="card-body">
-			<form action="/admin/teams/<?= esc($team['id']) ?>" method="post">
+			<form action="/admin/teams/<?= esc($team->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="team_id"><?= lang('General.team')." ".lang('General.id') ?></label>
-					<input disabled class="form-control" id="team_id" value="<?= esc($team['id']) ?>">
+					<input disabled class="form-control" id="team_id" value="<?= esc($team->id) ?>">
 				</div>
 				<div class="form-group">
 					<label for="auth_code"><?= lang('admin/Team.authCode') ?></label>
-					<input disabled class="form-control" id="auth_code" value="<?= esc($team['auth_code']) ?>">
+					<input disabled class="form-control" id="auth_code" value="<?= esc($team->auth_code) ?>">
 				</div>
 				<div class="form-group">
 					<label for="leader_id"><?= lang('admin/Team.leaderId') ?></label>
 					<select name="leader_id" class="form-control" id="leader_id">
 						<?php foreach($teamMembers as $member) : ?>
-							<option <?= $member['id']===$team['leader_id'] ? "selected":"" ?> value="<?= esc($member["id"]) ?>"><?= esc($member["username"]) ?></option>
+							<option <?= $member['id']===$team->leader_id ? "selected":"" ?> value="<?= esc($member["id"]) ?>"><?= esc($member["username"]) ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('General.name') ?></label>
-					<input type="name" name="name" class="form-control" id="name" value="<?= esc($team['name']) ?>">
+					<input type="name" name="name" class="form-control" id="name" value="<?= esc($team->name) ?>">
 				</div>
 				<div class="form-group">
 					<label for="created_at"><?= lang('General.createdAt') ?></label>
-					<input disabled class="form-control" id="created_at" value="<?= esc($team['created_at']) ?>">
+					<input disabled class="form-control" id="created_at" value="<?= esc($team->created_at) ?>">
 				</div>
 				<div class="form-group">
 					<label for="updated_at"><?= lang('General.updatedAt') ?></label>
-					<input disabled class="form-control" id="updated_at" value="<?= esc($team['updated_at']) ?>">
+					<input disabled class="form-control" id="updated_at" value="<?= esc($team->updated_at) ?>">
 				</div>
 				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Team.updateTeam') ?></button>
 			</form>
 
 			<div class="mt-4">
-				<form action="/admin/teams/<?= esc($team['id']) ?>/delete" method="post">
+				<form action="/admin/teams/<?= esc($team->id) ?>/delete" method="post">
 					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Team.deleteTeam') ?></button>
 				</form>
 			</div>
 
 			<div class="mt-4">
-				<form action="/admin/teams/<?= esc($team['id']) ?>/authcode" method="post">
+				<form action="/admin/teams/<?= esc($team->id) ?>/authcode" method="post">
 					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-info btn-block"><?= lang('admin/Team.changeAuthCode') ?></button>
 				</form>
 			</div>
 
 			<div class="mt-4">
-				<?php if ($team['is_banned'] == '0') : ?>
-					<form action="/admin/teams/<?= esc($team['id']) ?>/ban" method="post">
+				<?php if ($team->is_banned == '0') : ?>
+					<form action="/admin/teams/<?= esc($team->id) ?>/ban" method="post">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Team.doBan') ?></button>
 					</form>
 				<?php else : ?>
-					<form action="/admin/teams/<?= esc($team['id']) ?>/unban" method="post">
+					<form action="/admin/teams/<?= esc($team->id) ?>/unban" method="post">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/Team.doUnban') ?></button>
 					</form>
@@ -116,7 +116,7 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Team.markAsSolved') ?></div>
 		<div class="card-body">
-			<form action="/admin/teams/<?= $team['id'] ?>/solves" method="post">
+			<form action="/admin/teams/<?= $team->id ?>/solves" method="post">
 				<?= csrf_field() ?>
 				<div class="form-row">
 					<div class="col-4">
@@ -167,7 +167,7 @@
 								<td><?= $challenge['solves_username'] ?></td>
 								<td><?= $challenge['solves_at'] ?></td>
 								<td>
-									<form action="/admin/teams/<?= $team['id'] ?>/solves/<?= $challenge['solves_id'] ?>/delete" method="post">
+									<form action="/admin/teams/<?= $team->id ?>/solves/<?= $challenge['solves_id'] ?>/delete" method="post">
 										<?= csrf_field() ?>
 										<button class="btn btn-danger btn-block"><?= lang('General.delete') ?></button>
 									</form>

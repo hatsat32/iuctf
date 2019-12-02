@@ -63,7 +63,7 @@ class ScoreboardController extends UserController
 		{
 			$total_point = 0;
 
-			$team_solves = array_column($this->teamSolves($solves, $team['id']), 'challenge_id');
+			$team_solves = array_column($this->teamSolves($solves, $team->id), 'challenge_id');
 
 			foreach ($challenges as $ch => $challenge)
 			{
@@ -80,9 +80,9 @@ class ScoreboardController extends UserController
 				}
 			}
 
-			$teamScores[$tm]['total_point'] = $total_point;
+			$teamScores[$tm]->total_point = $total_point;
 
-			$teamScores[$tm]['final'] = $teamScores[$tm]['total_point'] - $teamScores[$tm]['cost_sum'];
+			$teamScores[$tm]->final = $teamScores[$tm]->total_point - $teamScores[$tm]->cost_sum;
 		}
 
 		// sort by rating or solve time

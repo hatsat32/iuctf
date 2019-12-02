@@ -7,7 +7,7 @@ class TeamModel extends Model
 	protected $table      = 'teams';
 	protected $primaryKey = 'id';
 
-	// protected $returnType    = 'App\Entities\Team';
+	protected $returnType    = 'App\Entities\Team';
 
 	protected $allowedFields = [
 		'leader_id', 'name', 'auth_code', 'is_banned'

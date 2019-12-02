@@ -86,7 +86,7 @@ class AuthController extends Controller
 		{
 			$team = (new TeamModel())->find($user->team_id);
 
-			if ($team['is_banned'] == '1')
+			if ($team->is_banned == '1')
 			{
 				return redirect()->back()->withInput()->with('error', lang('admin/Team.banned'));
 			}

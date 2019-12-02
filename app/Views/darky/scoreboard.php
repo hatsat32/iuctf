@@ -17,8 +17,8 @@
 			<tbody>
 				<?php foreach($scores as $score): ?>
 				<tr class="table-active">
-					<td><?= esc($score['name']) ?></th>
-					<td><?= esc($score['final']) ?></td>
+					<td><?= esc($score->name) ?></th>
+					<td><?= esc($score->final) ?></td>
 				</tr>
 				<?php endforeach ?>
 			</tbody>

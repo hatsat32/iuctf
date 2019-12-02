@@ -40,7 +40,7 @@
 					<select name="team_id" class="form-control" id="team_id">
 						<option disabled selected value>--- <?= lang('admin/User.pickATeam') ?> ---</option>
 						<?php foreach($teams as $team): ?>
-							<option value="<?= esc($team["id"]) ?>"><?= esc($team["name"]) ?></option>
+							<option value="<?= esc($team->id) ?>"><?= esc($team->name) ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>

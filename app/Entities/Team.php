@@ -4,16 +4,10 @@ use CodeIgniter\Entity;
 
 class Team extends Entity
 {
-	// protected $id;
-	// protected $leader_id;
-	// protected $name;
-	// protected $auth_code;
-	// protected $is_banned;
-
 	protected $attributes = [
-		'id' => null,
+		'id'        => null,
 		'leader_id' => null,
-		'name' => null,
+		'name'      => null,
 		'auth_code' => null,
 		'is_banned' => null,
 	];
@@ -22,6 +16,6 @@ class Team extends Entity
 	{
 		$userModel = new \App\Models\UserModel();
 
-		return $userModel->find($this->leader_id);
+		return $userModel->find($this->attributes['leader_id']);
 	}
 }

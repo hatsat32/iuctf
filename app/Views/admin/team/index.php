@@ -34,14 +34,14 @@
 					<tbody>
 					<?php foreach($teams as $team): ?>
 						<tr>
-							<td><?= esc($team["id"]) ?></td>
-							<td><?= esc($team["leader_id"]) ?></td>
-							<td><?= esc($team["name"]) ?></td>
-							<td><?= esc($team["is_banned"]) ?></td>
-							<td><?= esc($team["created_at"]) ?></td>
-							<td><?= esc($team["updated_at"]) ?></td>
+							<td><?= esc($team->id) ?></td>
+							<td><?= esc($team->leader_id) ?></td>
+							<td><?= esc($team->name) ?></td>
+							<td><?= esc($team->is_banned) ?></td>
+							<td><?= esc($team->created_at) ?></td>
+							<td><?= esc($team->updated_at) ?></td>
 							<td>
-								<a class="btn btn-info btn-block" href="/admin/teams/<?= esc($team["id"]) ?>">
+								<a class="btn btn-info btn-block" href="/admin/teams/<?= esc($team->id) ?>">
 									<?= lang('General.detail') ?>
 								</a>
 							</td>

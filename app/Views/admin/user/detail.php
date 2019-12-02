@@ -35,7 +35,7 @@
 					<label for="team_id"><?= lang('admin/User.selectTeam') ?></label>
 					<select name="team_id" class="form-control" id="team_id">
 						<?php foreach($teams as $team): ?>
-							<option <?= $user['team_id']===$team['id'] ? "selected":"" ?> value="<?= esc($team["id"]) ?>"><?= esc($team["name"]) ?></option>
+							<option <?= $user['team_id']===$team->id ? "selected":"" ?> value="<?= esc($team->id) ?>"><?= esc($team->name) ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
