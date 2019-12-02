@@ -28,7 +28,7 @@
 					<label for="leader_id"><?= lang('admin/Team.leaderId') ?></label>
 					<select name="leader_id" class="form-control" id="leader_id">
 						<?php foreach($teamMembers as $member) : ?>
-							<option <?= $member['id']===$team->leader_id ? "selected":"" ?> value="<?= esc($member["id"]) ?>"><?= esc($member["username"]) ?></option>
+							<option <?= $member->id===$team->leader_id ? "selected":"" ?> value="<?= esc($member->id) ?>"><?= esc($member->username) ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -96,12 +96,12 @@
 					<tbody>
 						<?php foreach ($teamMembers as $member) : ?>
 						<tr>
-							<td><?= $member['id'] ?></td>
-							<td><?= $member['username'] ?></td>
-							<td><?= $member['name'] ?></td>
-							<td><?= $member['email'] ?></td>
+							<td><?= $member->id ?></td>
+							<td><?= $member->username ?></td>
+							<td><?= $member->name ?></td>
+							<td><?= $member->email ?></td>
 							<td>
-								<a href="/admin/users/<?= $member['id'] ?>" class="btn btn-primary btn-block"><?= lang('General.detail') ?></a>
+								<a href="/admin/users/<?= $member->id ?>" class="btn btn-primary btn-block"><?= lang('General.detail') ?></a>
 							</td>
 						</tr>
 						<?php endforeach ?>
@@ -124,7 +124,7 @@
 							<select name="user_id" class="form-control" id="user_id" required>
 								<option disabled selected value><?= lang('admin/Team.selectUser') ?></option>
 								<?php foreach($teamMembers as $member) : ?>
-									<option value="<?= esc($member["id"]) ?>"><?= esc($member["username"]) ?></option>
+									<option value="<?= esc($member->id) ?>"><?= esc($member->username) ?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>
@@ -162,10 +162,10 @@
 						<?php foreach ($challenges as $challenge) : ?>
 							<?php if ($challenge['solves_id'] !== null) : ?>
 							<tr>
-								<td><?= $challenge['solves_id'] ?></td>
-								<td><?= $challenge['name'] ?></td>
-								<td><?= $challenge['solves_username'] ?></td>
-								<td><?= $challenge['solves_at'] ?></td>
+								<td><?= esc($challenge['solves_id']) ?></td>
+								<td><?= esc($challenge['name']) ?></td>
+								<td><?= esc($challenge['solves_username']) ?></td>
+								<td><?= esc($challenge['solves_at']) ?></td>
 								<td>
 									<form action="/admin/teams/<?= $team->id ?>/solves/<?= $challenge['solves_id'] ?>/delete" method="post">
 										<?= csrf_field() ?>

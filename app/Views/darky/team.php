@@ -46,7 +46,7 @@
 			<h3 class="card-header"><?= lang('Home.teamMembers') ?></h3>
 			<ul class="list-group list-group-flush">
 				<?php foreach($team_members as $member): ?>
-					<li class="list-group-item"><?= esc($member['username']) ?></li>
+					<li class="list-group-item"><?= esc($member->username) ?></li>
 				<?php endforeach ?>
 			</ul>
 		</div>
@@ -61,7 +61,7 @@
 			<tbody>
 				<tr>
 					<th><?= lang('Home.teamLeader') ?></th>
-					<td><?= esc($team->leader()['username']) ?></td>
+					<td><?= esc($team->leader()->username) ?></td>
 				</tr>
 				<tr>
 					<th><?= lang('Home.teamName') ?></th>

@@ -87,11 +87,11 @@ class ScoreboardController extends UserController
 
 		// sort by rating or solve time
 		usort($teamScores, function($a, $b) {
-			$retval =  $b['final'] <=> $a['final'];
+			$retval =  $b->final <=> $a->final;
 
 			if ($retval == 0)
 			{
-				$retval = $a['lastsolve'] <=> $b['lastsolve'];
+				$retval = $a->lastsolve <=> $b->lastsolve;
 			}
 
 			return $retval;

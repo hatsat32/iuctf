@@ -34,14 +34,14 @@
                     <tbody>
 					<?php foreach($users as $user): ?>
                         <tr>
-                            <td><?= esc($user["id"]) ?></td>
-                            <td><?= esc($user["team_id"]) ?></td>
-                            <td><?= esc($user["username"]) ?></td>
-                            <td><?= esc($user["name"]) ?></td>
-                            <td><?= esc($user["email"]) ?></td>
-                            <td><?= esc($user["created_at"]) ?></td>
-                            <td><?= esc($user["updated_at"]) ?></td>
-							<td><a href="/admin/users/<?= esc($user["id"]) ?>" class="btn btn-info btn-block"><?= lang('General.detail') ?></a></td>
+                            <td><?= esc($user->id) ?></td>
+                            <td><?= esc($user->team_id) ?></td>
+                            <td><?= esc($user->username) ?></td>
+                            <td><?= esc($user->name) ?></td>
+                            <td><?= esc($user->email) ?></td>
+                            <td><?= esc($user->created_at) ?></td>
+                            <td><?= esc($user->updated_at) ?></td>
+							<td><a href="/admin/users/<?= esc($user->id) ?>" class="btn btn-info btn-block"><?= lang('General.detail') ?></a></td>
                         </tr>
 					<?php endforeach ?>
                     </tbody>

@@ -48,7 +48,7 @@ class MakeAdmin extends BaseCommand
 
 		try
 		{
-			$auth->addUserToGroup($user['id'], 'admin');
+			$auth->addUserToGroup($user->id, 'admin');
 			CLI::write('Success!', 'yellow');
 		}
 		catch (\Exception $e)

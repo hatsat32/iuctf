@@ -29,17 +29,17 @@
 				<div class="form-group">
 					<label for="username"><?= lang('Home.enterUsername') ?></label>
 					<input type="text" name="username" class="form-control form-control-lg" id="username"
-					value="<?= esc($user['username']) ?>">
+					value="<?= esc($user->username) ?>">
 				</div>
 				<div class="form-group">
 					<label for="email"><?= lang('Home.enterEmail') ?></label>
 					<input type="email" name="email" class="form-control form-control-lg" id="email"
-					value="<?= esc($user['email']) ?>">
+					value="<?= esc($user->email) ?>">
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('Home.enterName') ?></label>
 					<input type="text" name="name" class="form-control form-control-lg" id="name"
-					value="<?= esc($user['name']) ?>">
+					value="<?= esc($user->name) ?>">
 				</div>
 				<div class="form-group">
 					<label for="password-present"><?= lang('General.password') ?></label>
