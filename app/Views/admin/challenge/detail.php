@@ -137,12 +137,12 @@
 					<tbody>
 					<?php foreach($flags as $flag): ?>
 						<tr>
-							<td><?= lang("admin/Challenge.{$flag['type']}") ?></td>
-							<td><?= esc($flag["content"]) ?></td>
+							<td><?= lang("admin/Challenge.{$flag->type}") ?></td>
+							<td><?= esc($flag->content) ?></td>
 							<td>
-								<form action="/admin/challenges/<?= $challenge['id'] ?>/flags/<?= esc($flag['id']) ?>/delete" method="post">
+								<form action="/admin/challenges/<?= $challenge['id'] ?>/flags/<?= esc($flag->id) ?>/delete" method="post">
 									<?= csrf_field() ?>
-									<input type="hidden" name="flag" value=" <?= esc($flag['id']) ?>">
+									<input type="hidden" name="flag" value=" <?= esc($flag->id) ?>">
 									<button class="btn btn-danger btn-block" type="submit"><?= lang('General.delete') ?></button>
 								</form>
 							</td>

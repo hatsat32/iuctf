@@ -101,12 +101,12 @@ class ChallengeController extends UserController
 		$result = false;
 		foreach ($flags as $flag)
 		{
-			if ($flag['type'] === 'static' && $flag['content'] === $submited_flag)
+			if ($flag->type === 'static' && $flag->content === $submited_flag)
 			{
 				$result = true;
 				break;
 			}
-			else if ($flag['type'] === 'regex' && preg_match("/{$flag['content']}/", $submited_flag))
+			else if ($flag->type === 'regex' && preg_match("/{$flag->content}/", $submited_flag))
 			{
 				$result = true;
 				break;
