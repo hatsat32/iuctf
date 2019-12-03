@@ -56,7 +56,7 @@ class ScoreboardController extends UserController
 
 		foreach ($challenges as $ch => $challenge)
 		{
-			$challenges[$ch]['d_point'] = $this->calculatePoint($challenge['point'], $challenge['solve_count']);
+			$challenges[$ch]->d_point = $this->calculatePoint($challenge->point, $challenge->solve_count);
 		}
 
 		foreach ($teamScores as $tm => $team)
@@ -67,15 +67,15 @@ class ScoreboardController extends UserController
 
 			foreach ($challenges as $ch => $challenge)
 			{
-				if (in_array($challenge['id'], $team_solves))
+				if (in_array($challenge->id, $team_solves))
 				{
-					if ($challenge['type'] === 'dynamic')
+					if ($challenge->type === 'dynamic')
 					{
-						$total_point += $challenge['d_point'];
+						$total_point += $challenge->d_point;
 					}
 					else
 					{
-						$total_point += $challenge['point'];
+						$total_point += $challenge->point;
 					}
 				}
 			}

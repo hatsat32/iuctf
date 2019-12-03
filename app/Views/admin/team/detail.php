@@ -134,8 +134,8 @@
 							<select name="challenge_id" class="form-control" id="challenge_id" required>
 								<option disabled selected value><?= lang('admin/Team.selectChallenge') ?></option>
 								<?php foreach($challenges as $challenge) : ?>
-									<?php if ($challenge['solves_id'] === null) : ?>
-										<option value="<?= esc($challenge["id"]) ?>"><?= esc($challenge["name"]) ?></option>
+									<?php if ($challenge->solves_id === null) : ?>
+										<option value="<?= esc($challenge->id) ?>"><?= esc($challenge->name) ?></option>
 									<?php endif ?>
 								<?php endforeach; ?>
 							</select>
@@ -160,14 +160,14 @@
 					</thead>
 					<tbody>
 						<?php foreach ($challenges as $challenge) : ?>
-							<?php if ($challenge['solves_id'] !== null) : ?>
+							<?php if ($challenge->solves_id !== null) : ?>
 							<tr>
-								<td><?= esc($challenge['solves_id']) ?></td>
-								<td><?= esc($challenge['name']) ?></td>
-								<td><?= esc($challenge['solves_username']) ?></td>
-								<td><?= esc($challenge['solves_at']) ?></td>
+								<td><?= esc($challenge->solves_id) ?></td>
+								<td><?= esc($challenge->name) ?></td>
+								<td><?= esc($challenge->solves_username) ?></td>
+								<td><?= esc($challenge->solves_at) ?></td>
 								<td>
-									<form action="/admin/teams/<?= $team->id ?>/solves/<?= $challenge['solves_id'] ?>/delete" method="post">
+									<form action="/admin/teams/<?= $team->id ?>/solves/<?= $challenge->solves_id ?>/delete" method="post">
 										<?= csrf_field() ?>
 										<button class="btn btn-danger btn-block"><?= lang('General.delete') ?></button>
 									</form>

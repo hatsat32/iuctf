@@ -12,7 +12,6 @@
 		<a class="btn btn-primary btn-block" href="/admin/challenges/new"><?= lang('General.add') ?></a>
 	</div>
 
-	<!-- DataTables Example -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-user-friends"></i>
@@ -33,13 +32,13 @@
 					<tbody>
 					<?php foreach($challenges as $challenge): ?>
 						<tr>
-							<td><?= esc($challenge["id"]) ?></td>
-							<td><?= esc($challenge["category_id"]) ?></td>
-							<td><?= esc($challenge["name"]) ?></td>
-							<td><?= esc($challenge["point"]) ?></td>
-							<td><?= esc($challenge["is_active"]) ?></td>
+							<td><?= esc($challenge->id) ?></td>
+							<td><?= esc($challenge->category_id) ?></td>
+							<td><?= esc($challenge->name) ?></td>
+							<td><?= esc($challenge->point) ?></td>
+							<td><?= esc($challenge->is_active) ?></td>
 							<td>
-								<a class="btn btn-info btn-block" href="/admin/challenges/<?= esc($challenge["id"]) ?>">
+								<a class="btn btn-info btn-block" href="/admin/challenges/<?= esc($challenge->id) ?>">
 									<?= lang('General.detail') ?>
 								</a>
 							</td>

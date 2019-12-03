@@ -49,7 +49,7 @@ class ChallengeController extends UserController
 
 		foreach ($categories as $c_key => $c_val) {
 			$arr = array_filter($challenges, function($challenge) use ($c_val) {
-				return $challenge['category_id'] == $c_val['id'];
+				return $challenge->category_id == $c_val['id'];
 			});
 
 			if(! empty($arr))
@@ -115,12 +115,12 @@ class ChallengeController extends UserController
 
 		$submitModel = new \App\Models\SubmitModel();
 		$data = [
-			'challenge_id'  => $challengeID,
-			'user_id'		=> user()->id,
-			'team_id'		=> user()->team_id,
-			'ip'			=> $this->request->getIPAddress(),
-			'provided'		=> $submited_flag,
-			'type'			=> $result ? '1':'0',
+			'challenge_id' => $challengeID,
+			'user_id'      => user()->id,
+			'team_id'      => user()->team_id,
+			'ip'           => $this->request->getIPAddress(),
+			'provided'     => $submited_flag,
+			'type'         => $result ? '1':'0',
 		];
 		$submitModel->insert($data);
 
@@ -130,8 +130,8 @@ class ChallengeController extends UserController
 		}
 
 		$data = [
-			'challenge_id'	=> $challengeID,
-			'team_id'		=> user()->team_id,
+			'challenge_id' => $challengeID,
+			'team_id'      => user()->team_id,
 		];
 
 		$solved_before = $this->solvesModel->where($data)->find();
@@ -163,10 +163,10 @@ class ChallengeController extends UserController
 		$hintUnlockModel = new HintUnlockModel();
 
 		$data = [
-			'hint_id'		=> $hintID,
-			'user_id'		=> user()->id,
-			'team_id'		=> user()->team_id,
-			'challenge_id'	=> $challengeID,
+			'hint_id'      => $hintID,
+			'user_id'      => user()->id,
+			'team_id'      => user()->team_id,
+			'challenge_id' => $challengeID,
 		];
 
 		$result = $hintUnlockModel->insert($data);

@@ -13,30 +13,30 @@
 
 <div class="row">
 	<div class="col-md-4 my-2">
-		<?php foreach ($categories as $category): ?>
+		<?php foreach ($categories as $category) : ?>
 			<?php if (isset($category['challenges']) === true): ?>
 				<div class="card border-secondary mb-3">
-					<h4 class="card-header"><?=esc($category['name'])?></h4>
+					<h4 class="card-header"><?= esc($category['name']) ?></h4>
 					<div class="list-group list-group-flush">
 						<?php foreach ($category['challenges'] as $ch): ?>
-							<a href="/challenges/<?=$ch['id']?>" class="list-group-item list-group-item-action p-2 <?= in_array($ch['id'], $solves)? 'text-success':'text-danger' ?>">
-								<?=esc($ch['name'])?> (<?=esc($ch['point'])?>)</a>
-						<?php endforeach?>
+							<a href="/challenges/<?= $ch->id ?>" class="list-group-item list-group-item-action p-2 <?= in_array($ch->id, $solves) ? 'text-success':'text-danger' ?>">
+								<?= esc($ch->name) ?> (<?= esc($ch->point) ?>)</a>
+						<?php endforeach ?>
 					</div>
 				</div>
-			<?php endif?>
-		<?php endforeach?>
+			<?php endif ?>
+		<?php endforeach ?>
 	</div>
 
 
 	<div class="col-md-8">
-		<?php if(isset($challenge)): ?>
+		<?php if(isset($challenge)) : ?>
 			<div class="card m-2">
-				<h3 class="card-header <?= in_array($challenge['id'], $solves)? 'bg-success':'bg-danger' ?>"><?= esc($challenge['name']) ?></h3>
-				<h3 class="card-title text-center text-info my-2"><?= esc($challenge['point']).' '.lang('General.point')?></h3>
+				<h3 class="card-header <?= in_array($challenge->id, $solves) ? 'bg-success':'bg-danger' ?>"><?= esc($challenge->name) ?></h3>
+				<h3 class="card-title text-center text-info my-2"><?= esc($challenge->point).' '.lang('General.point')?></h3>
 
 				<div class="card-body">
-					<p class="card-text lead"><?= esc($challenge['description']) ?></p>
+					<p class="card-text lead"><?= esc($challenge->description) ?></p>
 				</div>
 
 				<?php if(! empty($files)): ?>
@@ -63,7 +63,7 @@
 								</li>
 								<?php else: ?>
 								<li class="list-group-item text-info">
-									<form action="/challenges/<?= $challenge['id'] ?>/hints/<?= $hint['id'] ?>" method="post">
+									<form action="/challenges/<?= esc($challenge->id) ?>/hints/<?= esc($hint['id']) ?>" method="post">
 										<?= csrf_field() ?>
 										<button class="btn btn-primary btn-block" type="submit">
 											<?= lang('Home.hintUnlock').' ('.$hint['cost'].' '.lang('General.point').')' ?>
@@ -108,7 +108,7 @@
 
 				<div class="card-footer text-muted">
 					<div class="w-100">
-						<form class="" action="/challenges/<?= esc($challenge['id']) ?>" method="post">
+						<form class="" action="/challenges/<?= esc($challenge->id) ?>" method="post">
 							<?= csrf_field() ?>
 							<div class="form-row">
 								<div class="col-9">
