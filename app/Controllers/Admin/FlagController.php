@@ -46,36 +46,36 @@ class FlagController extends AdminController
 
 	public function create($challengeID = null)
 	{
-        $data = [
-            'challenge_id'  => $challengeID,
-            'type'          => $this->request->getPost('type'),
-            'content'       => $this->request->getPost('content'),
-        ];
+		$data = [
+			'challenge_id'  => $challengeID,
+			'type'          => $this->request->getPost('type'),
+			'content'       => $this->request->getPost('content'),
+		];
 
-        $result = $this->flagModel->insert($data);
+		$result = $this->flagModel->insert($data);
 
-        if (! $result)
-        {
-            $errors = $this->flagModel->errors();
-            return redirect()->to("/admin/challenges/$challengeID");
-        }
+		if (! $result)
+		{
+			$errors = $this->flagModel->errors();
+			return redirect()->to("/admin/challenges/$challengeID");
+		}
 
-        return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->to("/admin/challenges/$challengeID");
 	}
 
 	//--------------------------------------------------------------------
 
 	public function delete($challengeID = null, $flagID = null)
 	{
-        $result = $this->flagModel->delete($flagID);
+		$result = $this->flagModel->delete($flagID);
 
-        if (! $result)
-        {
-            $errors = $this->flagModel->errors();
-            return redirect()->to("/admin/challenges/$challengeID");
-        }
+		if (! $result)
+		{
+			$errors = $this->flagModel->errors();
+			return redirect()->to("/admin/challenges/$challengeID");
+		}
 
-        return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->to("/admin/challenges/$challengeID");
 	}
 
 	//--------------------------------------------------------------------

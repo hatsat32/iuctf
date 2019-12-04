@@ -12,12 +12,9 @@ class HintModel extends Model
 	];
 
 	protected $validationRules = [
-        'challenge_id'	=> 'required|numeric',
-        'content'		=> 'required',
-        'cost'			=> 'required|numeric',
-        'is_active'		=> 'required|numeric|in_list[0,1]',
+		'challenge_id' => 'required|numeric',
+		'content'      => 'required',
+		'cost'         => 'required|numeric',
+		'is_active'    => 'required|numeric|in_list[0,1]',
 	];
-	
-	protected $validationMessages = [];
-	protected $skipValidation = false;
 }

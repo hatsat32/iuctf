@@ -29,8 +29,8 @@ class FileController extends AdminController
 			$file->move(FCPATH.'uploads', $name);
 
 			$data = [
-				'challenge_id'	=> $challengeID,
-				'location'		=> $name,
+				'challenge_id' => $challengeID,
+				'location'     => $name,
 			];
 
 			$this->fileModel->insert($data);

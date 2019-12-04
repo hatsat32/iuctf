@@ -49,9 +49,9 @@ class ProfileController extends UserController
 		}
 
 		$data = [
-			'username'	=> $this->request->getPost('username'),
-			'email'		=> $this->request->getPost('email'),
-			'name'		=> $this->request->getPost('name'),
+			'username' => $this->request->getPost('username'),
+			'email'    => $this->request->getPost('email'),
+			'name'     => $this->request->getPost('name'),
 		];
 
 		$result = $this->userModel->update(user()->id, $data);
@@ -73,9 +73,9 @@ class ProfileController extends UserController
 		$user = user();
 
 		$rules = [
-			'password-old'		=> 'required',
-			'password'			=> 'required|strong_password',
-			'password-confirm'	=> 'required|matches[password]',
+			'password-old'     => 'required',
+			'password'         => 'required|strong_password',
+			'password-confirm' => 'required|matches[password]',
 		];
 
 		if (! $this->validate($rules))

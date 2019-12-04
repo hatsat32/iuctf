@@ -47,21 +47,21 @@ class HintController extends AdminController
 	public function create($challengeID = null)
 	{
 		$data = [
-			'challenge_id'	=> $challengeID,
-			'cost'			=> $this->request->getPost('cost'),
-			'content'		=> $this->request->getPost('content'),
-			'is_active'		=> $this->request->getPost('is_active'),
+			'challenge_id' => $challengeID,
+			'cost'         => $this->request->getPost('cost'),
+			'content'      => $this->request->getPost('content'),
+			'is_active'    => $this->request->getPost('is_active'),
 		];
 
 		$result = $this->hintModel->insert($data);
 
 		if (! $result)
-        {
-            $errors = $this->hintModel->errors();
-            return redirect()->to("/admin/challenges/$challengeID");
-        }
+		{
+			$errors = $this->hintModel->errors();
+			return redirect()->to("/admin/challenges/$challengeID");
+		}
 
-        return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->to("/admin/challenges/$challengeID");
 	}
 
 	//--------------------------------------------------------------------
@@ -71,12 +71,12 @@ class HintController extends AdminController
 		$result = $this->hintModel->delete($hintID);
 
 		if (! $result)
-        {
-            $errors = $this->hintModel->errors();
-            return redirect()->back()->with('errors', $errors);
-        }
+		{
+			$errors = $this->hintModel->errors();
+			return redirect()->back()->with('errors', $errors);
+		}
 
-        return redirect()->back();
+		return redirect()->back();
 	}
 
 	//--------------------------------------------------------------------
@@ -84,19 +84,19 @@ class HintController extends AdminController
 	public function update($challengeID = null, $id = null)
 	{
 		$data = [
-			'cost'			=> $this->request->getPost('cost'),
-			'content'		=> $this->request->getPost('content'),
-			'is_active'		=> $this->request->getPost('is_active'),
+			'cost'      => $this->request->getPost('cost'),
+			'content'   => $this->request->getPost('content'),
+			'is_active' => $this->request->getPost('is_active'),
 		];
 
 		$result = $this->hintModel->update($id, $data);
 
 		if (! $result)
-        {
-            $errors = $this->hintModel->errors();
-            return redirect()->back()->with('errors', $errors);
-        }
+		{
+			$errors = $this->hintModel->errors();
+			return redirect()->back()->with('errors', $errors);
+		}
 
-        return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->to("/admin/challenges/$challengeID");
 	}
 }

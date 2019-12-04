@@ -72,9 +72,9 @@ class TeamController extends AdminController
 	{
 		$data = [
 			'leader_id' => $this->request->getPost('leader_id'),
-			'name'		=> $this->request->getPost('name'),
-			'is_banned'	=> '0',
-			'auth_code'	=> bin2hex(random_bytes(32)),
+			'name'      => $this->request->getPost('name'),
+			'is_banned' => '0',
+			'auth_code' => bin2hex(random_bytes(32)),
 		];
 
 		$result = $this->teamModel->insert($data);
@@ -110,8 +110,8 @@ class TeamController extends AdminController
 		$teamMembers = $this->userModel->where('team_id', $id)->findColumn('id') ?? [];
 
 		$data = [
-			'name'		=> $this->request->getPost('name'),
-			'leader_id'	=> $this->request->getPost('leader_id'),
+			'name'      => $this->request->getPost('name'),
+			'leader_id' => $this->request->getPost('leader_id'),
 		];
 
 		if (! in_array($this->request->getPost('leader_id'), $teamMembers))
@@ -135,7 +135,7 @@ class TeamController extends AdminController
 	public function changeAuthCode($id = null)
 	{
 		$data = [
-			'auth_code'	=> bin2hex(random_bytes(32)),
+			'auth_code' => bin2hex(random_bytes(32)),
 		];
 
 		$result = $this->teamModel->update($id, $data);
@@ -155,9 +155,9 @@ class TeamController extends AdminController
 		$solvesModel = new SolvesModel();
 
 		$data = [
-			'team_id'		=> $id,
-			'challenge_id'	=> $this->request->getPost('challenge_id'),
-			'user_id'		=> $this->request->getPost('user_id'),
+			'team_id'      => $id,
+			'challenge_id' => $this->request->getPost('challenge_id'),
+			'user_id'      => $this->request->getPost('user_id'),
 		];
 
 		$result = $solvesModel->insert($data);

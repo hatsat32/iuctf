@@ -13,7 +13,7 @@ class ConfigController extends AdminController
 		parent::initController($request, $response, $logger);
 
 		$this->configModel = new ConfigModel();
-		$this->validation =  \Config\Services::validation();
+		$this->validation  =  \Config\Services::validation();
 	}
 
 	//--------------------------------------------------------------------

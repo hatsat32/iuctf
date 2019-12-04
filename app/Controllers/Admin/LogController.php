@@ -30,8 +30,8 @@ class LogController extends AdminController
 								->orderBy('submits.created_at', 'DESC');
 
 		$viewData = [
-			'submits'	=> $query->paginate(100),
-			'pager'		=> $query->pager,
+			'submits' => $query->paginate(100),
+			'pager'   => $query->pager,
 		];
 
 		return $this->render('log/submits', $viewData);
@@ -45,8 +45,8 @@ class LogController extends AdminController
 		$loginModel->asArray();
 
 		$viewData = [
-			'logins'	=> $loginModel->paginate(100),
-			'pager'		=> $loginModel->pager,
+			'logins' => $loginModel->paginate(100),
+			'pager'  => $loginModel->pager,
 		];
 
 		return $this->render('log/logins', $viewData);

@@ -24,12 +24,12 @@ class ChallengeController extends UserController
 	{
 		parent::initController($request, $response, $logger);
 		
-		$this->challengeModel	= new ChallengeModel();
-		$this->categorygeModel	= new CategoryModel();
-		$this->solvesModel		= new SolvesModel();
-		$this->hintModel		= new HintModel();
-		$this->fileModel		= new FileModel();
-		$this->flagModel		= new FlagModel();
+		$this->challengeModel  = new ChallengeModel();
+		$this->categorygeModel = new CategoryModel();
+		$this->solvesModel     = new SolvesModel();
+		$this->hintModel       = new HintModel();
+		$this->fileModel       = new FileModel();
+		$this->flagModel       = new FlagModel();
 	}
 
 	//--------------------------------------------------------------------

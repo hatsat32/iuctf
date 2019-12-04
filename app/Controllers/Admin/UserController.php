@@ -62,10 +62,10 @@ class UserController extends AdminController
 	public function create()
 	{
 		$data = [
-			'username' => $this->request->getPost('username'),
-			'email' => $this->request->getPost('email'),
-			'name' => $this->request->getPost('name'),
-			'team_id' => $this->request->getPost('team_id'),
+			'username'      => $this->request->getPost('username'),
+			'email'         => $this->request->getPost('email'),
+			'name'          => $this->request->getPost('name'),
+			'team_id'       => $this->request->getPost('team_id'),
 			'password_hash' => password_hash(
 				base64_encode(
 					hash('sha384', $this->request->getPost('password'), true)
@@ -75,7 +75,7 @@ class UserController extends AdminController
 		];
 
 		$rules = array_merge($this->userModel->getValidationRules(['only' => ['email', 'username']]), [
-			'password'	 => 'required|strong_password',
+			'password'         => 'required|strong_password',
 			'password-confirm' => 'required|matches[password]',
 		]);
 
@@ -139,8 +139,8 @@ class UserController extends AdminController
 		$user = $authUserModel->find($user_id);
 
 		$rules = [
-			'password'			=> 'required|strong_password',
-			'password-confirm'	=> 'required|matches[password]',
+			'password'         => 'required|strong_password',
+			'password-confirm' => 'required|matches[password]',
 		];
 
 		if (! $this->validate($rules))

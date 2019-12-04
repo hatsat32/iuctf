@@ -12,7 +12,7 @@ class FileModel extends Model
 	];
 
 	protected $validationRules = [
-        'challenge_id'      => 'required|numeric',
-        'location'          => 'required|string',
+		'challenge_id' => 'required|numeric',
+		'location'     => 'required|string',
 	];
 }

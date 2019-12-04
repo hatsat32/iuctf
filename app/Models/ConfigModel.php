@@ -12,8 +12,8 @@ class ConfigModel extends Model
 	];
 
 	protected $validationRules = [
-		'key'			=> 'required|alpha_numeric',
-		'description'     => 'required',
+		'key'         => 'required|alpha_numeric',
+		'description' => 'required',
 	];
 	
 	protected $validationMessages = [];

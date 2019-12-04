@@ -54,8 +54,8 @@
 	</div>
 
 	<script>
-        $(document).ready(function() {
-            $("#teams-table").DataTable();
-        });
-    </script>
+		$(document).ready(function() {
+			$("#teams-table").DataTable();
+		});
+	</script>
 <?= $this->endSection() ?>

@@ -54,9 +54,9 @@ class TeamController extends UserController
 
 		$data = [
 			'leader_id' => user()->id,
-			'name'		=> $this->request->getPost('name'),
-			'is_banned'	=> '0',
-			'auth_code'	=> bin2hex(random_bytes(32)),
+			'name'      => $this->request->getPost('name'),
+			'is_banned' => '0',
+			'auth_code' => bin2hex(random_bytes(32)),
 		];
 
 		$team_id = $this->teamModel->insert($data);

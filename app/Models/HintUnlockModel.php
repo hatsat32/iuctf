@@ -12,12 +12,9 @@ class HintUnlockModel extends Model
 	];
 
 	protected $validationRules = [
-        'hint_id'		=> 'required|numeric',
-        'user_id'		=> 'required|numeric',
-        'team_id'		=> 'required|numeric',
-        'challenge_id'	=> 'required|numeric',
+		'hint_id'      => 'required|numeric',
+		'user_id'      => 'required|numeric',
+		'team_id'      => 'required|numeric',
+		'challenge_id' => 'required|numeric',
 	];
-	
-	protected $validationMessages = [];
-	protected $skipValidation = false;
 }

@@ -12,10 +12,7 @@ class CategoryModel extends Model
 	];
 
 	protected $validationRules = [
-		'name'			=> 'required|alpha_numeric_space',
-		// 'description'     => 'alpha_numeric_space',
+		'name'        => 'required|alpha_numeric_space',
+		'description' => 'alpha_numeric_space',
 	];
-	
-	protected $validationMessages = [];
-	protected $skipValidation = false;
 }

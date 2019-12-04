@@ -3,8 +3,8 @@
 <?= $this->section('content') ?>
 
 	<div class="my-4 text-center">
-        <h1><?= lang('Home.hash') ?></h1>
-    </div>
+		<h1><?= lang('Home.hash') ?></h1>
+	</div>
 
 	<form action="/hash" method="post">
 		<?= csrf_field() ?>

@@ -51,11 +51,11 @@ class ChallengeController extends AdminController
 		$fileModel = new FileModel();
 		$flagModel = new FlagModel();
 	
-		$viewData['challenge'] = $this->challengeModel->find($id);
-		$viewData['categories']	= $this->categoryModel->findAll();
-		$viewData['flags'] = $flagModel->where('challenge_id', $id)->findAll();
-		$viewData['hints'] = $hintModel->where('challenge_id', $id)->findAll();
-		$viewData['files'] = $fileModel->where('challenge_id', $id)->findAll();
+		$viewData['challenge']  = $this->challengeModel->find($id);
+		$viewData['categories'] = $this->categoryModel->findAll();
+		$viewData['flags']      = $flagModel->where('challenge_id', $id)->findAll();
+		$viewData['hints']      = $hintModel->where('challenge_id', $id)->findAll();
+		$viewData['files']      = $fileModel->where('challenge_id', $id)->findAll();
 	
 		return $this->render('challenge/detail', $viewData);
 	}
@@ -65,21 +65,21 @@ class ChallengeController extends AdminController
 	public function create()
 	{
 		$data = [
-			'category_id'	=> $this->request->getPost('category_id'),
-			'name'			=> $this->request->getPost('name'),
-			'description'	=> $this->request->getPost('description'),
-			'point'			=> $this->request->getPost('point'),
-			'max_attempts'	=> empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
-			'type'			=> $this->request->getPost('type'),
-			'is_active'		=> $this->request->getPost('is_active'),
+			'category_id'  => $this->request->getPost('category_id'),
+			'name'         => $this->request->getPost('name'),
+			'description'  => $this->request->getPost('description'),
+			'point'        => $this->request->getPost('point'),
+			'max_attempts' => empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
+			'type'         => $this->request->getPost('type'),
+			'is_active'    => $this->request->getPost('is_active'),
 		];
 
 		$result = $this->challengeModel->insert($data);
 
 		if (! $result)
 		{
-			$viewData['errors'] 	= $this->challengeModel->errors();
-			$viewData['categories']	= $this->categoryModel->findAll();
+			$viewData['errors']     = $this->challengeModel->errors();
+			$viewData['categories'] = $this->categoryModel->findAll();
 			return redirect()->to('/admin/challenges/new')->withInput();
 		}
 
@@ -106,13 +106,13 @@ class ChallengeController extends AdminController
 	public function update($id = null)
 	{
 		$data = [
-			'category_id'	=> $this->request->getPost('category_id'),
-			'name'			=> $this->request->getPost('name'),
-			'description'	=> $this->request->getPost('description'),
-			'point'			=> $this->request->getPost('point'),
-			'max_attempts'	=> empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
-			'type'			=> $this->request->getPost('type'),
-			'is_active'		=> $this->request->getPost('is_active'),
+			'category_id'  => $this->request->getPost('category_id'),
+			'name'         => $this->request->getPost('name'),
+			'description'  => $this->request->getPost('description'),
+			'point'        => $this->request->getPost('point'),
+			'max_attempts' => empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
+			'type'         => $this->request->getPost('type'),
+			'is_active'    => $this->request->getPost('is_active'),
 		];
 
 		$result = $this->challengeModel->update($id, $data);

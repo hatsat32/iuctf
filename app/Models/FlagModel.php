@@ -14,9 +14,9 @@ class FlagModel extends Model
 	];
 
 	protected $validationRules = [
-		'challenge_id'  => 'numeric',
-		'type'          => 'required|in_list[static,regex]',
-		'content'       => 'required|min_length[3]',
+		'challenge_id' => 'numeric',
+		'type'         => 'required|in_list[static,regex]',
+		'content'      => 'required|min_length[3]',
 	];
 	
 	protected $useTimestamps = true;

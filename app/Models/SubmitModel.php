@@ -12,14 +12,11 @@ class SubmitModel extends Model
 	];
 
 	protected $validationRules = [
-        'challenge_id'  => 'required|numeric',
-        'user_id'		=> 'required|numeric',
-        'team_id'		=> 'required|numeric',
-        'ip'			=> 'required|valid_ip[ipv4,ipv6]',
-        'provided'		=> 'required|string',
-        'type'			=> 'required|in_list[0,1]',
+		'challenge_id' => 'required|numeric',
+		'user_id'      => 'required|numeric',
+		'team_id'      => 'required|numeric',
+		'ip'           => 'required|valid_ip[ipv4,ipv6]',
+		'provided'     => 'required|string',
+		'type'         => 'required|in_list[0,1]',
 	];
-	
-	protected $validationMessages = [];
-	protected $skipValidation = false;
 }
