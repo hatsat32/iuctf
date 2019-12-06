@@ -44,7 +44,7 @@ class InitialTables extends Migration
 		$this->forge->addField([
 			'id'          => ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
 			'name'        => ['type' => 'varchar', 'constraint' => '100', 'unique' => true],
-			'description' => ['type' => 'varchar', 'constraint' => '250'],
+			'description' => ['type' => 'varchar', 'constraint' => '250', 'null' => true],
 			'created_at'  => ['type' => 'datetime', 'null' => true],
 			'updated_at'  => ['type' => 'datetime', 'null' => true],
 		]);
