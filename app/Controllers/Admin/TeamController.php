@@ -70,22 +70,63 @@ class TeamController extends AdminController
 
 	public function create()
 	{
+		$leader = $this->userModel
+				->where('username', $this->request->getPost('leader_username'))
+				->first();
+
+		// make sure user found
+		if ($leader === null)
+		{
+			$error = lang('admin/Team.noUserFound');
+			return redirect()->to('/admin/teams/new')->withInput()->with('error', $error);
+		}
+
+		// user dont have team
+		if ($leader->team_id !== null)
+		{
+			$error = lang('admin/Team.userAlreadyHaveTeam');
+			return redirect()->to('/admin/teams/new')->withInput()->with('error', $error);
+		}
+
 		$data = [
-			'leader_id' => $this->request->getPost('leader_id'),
+			'leader_id' => $leader->id,
 			'name'      => $this->request->getPost('name'),
 			'is_banned' => '0',
 			'auth_code' => bin2hex(random_bytes(32)),
 		];
 
-		$result = $this->teamModel->insert($data);
-
-		if (! $result)
+		try
 		{
-			$errors = $this->teamModel->errors();
-			return redirect()->to('/admin/teams/new');
+			$teamID = $this->teamModel->insert($data);
+		}
+		catch (\Exception $e)
+		{
+			// team exist with this name
+			if ($e->getCode() === 1062)
+			{
+				return redirect()->to('/admin/teams/new')->withInput()->with('error', lang('admin/Team.teamExistWithThisName'));
+			}
+
+			return redirect()->to('/admin/teams/new')->withInput()->with('error', $e->getMessage());
 		}
 
-		return redirect()->to('/admin/teams');
+		if (! $teamID)
+		{
+			$errors = $this->teamModel->errors();
+			return redirect()->to('/admin/teams/new')->withInput()->with('errors', $errors);
+		}
+
+		// add user to new team
+		$leader->team_id = $teamID;
+		$userUpdate = $this->userModel->save($leader);
+
+		if (! $userUpdate)
+		{
+			$errors = $this->userModel->errors();
+			return redirect()->to('/admin/teams/new')->withInput()->with('errors', $errors);
+		}
+
+		return redirect()->to("/admin/teams/$teamID");
 	}
 
 	//--------------------------------------------------------------------

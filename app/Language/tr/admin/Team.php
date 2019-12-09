@@ -5,6 +5,10 @@ return [
 	'ban'			=> 'Ban',
 	'leader'		=> 'Lider',
 	'leaderId'		=> 'Lider ID',
+	'leaderUsername'        => 'Lider Kullanıcıadı',
+	'userAlreadyHaveTeam'   => 'Bu kullanıcının zaten takımı var!',
+	'noUserFound'           => 'Kullanıcı bulunamadı',
+	'teamExistWithThisName' => 'Bu isimde bir takım zaten var',
 
 	'addTeam'		=> 'Takım Ekle',
 	'editTeam'		=> 'Takım Düzenle',

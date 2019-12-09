@@ -5,6 +5,10 @@ return [
 	'ban'			=> 'Ban',
 	'leader'		=> 'Leader',
 	'leaderId'		=> 'Leader ID',
+	'leaderUsername'        => 'Leader Username',
+	'userAlreadyHaveTeam'   => 'The user already have a team!',
+	'noUserFound'           => 'No user Found',
+	'teamExistWithThisName' => 'Team exist with this name',
 
 	'addTeam'		=> 'Add Team',
 	'editTeam'		=> 'Edit Team',
