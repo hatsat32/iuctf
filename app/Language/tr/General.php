@@ -32,12 +32,17 @@ return [
 	'hints'			=> 'İpuçları',
 	'file'			=> 'Dosya',
 	'files'			=> 'Dosyalar',
+	'solve'         => 'Çözüm',
+	'solves'        => 'Çözümler',
+	'submit'        => 'Deneme',
+	'submits'       => 'Denemeler',
 	'date'			=> 'Tarih',
 	'time'			=> 'Zaman',
 
 	'username'		=> 'Kullanıcı Adı',
 	'email'			=> 'Email',
 	'password'		=> 'Parola',
+	'confirmPassword' => 'Parola Doğrula',
 	'language'		=> 'Dil',
 
 	'firstPage'		=> 'İlk Sayfa',

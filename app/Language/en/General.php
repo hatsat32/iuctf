@@ -32,12 +32,17 @@ return [
 	'hints'			=> 'Hints',
 	'file'			=> 'File',
 	'files'			=> 'Files',
+	'solve'         => 'Solve',
+	'solves'        => 'Solves',
+	'submit'        => 'Submit',
+	'submits'       => 'Submits',
 	'date'			=> 'Date',
 	'time'			=> 'Time',
 
 	'username'		=> 'Username',
 	'email'			=> 'Email',
 	'password'		=> 'Password',
+	'confirmPassword' => 'Confirm Password',
 	'language'		=> 'Language',
 
 	'firstPage'		=> 'First Page',

@@ -75,6 +75,10 @@ $routes->setAutoRoute(false);
 $routes->get('/', 'Home::index');
 $routes->get('/language', 'Home::language');
 
+// installation manager routes
+$routes->get('/install',   'Install::index');
+$routes->get('/installed', 'Install::installed');
+$routes->post('/install',  'Install::install');
 
 /**
  * Myth:Auth routes
