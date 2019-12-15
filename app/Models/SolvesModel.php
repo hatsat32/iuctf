@@ -6,6 +6,7 @@ class SolvesModel extends Model
 {
 	protected $table      = 'solves';
 	protected $primaryKey = 'id';
+	// protected $returnType = \stdClass::class;
 
 	protected $allowedFields = [
 		'challenge_id', 'user_id', 'team_id'
@@ -16,4 +17,7 @@ class SolvesModel extends Model
 		'user_id'      => 'required|numeric',
 		'team_id'      => 'required|numeric',
 	];
+
+	protected $useTimestamps = true;
+	protected $updatedField  = null; // no need for update_at when logs solves
 }
