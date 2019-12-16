@@ -7,7 +7,7 @@ use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 use App\Models\TeamModel;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
 	protected $auth;
 	/**
@@ -120,7 +120,7 @@ class AuthController extends Controller
 			$this->auth->logout();
 		}
 
-		return redirect('/');
+		return redirect()->to('/');
 	}
 
 	//--------------------------------------------------------------------
