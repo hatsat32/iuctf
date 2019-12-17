@@ -105,24 +105,24 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
 
 
 $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'], function($routes) {
-	$routes->get('challenges',						'ChallengeController::challenges');
-	$routes->get('challenges/(:num)',				'ChallengeController::challenges/$1');
-	$routes->post('challenges/(:num)',				'ChallengeController::flagSubmit/$1');
-	$routes->post('challenges/(:num)/hints/(:num)',	'ChallengeController::hint/$1/$2');
+	$routes->get('challenges',                      'ChallengeController::challenges', ['as' => 'challenges']);
+	$routes->get('challenges/(:num)',               'ChallengeController::challenges/$1', ['as' => 'challenge-detail']);
+	$routes->post('challenges/(:num)',              'ChallengeController::flagSubmit/$1');
+	$routes->post('challenges/(:num)/hints/(:num)', 'ChallengeController::hint/$1/$2');
 
-	$routes->get('team',		'TeamController::index');
-	$routes->post('createteam',	'TeamController::createTeam');
-	$routes->post('jointeam',	'TeamController::joinTeam');
+	$routes->get('team',        'TeamController::index', ['as' => 'team']);
+	$routes->post('createteam', 'TeamController::createTeam');
+	$routes->post('jointeam',   'TeamController::joinTeam');
 
-	$routes->get('profile',		'ProfileController::index');
-	$routes->post('profile',	'ProfileController::updateProfile');
+	$routes->get('profile',                  'ProfileController::index', ['as' => 'profile']);
+	$routes->post('profile',                 'ProfileController::updateProfile');
 	$routes->post('profile/change-password', 'ProfileController::updatePassword');
 
-	$routes->get('scoreboard',		'ScoreboardController::index');
-	$routes->get('notifications',	'UserUtilityController::notifications');
+	$routes->get('scoreboard',    'ScoreboardController::index', ['as' => 'scoreboard']);
+	$routes->get('notifications', 'UserUtilityController::notifications', ['as' => 'notifications']);
 
-	$routes->get('hash',	'UserUtilityController::hash');
-	$routes->post('hash',	'UserUtilityController::gethash');
+	$routes->get('hash',  'UserUtilityController::hash', ['as' => 'hash']);
+	$routes->post('hash', 'UserUtilityController::gethash');
 });
 
 
