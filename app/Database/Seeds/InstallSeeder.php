@@ -9,7 +9,7 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 		$builder->insertBatch([
 			[
 				'key'   => 'competition_name',
-				'value' => NULL,
+				'value' => 'IUCTF',
 			],
 			[
 				'key'   => 'competition_logo',
@@ -17,7 +17,7 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 			],
 			[
 				'key'   => 'theme',
-				'value' => NULL,
+				'value' => 'default',
 			],
 			[
 				'key'   => 'competition_timer',
@@ -34,6 +34,18 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 			[
 				'key'   => 'allow_register',
 				'value' => NULL,
+			],
+			[
+				'key'   => 'home_page',
+				'value' => NULL,
+			],
+			[
+				'key'   => 'need_hash',
+				'value' => NULL,
+			],
+			[
+				'key'   => 'team_member_limit',
+				'value' => 4,
 			],
 		]);
 
