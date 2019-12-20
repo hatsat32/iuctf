@@ -45,10 +45,16 @@
 			<a class="dropdown-item" href="/admin/logs/login"><?= lang('admin/Templates.loginLogs') ?></a>
 		</div>
 	</li>
-	<li class="nav-item active">
-		<a class="nav-link" href="/admin/config">
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="sidebar-settings" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<i class="fas fa-cog"></i>
 			<span><?= lang('admin/Templates.settings') ?></span>
 		</a>
+		<div class="dropdown-menu" aria-labelledby="sidebar-settings">
+			<a class="dropdown-item" href="/admin/settings/"><?= lang('admin/Settings.settings') ?></a>
+			<a class="dropdown-item" href="/admin/settings/general"><?= lang('admin/Settings.general') ?></a>
+			<a class="dropdown-item" href="/admin/settings/timer"><?= lang('admin/Settings.timer') ?></a>
+			<a class="dropdown-item" href="/admin/settings/data"><?= lang('admin/Settings.data') ?></a>
+		</div>
 	</li>
 </ul>

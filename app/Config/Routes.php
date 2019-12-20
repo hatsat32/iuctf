@@ -224,11 +224,15 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'NotificationController::update/$1');
 	});
 
-	$routes->group('config', function($routes)
-	{
-		$routes->get('/', 					'ConfigController::index', ['as' => 'admin-config']);
-		$routes->post('competition-timer', 	'ConfigController::competitionTimer');
-		$routes->post('competition-times', 	'ConfigController::competitionTimes');
+	$routes->group('settings', function($routes) {
+		$routes->get('/',        'SettingsController::index',   ['as' => 'admin-config']);
+		$routes->get('general',  'SettingsController::general', ['as' => 'admin-config-general']);
+		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-config-timer']);
+		$routes->get('data',     'SettingsController::data',    ['as' => 'admin-config-data']);
+		$routes->post('general', 'SettingsController::update');
+
+		$routes->post('competition-timer', 'SettingsController::competitionTimer');
+		$routes->post('competition-times', 'SettingsController::competitionTimes');
 	});
 
 	$routes->group('logs', function($routes)

@@ -3,7 +3,7 @@
 use App\Core\AdminController;
 use \App\Models\ConfigModel;
 
-class ConfigController extends AdminController
+class SettingsController extends AdminController
 {
 	private $configModel;
 	private $validation;
@@ -26,7 +26,28 @@ class ConfigController extends AdminController
 			$viewData['config'][$row['key']] = $row['value'];
 		}
 
-		return $this->render('config/index', $viewData);
+		return $this->render('settings/index', $viewData);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function general()
+	{
+		return $this->render('settings/general');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function timer()
+	{
+		return $this->render('settings/timer');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function data()
+	{
+		return $this->render('settings/data');
 	}
 
 	//--------------------------------------------------------------------
