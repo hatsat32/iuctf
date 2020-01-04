@@ -1,19 +1,18 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use \App\Models\ConfigModel;
+use App\Models\SettingsModel;
+use App\Entities\Settings;
 
 class SettingsController extends AdminController
 {
-	private $configModel;
-	private $validation;
+	protected $SettingsModel;
 
 	public function initController($request, $response, $logger)
 	{
 		parent::initController($request, $response, $logger);
 
-		$this->configModel = new ConfigModel();
-		$this->validation  =  \Config\Services::validation();
+		$this->SettingsModel = new SettingsModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -22,8 +21,8 @@ class SettingsController extends AdminController
 	{
 		$viewData['config'] = [];
 
-		foreach ($this->configModel->findAll() as $row) {
-			$viewData['config'][$row['key']] = $row['value'];
+		foreach ($this->SettingsModel->findAll() as $row) {
+			$viewData['config'][$row->key] = $row->value;
 		}
 
 		return $this->render('settings/index', $viewData);
@@ -33,7 +32,89 @@ class SettingsController extends AdminController
 
 	public function general()
 	{
-		return $this->render('settings/general');
+		$settings = new \stdClass();
+
+		foreach ($this->SettingsModel->findAll() as $row)
+		{
+			$settings->{$row->key} = $row->value;
+		}
+
+		return $this->render('settings/general', ['settings' => $settings]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function generalUpdate()
+	{
+		$rules = [
+			'competition_name' => [
+				'label' => lang('admin/Settings.ctfName'),
+				'rules' => 'required|min_length[3]'
+			],
+			'team_member_limit' => [
+				'label' => lang('admin/Settings.memberLimit'),
+				'rules' => 'required|integer|max_length[10]'
+			],
+			'theme' => [
+				'label' => lang('admin/Settings.theme'),
+				'rules' => 'required'
+			],
+			'allow_register' => [
+				'label' => lang('admin/Settings.allowRegister'),
+				'rules' => 'required|in_list[allow,disallow]'
+			],
+			'need_hash' => [
+				'label' => lang('admin/Settings.needHashTitle'),
+				'rules' => 'required|in_list[true,false]'
+			],
+			'hash_secret_key' => [
+				'label' => lang('admin/Settings.hashSecretKey'),
+				'rules' => 'required'
+			],
+		];
+
+		dd($rules);
+
+		$data = [
+			[
+				'key'   => 'competition_name',
+				'value' => $this->request->getPost('competition_name')
+			],
+			[
+				'key'   => 'team_member_limit',
+				'value' => $this->request->getPost('team_member_limit')
+			],
+			[
+				'key'   => 'theme',
+				'value' => $this->request->getPost('theme')
+			],
+			[
+				'key'   => 'allow_register',
+				'value' => $this->request->getPost('allow_register')
+			],
+			[
+				'key'   => 'need_hash',
+				'value' => $this->request->getPost('need_hash')
+			],
+			[
+				'key'   => 'hash_secret_key',
+				'value' => $this->request->getPost('hash_secret_key')
+			],
+		];
+
+		if (! $this->validate($rules))
+		{
+			return redirect('admin-settings-general')->withInput()->with('errors', $this->validator->getErrors());
+		}
+
+		$result = $this->SettingsModel->updateBatch($data, 'key');
+		
+		if(! $result)
+		{
+			return redirect('admin-settings-general')->with('errors', $this->SettingsModel->errors());
+		}
+
+		return redirect('admin-settings-general')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -66,7 +147,7 @@ class SettingsController extends AdminController
 			return redirect('admin-config')->with('errors', $errors);
 		}
 
-		$result = $this->configModel
+		$result = $this->SettingsModel
 					->where('key', 'competition_timer')
 					->set(['value' => $timer])
 					->update();

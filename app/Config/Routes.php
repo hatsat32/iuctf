@@ -225,11 +225,14 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 	});
 
 	$routes->group('settings', function($routes) {
-		$routes->get('/',        'SettingsController::index',   ['as' => 'admin-config']);
-		$routes->get('general',  'SettingsController::general', ['as' => 'admin-config-general']);
-		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-config-timer']);
-		$routes->get('data',     'SettingsController::data',    ['as' => 'admin-config-data']);
-		$routes->post('general', 'SettingsController::update');
+		$routes->get('/',        'SettingsController::index',   ['as' => 'admin-settings']);
+		$routes->get('general',  'SettingsController::general', ['as' => 'admin-settings-general']);
+		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-settings-timer']);
+		$routes->get('data',     'SettingsController::data',    ['as' => 'admin-settings-data']);
+
+		$routes->post('general', 'SettingsController::generalUpdate');
+		$routes->post('timer',   'SettingsController::timerUpdate');
+		$routes->post('data',    'SettingsController::dataUpdate');
 
 		$routes->post('competition-timer', 'SettingsController::competitionTimer');
 		$routes->post('competition-times', 'SettingsController::competitionTimes');

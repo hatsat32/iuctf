@@ -47,6 +47,10 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 				'key'   => 'team_member_limit',
 				'value' => 4,
 			],
+			[
+				'key'   => 'hash_secret_key',
+				'value' => '',
+			],
 		]);
 
 		// create admin group
