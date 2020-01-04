@@ -119,7 +119,69 @@ class SettingsController extends AdminController
 
 	public function timer()
 	{
-		return $this->render('settings/timer');
+		$settings = new \stdClass();
+
+		foreach ($this->SettingsModel->findAll() as $row)
+		{
+			$settings->{$row->key} = $row->value;
+		}
+
+		return $this->render('settings/timer', ['settings' => $settings]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function timerUpdate()
+	{
+		$rules = [
+			'timer' => [
+				'label' => lang('admin/Settings.timer'),
+				'rules' => 'required|in_list[on,off]'
+			],
+			'start_time' => [
+				'label' => lang('admin/Settings.startTime'),
+				'rules' => 'permit_empty|valid_date'
+			],
+			'end_time' => [
+				'label' => lang('admin/Settings.endTime'),
+				'rules' => 'permit_empty|valid_date'
+			],
+		];
+
+		if (! $this->validate($rules))
+		{
+			return redirect('admin-settings-timer')->withInput()->with('errors', $this->validator->getErrors());
+		}
+
+		$updateData = [
+			[
+				'key' => 'competition_timer',
+				'value' => $this->request->getPost('timer')
+			],
+		];
+
+		if (isset($_POST['start_time']) && isset($_POST['end_time']))
+		{
+			$updateData = array_merge($updateData, [
+				[
+					'key' => 'competition_start_time',
+					'value' => $this->request->getPost('start_time')
+				],
+				[
+					'key' => 'competition_end_time',
+					'value' => $this->request->getPost('end_time')
+				],
+			]);
+		}
+
+		$result = $this->SettingsModel->updateBatch($updateData, 'key');
+		
+		if (! $result)
+		{
+			return redirect('admin-settings-timer')->with('errors', $this->SettingsModel->errors());
+		}
+
+		return redirect('admin-settings-timer')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------

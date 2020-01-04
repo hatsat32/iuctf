@@ -47,4 +47,7 @@ return [
 
 	'firstPage'		=> 'First Page',
 	'lastPage'		=> 'Last Page',
+
+	'on'            => 'On',
+	'off'           => 'Off',
 ];

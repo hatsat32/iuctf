@@ -47,4 +47,7 @@ return [
 
 	'firstPage'		=> 'İlk Sayfa',
 	'lastPage'		=> 'Son Sayfa',
+
+	'on'            => 'Açık',
+	'off'           => 'Kapalı',
 ];

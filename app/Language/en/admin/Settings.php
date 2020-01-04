@@ -28,8 +28,14 @@ return [
 	'needHashTitle'        => 'Need hash for flags',
 	'needHashDesc'         => 'New user register allow or dissallow',
 	'needHashKeyDesc'      => 'This key adds end of the flag before hash.',
-	'hashSecretKey'        => 'Hash Secret Key'
+	'hashSecretKey'        => 'Hash Secret Key',
 
 	// timer settings
+	'ctfTimer'             => 'CTF Timer',
+	'timerTitle'           => 'Timer',
+	'timerDesc'            => 'Configure CTF timer',
+	'startTime'            => 'Start Time',
+	'endTime'              => 'End Time',
+
 	// data settings
 ];

@@ -31,5 +31,11 @@ return [
 	'hashSecretKey'        => 'Hash Gizli Anahtar',
 
 	// timer settings
+	'ctfTimer'             => 'CTF Zamanlayıcı',
+	'timerTitle'           => 'Zamanlayıcı',
+	'timerDesc'            => 'CTF Zamanlayıcıyı Ayarla',
+	'startTime'            => 'Başlama Zamanı',
+	'endTime'              => 'Bitiş Zamanı',
+
 	// data settings
 ];
