@@ -73,8 +73,6 @@ class SettingsController extends AdminController
 			],
 		];
 
-		dd($rules);
-
 		$data = [
 			[
 				'key'   => 'competition_name',
