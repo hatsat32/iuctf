@@ -28,9 +28,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label for="competition-name"><?= lang('admin/Settings.ctfName') ?></label>
-							<input type="text" name="competition_name" class="form-control" id="competition-name"
-									value="<?= esc($settings->competition_name) ?>" required>
+							<label for="ctf-name"><?= lang('admin/Settings.ctfName') ?></label>
+							<input type="text" name="ctf_name" class="form-control" id="ctf-name"
+									value="<?= esc($settings->ctf_name) ?>" required>
 						</div>
 					</div>
 				</div>

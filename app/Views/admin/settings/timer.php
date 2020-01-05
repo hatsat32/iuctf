@@ -25,9 +25,9 @@
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label class="col-form-label" for="competition_timer"><?= lang('admin/Settings.ctfTimer') ?></label>
-						<select class="custom-select " id="competition_timer" name="timer">
-							<?php if($settings->competition_timer === 'on') : ?>
+						<label class="col-form-label" for="ctf_timer"><?= lang('admin/Settings.ctfTimer') ?></label>
+						<select class="custom-select " id="ctf_timer" name="ctf_timer">
+							<?php if($settings->ctf_timer === 'on') : ?>
 								<option selected value="on"><?= lang('General.on') ?></option>
 								<option value="off"><?= lang('General.off') ?></option>
 							<?php else : ?>
@@ -41,15 +41,17 @@
 
 			<hr>
 
-			<fieldset id="timer-box" <?= $settings->competition_timer === 'off' ? 'disabled' : '' ?>>
+			<fieldset id="timer-box" <?= $settings->ctf_timer === 'off' ? 'disabled' : '' ?>>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="start_time"><?= lang('admin/Settings.startTime') ?></label>
-						<input type="datetime-local" class="form-control" id="start_time" name="start_time" value="<?= $settings->competition_start_time ?>">
+						<input type="datetime-local" class="form-control" id="start_time" name="ctf_start_time"
+								value="<?= $settings->ctf_start_time ?>">
 					</div>
 					<div class="form-group col-md-6">
 						<label for="end_time"><?= lang('admin/Settings.endTime') ?></label>
-						<input type="datetime-local" class="form-control" id="end_time" name="end_time" value="<?= $settings->competition_end_time ?>">
+						<input type="datetime-local" class="form-control" id="end_time" name="ctf_end_time"
+								value="<?= $settings->ctf_end_time ?>">
 					</div>
 				</div>
 			</fieldset>
@@ -58,7 +60,7 @@
 	</div>
 
 	<script>
-		$("#competition_timer").change(function() {
+		$("#ctf_timer").change(function() {
 			console.log(this);
 
 			if ($(this).val() === "on")

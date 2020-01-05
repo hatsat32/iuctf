@@ -48,7 +48,7 @@ class SettingsController extends AdminController
 	public function generalUpdate()
 	{
 		$rules = [
-			'competition_name' => [
+			'ctf_name' => [
 				'label' => lang('admin/Settings.ctfName'),
 				'rules' => 'required|min_length[3]'
 			],
@@ -70,14 +70,14 @@ class SettingsController extends AdminController
 			],
 			'hash_secret_key' => [
 				'label' => lang('admin/Settings.hashSecretKey'),
-				'rules' => 'required'
+				'rules' => 'permit_empty'
 			],
 		];
 
 		$data = [
 			[
-				'key'   => 'competition_name',
-				'value' => $this->request->getPost('competition_name')
+				'key'   => 'ctf_name',
+				'value' => $this->request->getPost('ctf_name')
 			],
 			[
 				'key'   => 'team_member_limit',
@@ -106,7 +106,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-general')->withInput()->with('errors', $this->validator->getErrors());
 		}
 
-		$result = $this->SettingsModel->updateBatch($data, 'key');
+		$result = $this->SettingsModel->skipValidation()->updateBatch($data, 'key');
 
 		if(! $result)
 		{
@@ -133,21 +133,27 @@ class SettingsController extends AdminController
 	//--------------------------------------------------------------------
 
 	public function timerUpdate()
-	{
+	{#1222-12-12T00:12
 		$rules = [
-			'timer' => [
+			'ctf_timer' => [
 				'label' => lang('admin/Settings.timer'),
 				'rules' => 'required|in_list[on,off]'
 			],
-			'start_time' => [
-				'label' => lang('admin/Settings.startTime'),
-				'rules' => 'permit_empty|valid_date'
-			],
-			'end_time' => [
-				'label' => lang('admin/Settings.endTime'),
-				'rules' => 'permit_empty|valid_date'
-			],
-		];
+		];//dd($_POST);
+
+		if ($this->request->getPost('ctf_timer') === 'on')
+		{
+			$rules = array_merge($rules, [
+				'ctf_start_time' => [
+					'label' => lang('admin/Settings.startTime'),
+					'rules' => 'required|valid_date'
+				],
+				'ctf_end_time' => [
+					'label' => lang('admin/Settings.endTime'),
+					'rules' => 'required|valid_date'
+				]
+			]);
+		}
 
 		if (! $this->validate($rules))
 		{
@@ -156,26 +162,26 @@ class SettingsController extends AdminController
 
 		$updateData = [
 			[
-				'key' => 'competition_timer',
-				'value' => $this->request->getPost('timer')
+				'key' => 'ctf_timer',
+				'value' => $this->request->getPost('ctf_timer')
 			],
 		];
 
-		if (isset($_POST['start_time']) && isset($_POST['end_time']))
+		if (isset($_POST['ctf_start_time']) && isset($_POST['ctf_end_time']))
 		{
 			$updateData = array_merge($updateData, [
 				[
-					'key' => 'competition_start_time',
-					'value' => $this->request->getPost('start_time')
+					'key' => 'ctf_start_time',
+					'value' => $this->request->getPost('ctf_start_time')
 				],
 				[
-					'key' => 'competition_end_time',
-					'value' => $this->request->getPost('end_time')
+					'key' => 'ctf_end_time',
+					'value' => $this->request->getPost('ctf_end_time')
 				],
 			]);
 		}
 
-		$result = $this->SettingsModel->updateBatch($updateData, 'key');
+		$result = $this->SettingsModel->skipValidation()->updateBatch($updateData, 'key');
 
 		if (! $result)
 		{

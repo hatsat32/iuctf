@@ -8,11 +8,11 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 		$builder = $this->db->table('settings');
 		$builder->insertBatch([
 			[
-				'key'   => 'competition_name',
+				'key'   => 'ctf_name',
 				'value' => 'IUCTF',
 			],
 			[
-				'key'   => 'competition_logo',
+				'key'   => 'ctf_logo',
 				'value' => NULL,
 			],
 			[
@@ -20,20 +20,20 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 				'value' => 'default',
 			],
 			[
-				'key'   => 'competition_timer',
+				'key'   => 'ctf_timer',
+				'value' => 'off',
+			],
+			[
+				'key'   => 'ctf_start_time',
 				'value' => NULL,
 			],
 			[
-				'key'   => 'competition_start_time',
-				'value' => NULL,
-			],
-			[
-				'key'   => 'competition_end_time',
+				'key'   => 'ctf_end_time',
 				'value' => NULL,
 			],
 			[
 				'key'   => 'allow_register',
-				'value' => NULL,
+				'value' => 'allow',
 			],
 			[
 				'key'   => 'home_page',
@@ -41,7 +41,7 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 			],
 			[
 				'key'   => 'need_hash',
-				'value' => NULL,
+				'value' => 'false',
 			],
 			[
 				'key'   => 'team_member_limit',
@@ -49,7 +49,7 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 			],
 			[
 				'key'   => 'hash_secret_key',
-				'value' => '',
+				'value' => NULL,
 			],
 		]);
 
