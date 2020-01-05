@@ -1,5 +1,7 @@
 <?php namespace Config;
 
+use CodeIgniter\Router\RouteCollection;
+
 /**
  * --------------------------------------------------------------------
  * URI Routing
@@ -83,7 +85,7 @@ $routes->post('/install',  'Install::install');
 /**
  * Myth:Auth routes
  */
-$routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
+$routes->group('', ['namespace' => 'App\Controllers'], function(RouteCollection $routes) {
 	// Login/out
 	$routes->get('login', 'AuthController::login', ['as' => 'login']);
 	$routes->post('login', 'AuthController::attemptLogin');
@@ -104,7 +106,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
 });
 
 
-$routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'], function($routes) {
+$routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'], function(RouteCollection $routes) {
 	$routes->get('challenges',                      'ChallengeController::challenges', ['as' => 'challenges']);
 	$routes->get('challenges/(:num)',               'ChallengeController::challenges/$1', ['as' => 'challenge-detail']);
 	$routes->post('challenges/(:num)',              'ChallengeController::flagSubmit/$1');
@@ -126,11 +128,10 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 });
 
 
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function($routes) {
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function(RouteCollection $routes) {
 	$routes->get('/', 'DashboardController::index');
 
-	$routes->group('teams', function($routes)
-	{
+	$routes->group('teams', function(RouteCollection $routes) {
 		$routes->get('/', 				'TeamController::index');
 		$routes->get('new', 			'TeamController::new');
 		$routes->get('(:num)/edit', 	'TeamController::edit/$1');
@@ -147,8 +148,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)/solves/(:num)/delete', 	'TeamController::markAsUnsolved/$1/$2');
 	});
 
-	$routes->group('users', function($routes)
-	{
+	$routes->group('users', function(RouteCollection $routes) {
 		$routes->get('/', 				'UserController::index');
 		$routes->get('new', 			'UserController::new');
 		$routes->get('(:num)/edit', 	'UserController::edit/$1');
@@ -163,8 +163,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)/unban',   'UserController::unban/$1');
 	});
 
-	$routes->group('categories', function($routes)
-	{
+	$routes->group('categories', function(RouteCollection $routes) {
 		$routes->get('/', 				'CategoryController::index');
 		$routes->get('new', 			'CategoryController::new');
 		$routes->get('(:num)/edit', 	'CategoryController::edit/$1');
@@ -174,8 +173,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'CategoryController::update/$1');
 	});
 
-	$routes->group('challenges', function($routes)
-	{
+	$routes->group('challenges', function(RouteCollection $routes) {
 		$routes->get('/', 				'ChallengeController::index');
 		$routes->get('new', 			'ChallengeController::new');
 		$routes->get('(:num)/edit', 	'ChallengeController::edit/$1');
@@ -185,8 +183,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'ChallengeController::update/$1');
 	});
 
-	$routes->group('challenges/(:num)/flags', function($routes)
-	{
+	$routes->group('challenges/(:num)/flags', function(RouteCollection $routes) {
 		$routes->get('/', 				'FlagController::index$1');
 		$routes->get('new', 			'FlagController::new$1');
 		$routes->get('(:num)/edit', 	'FlagController::edit/$1/$2');
@@ -196,8 +193,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'FlagController::update/$1/$2');
 	});
 
-	$routes->group('challenges/(:num)/hints', function($routes)
-	{
+	$routes->group('challenges/(:num)/hints', function(RouteCollection $routes) {
 		$routes->get('/', 				'HintController::index$1');
 		$routes->get('new', 			'HintController::new$1');
 		$routes->get('(:num)/edit', 	'HintController::edit/$1/$2');
@@ -207,14 +203,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'HintController::update/$1/$2');
 	});
 
-	$routes->group('challenges/(:num)/files', function($routes)
-	{
+	$routes->group('challenges/(:num)/files', function(RouteCollection $routes) {
 		$routes->post('/',				'FileController::create/$1');
 		$routes->post('(:num)/delete',	'FileController::delete/$1/$2');
 	});
 
-	$routes->group('notifications', function($routes)
-	{
+	$routes->group('notifications', function(RouteCollection $routes) {
 		$routes->get('/', 				'NotificationController::index');
 		$routes->get('new', 			'NotificationController::new');
 		$routes->get('(:num)/edit', 	'NotificationController::edit/$1');
@@ -224,13 +218,13 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)', 		'NotificationController::update/$1');
 	});
 
-	$routes->group('settings', function($routes) {
+	$routes->group('settings', function(RouteCollection $routes) {
 		$routes->get('/',        'SettingsController::index',   ['as' => 'admin-settings']);
 
 		$routes->get('general',  'SettingsController::general', ['as' => 'admin-settings-general']);
 		$routes->post('general', 'SettingsController::generalUpdate');
-		
-		
+
+
 		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-settings-timer']);
 		$routes->post('timer',   'SettingsController::timerUpdate');
 
@@ -241,8 +235,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('data/reset',             'SettingsController::resetData');
 	});
 
-	$routes->group('logs', function($routes)
-	{
+	$routes->group('logs', function(RouteCollection $routes) {
 		$routes->get('submits', 	'LogController::submits', ['as' => 'admin-log-flag']);
 		$routes->get('login', 		'LogController::login', ['as' => 'admin-log-login']);
 	});
