@@ -133,13 +133,13 @@ class SettingsController extends AdminController
 	//--------------------------------------------------------------------
 
 	public function timerUpdate()
-	{#1222-12-12T00:12
+	{
 		$rules = [
 			'ctf_timer' => [
 				'label' => lang('admin/Settings.timer'),
 				'rules' => 'required|in_list[on,off]'
 			],
-		];//dd($_POST);
+		];
 
 		if ($this->request->getPost('ctf_timer') === 'on')
 		{
