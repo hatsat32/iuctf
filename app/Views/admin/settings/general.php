@@ -84,8 +84,8 @@
 								<label class="custom-control-label" for="allow"><?= lang('admin/Settings.allowRegister') ?></label>
 							</div>
 							<div class="custom-control custom-radio">
-								<input type="radio" class="custom-control-input" id="disallow" name="allow_register" value="dissallow"
-										<?= $settings->allow_register === 'dissallow' ? 'checked':'' ?> required>
+								<input type="radio" class="custom-control-input" id="disallow" name="allow_register" value="disallow"
+										<?= $settings->allow_register === 'disallow' ? 'checked':'' ?> required>
 								<label class="custom-control-label" for="disallow"><?= lang('admin/Settings.disallowRegister') ?></label>
 							</div>
 						</div>

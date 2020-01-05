@@ -14,7 +14,7 @@ class InitialTables extends Migration
 			'updated_at' => ['type' => 'datetime', 'null' => true],
 		]);
 		$this->forge->addKey('id', true);
-		$this->forge->createTable('config');
+		$this->forge->createTable('settings');
 
 		//--------------------------------------------------------------------
 
@@ -179,9 +179,9 @@ class InitialTables extends Migration
 
 	public function down()
 	{
-		$this->db->disableForeignKeyConstraints();
+		$this->db->disableForeignKeyChecks();
 
-		$this->forge->dropTable('config', true);
+		$this->forge->dropTable('settings', true);
 		$this->forge->dropTable('teams', true);
 
 		$this->forge->dropColumn('users', 'team_id');
@@ -199,6 +199,6 @@ class InitialTables extends Migration
 		$this->forge->dropTable('tracking', true);
 		$this->forge->dropTable('dynamic_challenges', true);
 
-		$this->db->enableForeignKeyConstraints();
+		$this->db->disableForeignKeyChecks();
 	}
 }

@@ -5,7 +5,7 @@ use App\Entities\Settings;
 
 class SettingsModel extends Model
 {
-	protected $table      = 'config';
+	protected $table      = 'settings';
 	protected $primaryKey = 'id';
 	protected $returnType = Settings::class;
 

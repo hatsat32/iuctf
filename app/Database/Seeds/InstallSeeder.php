@@ -5,7 +5,7 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 	public function run()
 	{
 		// default settings
-		$builder = $this->db->table('config');
+		$builder = $this->db->table('settings');
 		$builder->insertBatch([
 			[
 				'key'   => 'competition_name',
