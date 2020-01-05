@@ -38,4 +38,12 @@ return [
 	'endTime'              => 'Bitiş Zamanı',
 
 	// data settings
+	'backup'               => 'Yedekle',
+	'reset'                => 'Sıfırla',
+	'download'             => 'İndir',
+	'backupDesc'           => 'Yedek al',
+	'backupSuccessful'     => 'Yedek alma başarılı',
+	'deletedSuccessfully'  => 'Başarıyla silindi',
+	'fileNotExist'         => 'Dosya bulunamadı {file}',
+	'deleteError'          => 'Dosya silerken bir hata oldu',
 ];

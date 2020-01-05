@@ -38,4 +38,12 @@ return [
 	'endTime'              => 'End Time',
 
 	// data settings
+	'backup'               => 'Backup',
+	'reset'                => 'Reset',
+	'download'             => 'Download',
+	'backupDesc'           => 'Backup files',
+	'backupSuccessful'     => 'Taking backup successfull',
+	'deletedSuccessfully'  => 'Deleted Successfully',
+	'fileNotExist'         => 'File not exist {file}',
+	'deleteError'          => 'File delete error happen',
 ];

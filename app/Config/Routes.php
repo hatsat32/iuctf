@@ -226,16 +226,19 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 
 	$routes->group('settings', function($routes) {
 		$routes->get('/',        'SettingsController::index',   ['as' => 'admin-settings']);
+
 		$routes->get('general',  'SettingsController::general', ['as' => 'admin-settings-general']);
-		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-settings-timer']);
-		$routes->get('data',     'SettingsController::data',    ['as' => 'admin-settings-data']);
-
 		$routes->post('general', 'SettingsController::generalUpdate');
+		
+		
+		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-settings-timer']);
 		$routes->post('timer',   'SettingsController::timerUpdate');
-		$routes->post('data',    'SettingsController::dataUpdate');
 
-		$routes->post('competition-timer', 'SettingsController::competitionTimer');
-		$routes->post('competition-times', 'SettingsController::competitionTimes');
+		$routes->get('data',                    'SettingsController::data',    ['as' => 'admin-settings-data']);
+		$routes->get('data/backup/(:segment)',  'SettingsController::download/$1');
+		$routes->post('data/backup',            'SettingsController::backupData');
+		$routes->post('data/backup/(:segment)', 'SettingsController::delete/$1');
+		$routes->post('data/reset',             'SettingsController::resetData');
 	});
 
 	$routes->group('logs', function($routes)

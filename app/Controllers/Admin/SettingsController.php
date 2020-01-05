@@ -2,10 +2,11 @@
 
 use App\Core\AdminController;
 use App\Models\SettingsModel;
-use App\Entities\Settings;
+use ZipArchive;
 
 class SettingsController extends AdminController
 {
+	/** @var SettingsModel */
 	protected $SettingsModel;
 
 	public function initController($request, $response, $logger)
@@ -106,7 +107,7 @@ class SettingsController extends AdminController
 		}
 
 		$result = $this->SettingsModel->updateBatch($data, 'key');
-		
+
 		if(! $result)
 		{
 			return redirect('admin-settings-general')->with('errors', $this->SettingsModel->errors());
@@ -175,7 +176,7 @@ class SettingsController extends AdminController
 		}
 
 		$result = $this->SettingsModel->updateBatch($updateData, 'key');
-		
+
 		if (! $result)
 		{
 			return redirect('admin-settings-timer')->with('errors', $this->SettingsModel->errors());
@@ -188,84 +189,72 @@ class SettingsController extends AdminController
 
 	public function data()
 	{
-		return $this->render('settings/data');
-	}
+		helper('filesystem');
 
-	//--------------------------------------------------------------------
+		$backups = directory_map(WRITEPATH.'backups'.DIRECTORY_SEPARATOR);
 
-	public function competitionTimer()
-	{
-		$timer = $this->request->getPost('timer');
-
-		$rules = [
-			'timer' => 'required|in_list[on,off]'
-		];
-
-		if (! $this->validate($rules))
+		if (($key = array_search('index.html', $backups)) !== false)
 		{
-			$errors = $this->validator->getErrors();
-			return redirect('admin-config')->with('errors', $errors);
+			unset($backups[$key]);
 		}
 
-		$result = $this->SettingsModel
-					->where('key', 'competition_timer')
-					->set(['value' => $timer])
-					->update();
+		return $this->render('settings/data', ['backups' => $backups]);
+	}
 
-		if ($result)
+	//--------------------------------------------------------------------
+
+	public function backupData()
+	{
+		$zip = new ZipArchive();
+
+		$path = WRITEPATH.'backups'.DIRECTORY_SEPARATOR.'backup_'.date('d-m-Y_H-i-s').'.zip';
+		if ($zip->open($path, ZipArchive::CREATE) === true)
 		{
-			return redirect('admin-config')->with('errors', 'ekleme sırasında hata oluştu');
+			$zip->addGlob(
+				FCPATH.'uploads'.DIRECTORY_SEPARATOR.'*',
+				GLOB_BRACE,
+				['add_path' => 'uploads/', 'remove_all_path' => TRUE]
+			);
+		}
+		$zip->close();
+
+		return redirect('admin-settings-data')->with('message', lang('admin/Settings.backupSuccessful'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function delete($file = null)
+	{
+		$filePath = WRITEPATH . 'backups' . DIRECTORY_SEPARATOR . $file.'.zip';
+
+		if (file_exists($filePath) && ! unlink($filePath))
+		{
+			return redirect('admin-settings-data')->with('error', lang('admin/Settings.deleteError'));
 		}
 
-		return redirect('admin-config');
+		return redirect('admin-settings-data')->with('message', lang('admin/Settings.deletedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
 
-	public function competitionTimes()
+	public function download($file = null)
 	{
-		
+		$path = WRITEPATH.'backups'.DIRECTORY_SEPARATOR.$file.'.zip';
+
+		if (! file_exists($path))
+		{
+			return redirect('admin-settings-data')->with('error', lang('admin/Settings.fileNotExist', ['file' => "${file}.zip"]));
+		}
+
+		return $this->response->download($path, NULL);
 	}
 
 	//--------------------------------------------------------------------
 
-	public function new()
+	public function resetData()
 	{
-
+		return redirect('admin-settings-data')->with('reset-error', 'NOT IMPLEMENTED YET');
 	}
 
 	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function show($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function create()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function delete($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function update($id = null)
-	{
-
-	}
 }
