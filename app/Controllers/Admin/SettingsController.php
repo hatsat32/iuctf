@@ -20,13 +20,7 @@ class SettingsController extends AdminController
 
 	public function index()
 	{
-		$viewData['config'] = [];
-
-		foreach ($this->SettingsModel->findAll() as $row) {
-			$viewData['config'][$row->key] = $row->value;
-		}
-
-		return $this->render('settings/index', $viewData);
+		return redirect('admin-settings-general');
 	}
 
 	//--------------------------------------------------------------------
