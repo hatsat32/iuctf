@@ -39,25 +39,12 @@ php7.3-mbstring
 php-xml
 ```
 
-Run migrations and create `admin` group.
-
-```
-$ php spark migrate
-
-$ php spark auth:create_group admin
-```
-
-Go and regirter. After then make your use as admin.
-
-```
-$ php spark iuctf:makeadmin
-```
-
-and enjoy!
-
+Now, serve this project via spark.
 ```
 $ php spark serve
 ```
+
+Go to http://localhost:8080/install and then finish installation.
 
 ## LICENSE
 

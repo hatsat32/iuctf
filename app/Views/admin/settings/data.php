@@ -4,10 +4,10 @@
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="#">Dashboard</a>
+			<a href="/admin">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="#"><?= lang('admin/Settings.settings') ?></a>
+			<a href="/admin/settings"><?= lang('admin/Settings.settings') ?></a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('admin/Settings.data') ?></li>
 	</ol>
