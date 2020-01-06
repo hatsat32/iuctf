@@ -25,8 +25,8 @@ If you don't like or hate
 First steps:
 
 ```
-$ git clone https://gitlab.com/iucyber/iuctf-prototype.git
-$ cd iuctf-prototype
+$ git clone https://gitlab.com/iucyber/iuctf.git
+$ cd iuctf
 $ composer install
 ```
 
