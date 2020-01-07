@@ -15,4 +15,6 @@ class CategoryModel extends Model
 		'name'        => 'required|alpha_numeric_space',
 		'description' => 'alpha_numeric_space',
 	];
+
+	protected $useTimestamps = true;
 }

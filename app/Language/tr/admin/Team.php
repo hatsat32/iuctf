@@ -5,7 +5,7 @@ return [
 	'ban'			=> 'Ban',
 	'leader'		=> 'Lider',
 	'leaderId'		=> 'Lider ID',
-	'leaderUsername'        => 'Lider Kullanıcıadı',
+	'leaderUsername'        => 'Lider Kullanıcı Adı',
 	'userAlreadyHaveTeam'   => 'Bu kullanıcının zaten takımı var!',
 	'noUserFound'           => 'Kullanıcı bulunamadı',
 	'teamExistWithThisName' => 'Bu isimde bir takım zaten var',

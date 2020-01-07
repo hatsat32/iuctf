@@ -19,4 +19,7 @@ class SubmitModel extends Model
 		'provided'     => 'required|string',
 		'type'         => 'required|in_list[0,1]',
 	];
+
+	protected $useTimestamps = true;
+	protected $updatedField  = null; // no need for update_at when logs submits
 }
