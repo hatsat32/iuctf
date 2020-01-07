@@ -25,7 +25,7 @@
 					<input disabled class="form-control" id="auth_code" value="<?= esc($team->auth_code) ?>">
 				</div>
 				<div class="form-group">
-					<label for="leader_id"><?= lang('admin/Team.leaderId') ?></label>
+					<label for="leader_id"><?= lang('admin/Team.leaderUsername') ?></label>
 					<select name="leader_id" class="form-control" id="leader_id">
 						<?php foreach($teamMembers as $member) : ?>
 							<option <?= $member->id===$team->leader_id ? "selected":"" ?> value="<?= esc($member->id) ?>"><?= esc($member->username) ?></option>

@@ -21,4 +21,6 @@ class NotificationModel extends Model
 	
 	protected $validationMessages = [];
 	protected $skipValidation = false;
+	
+	protected $useTimestamps = true;
 }

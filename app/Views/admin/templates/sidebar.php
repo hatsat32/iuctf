@@ -51,7 +51,6 @@
 			<span><?= lang('admin/Templates.settings') ?></span>
 		</a>
 		<div class="dropdown-menu" aria-labelledby="sidebar-settings">
-			<a class="dropdown-item" href="/admin/settings/"><?= lang('admin/Settings.settings') ?></a>
 			<a class="dropdown-item" href="/admin/settings/general"><?= lang('admin/Settings.general') ?></a>
 			<a class="dropdown-item" href="/admin/settings/timer"><?= lang('admin/Settings.timer') ?></a>
 			<a class="dropdown-item" href="/admin/settings/data"><?= lang('admin/Settings.data') ?></a>
