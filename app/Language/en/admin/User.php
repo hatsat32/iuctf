@@ -20,4 +20,6 @@ return [
 	'unmakeAdmin'		=> 'Remove From Admin Group',
 
 	'pickATeam'			=> 'You Can Pick A Team',
+
+	'updatedSuccessfully' => 'User updated Successfully',
 ];

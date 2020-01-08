@@ -14,6 +14,7 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/User.userDetail') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<form action="/admin/users/<?= esc($user->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">

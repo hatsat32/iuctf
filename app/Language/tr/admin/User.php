@@ -20,4 +20,6 @@ return [
 	'unmakeAdmin'		=> 'Admin Grubundan Çıkar',
 
 	'pickATeam'			=> 'Bir Takım Seçebilirsin',
+
+	'updatedSuccessfully' => 'Kullanıcı başarıyla Güncellendi',
 ];
