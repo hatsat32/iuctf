@@ -6,7 +6,9 @@ use App\Models\TeamModel;
 
 class UserController extends AdminController
 {
+	/** @var UserModel **/
 	private $userModel;
+	/** @var TeamModel **/
 	private $teamModel;
 
 	public function initController($request, $response, $logger)
@@ -115,20 +117,18 @@ class UserController extends AdminController
 	public function update($id = null)
 	{
 		$user = $this->userModel->find($id);
-		$data = [
-			'username'	=> $this->request->getPost('username'),
-			'email'		=> $this->request->getPost('email'),
-			'name'		=> $this->request->getPost('name'),
-			'team_id'	=> $this->request->getPost('team_id'),
-		];
 
-		$result = $this->userModel->update($id, $data);
+		$user->fill($this->request->getPost());
+
+		$result = $this->userModel->update($id, $user);
+
 		if (! $result)
 		{
 			$errors = $this->userModel->errors();
-			return redirect()->to("/admin/users/$id");
+			return redirect()->to("/admin/users/$id")->with('errors', $errors);
 		}
-		return redirect()->to("/admin/users/$id");
+
+		return redirect()->to("/admin/users/$id")->with('message', lang('admin/User.updatedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
