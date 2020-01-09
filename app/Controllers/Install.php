@@ -11,7 +11,7 @@ class Install extends BaseController
 		$db = db_connect();
 
 		// install check
-		if ($db->tableExists('config'))
+		if ($db->tableExists('settings'))
 		{
 			return redirect()->to('/installed')->with('message', lang('Install.alreadyInstalled'));
 		}
@@ -38,10 +38,10 @@ class Install extends BaseController
 		$db = db_connect();
 
 		// install check
-		// if config table exist, platform already installed
-		if ($db->tableExists('config'))
+		// if settings table exist, platform already installed
+		if ($db->tableExists('settings'))
 		{
-			return redirect()->to('/installed');//->with('message', lang('Install.alreadyInstalled'));
+			return redirect()->to('/installed');
 		}
 
 		$users = new \Myth\Auth\Models\UserModel();

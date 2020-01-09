@@ -3,7 +3,7 @@
 return [
 	'installationManager'      => 'IUCTF Kurulum Yöneticisi',
 	'welcomeTitle'             => 'Kurulum Yöneticisine Hoşgeldiniz.',
-	'welcomeWizard'            => 'Bu sihirbaz kurumu yapmanıza yardım edecek.',
+	'welcomeWizard'            => 'Bu sihirbaz, kurulumu yapmanıza yardım edecek.',
 
 	'installationSuccessfull'  => 'Kurulum Başarılı',
 	'alreadyInstalled'         => 'Kurulum Çoktan Yapıldı.',
