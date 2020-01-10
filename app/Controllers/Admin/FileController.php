@@ -22,21 +22,32 @@ class FileController extends AdminController
 	{
 		$file = $this->request->getFile('file');
 
-		$name = $file->getRandomName();
-
-		if ($file->isValid() && ! $file->hasMoved())
+		// php file extension forbidden
+		if (preg_match('/php/', $file->getExtension()) === 1)
 		{
-			$file->move(FCPATH.'uploads', $name);
-
-			$data = [
-				'challenge_id' => $challengeID,
-				'location'     => $name,
-			];
-
-			$this->fileModel->insert($data);
+			return redirect()->to("/admin/challenges/$challengeID")->with('file-error', lang('admin/Challenge.fileUploadPhpError'));
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		$name = $file->getRandomName();
+
+		if (! $file->isValid() || file_exists(FCPATH.'uploads'.DIRECTORY_SEPARATOR.$name))
+		{
+			return redirect()->to("/admin/challenges/$challengeID")->with('file-errors', lang('admin/Challenge.FileUploadError'));
+		}
+
+		$file->move(FCPATH.'uploads', $name);
+
+		$data = [
+			'challenge_id' => $challengeID,
+			'location'     => $name,
+		];
+
+		if (! $this->fileModel->insert($data))
+		{
+			return redirect()->to("/admin/challenges/$challengeID")->with('file-errors', lang('admin/Challenge.FileUploadError'));
+		}
+
+		return redirect()->to("/admin/challenges/$challengeID")->with('file-message', lang('admin/Challenge.fileUploadSuccessful'));
 	}
 
 	//--------------------------------------------------------------------

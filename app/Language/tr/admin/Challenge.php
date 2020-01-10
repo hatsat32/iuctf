@@ -30,4 +30,8 @@ return [
 		'title' => "Uyarı",
 		'content'	=> 'Hiç kategori yok. Git ve yeni bir tane oluştur!'
 	],
+
+	'fileUploadSuccessful' => 'Dosya yükleme başarılı',
+	'FileUploadError'      => 'Dosya yüklerken bir hata oldu',
+	'fileUploadPhpError'   => 'Php dosyalarına asla izin verilmez!',
 ];

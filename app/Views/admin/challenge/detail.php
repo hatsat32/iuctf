@@ -224,6 +224,16 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('General.files') ?></div>
 		<div class="card-body">
+			<?php if (session()->has('file-message')) : ?>
+				<div class="alert alert-success">
+					<?= session('file-message') ?>
+				</div>
+			<?php endif ?>
+			<?php if (session()->has('file-error')) : ?>
+				<div class="alert alert-success">
+					<?= session('file-error') ?>
+				</div>
+			<?php endif ?>
 			<form action="/admin/challenges/<?= esc($challenge->id) ?>/files" method="post" enctype="multipart/form-data">
 				<?= csrf_field() ?>
 				<div class="form-row">
