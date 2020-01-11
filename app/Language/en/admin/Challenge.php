@@ -30,4 +30,8 @@ return [
 		'title' => "Warning",
 		'content'	=> 'There is no category. Go and create a new one!'
 	],
+
+	'fileUploadSuccessful' => 'File uploaded Successfully',
+	'FileUploadError'      => 'There was an error while upload successfully',
+	'fileUploadPhpError'   => 'Php files newer allowed!',
 ];
