@@ -5,10 +5,11 @@ use \App\Models\FileModel;
 
 class FileController extends AdminController
 {
+	/** @var FileModel **/
 	protected $fileModel = null;
 
 	//--------------------------------------------------------------------
-	
+
 	public function initController($request, $response, $logger)
 	{
 		parent::initController($request, $response, $logger);
@@ -17,7 +18,7 @@ class FileController extends AdminController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function create($challengeID = null)
 	{
 		$file = $this->request->getFile('file');
@@ -51,7 +52,7 @@ class FileController extends AdminController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function delete($challengeID = null, $fileID = null)
 	{
 		$file = $this->fileModel->find($fileID);
