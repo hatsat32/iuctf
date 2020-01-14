@@ -8,8 +8,11 @@ use \App\Models\SolvesModel;
 
 class TeamController extends AdminController
 {
+	/** @var TeamModel **/
 	private $teamModel;
+	/** @var UserModel **/
 	private $userModel;
+	/** @var ChallengeModel **/
 	private $challengeModel;
 
 	public function initController($request, $response, $logger)
@@ -35,13 +38,6 @@ class TeamController extends AdminController
 	public function new()
 	{
 		return $this->render('team/new');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------

@@ -9,7 +9,9 @@ use \App\Models\FileModel;
 
 class ChallengeController extends AdminController
 {
+	/** @var ChallengeModel **/
 	protected $challengeModel;
+	/** @var CategoryModel **/
 	protected $categoryModel;
 
 	public function initController($request, $response, $logger)
@@ -38,25 +40,18 @@ class ChallengeController extends AdminController
 
 	//--------------------------------------------------------------------
 
-	public function edit($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
 	public function show($id = null)
 	{
 		$hintModel = new HintModel();
 		$fileModel = new FileModel();
 		$flagModel = new FlagModel();
-	
+
 		$viewData['challenge']  = $this->challengeModel->find($id);
 		$viewData['categories'] = $this->categoryModel->findAll();
 		$viewData['flags']      = $flagModel->where('challenge_id', $id)->findAll();
 		$viewData['hints']      = $hintModel->where('challenge_id', $id)->findAll();
 		$viewData['files']      = $fileModel->where('challenge_id', $id)->findAll();
-	
+
 		return $this->render('challenge/detail', $viewData);
 	}
 

@@ -5,6 +5,7 @@ use \App\Models\HintModel;
 
 class HintController extends AdminController
 {
+	/** @var HintModel **/
 	private $hintModel;
 
 	public function initController($request, $response, $logger)
@@ -12,34 +13,6 @@ class HintController extends AdminController
 		parent::initController($request, $response, $logger);
 
 		$this->hintModel = new HintModel();
-	}
-
-	//--------------------------------------------------------------------
-
-	public function index()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function new()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function show($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------

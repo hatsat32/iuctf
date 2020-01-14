@@ -5,6 +5,7 @@ use \App\Models\CategoryModel;
 
 class CategoryController extends AdminController
 {
+	/** @var CategoryModel **/
 	protected $categoryModel = null;
 
 	public function initController($request, $response, $logger)
@@ -27,13 +28,6 @@ class CategoryController extends AdminController
 	public function new()
 	{
 		return $this->render('category/new');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------
