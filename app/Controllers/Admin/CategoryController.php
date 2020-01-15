@@ -47,15 +47,23 @@ class CategoryController extends AdminController
 			'description'   => $this->request->getPost('description'),
 		];
 
-		$result = $this->categoryModel->insert($data);
+		try
+		{
+			$result = $this->categoryModel->insert($data);
+		}
+		catch (\Exception $e)
+		{
+			return redirect()->route('admin-categories-new')->withInput()
+					->with('error', $e->getMessage());
+		}
 
 		if (! $result)
 		{
-			$errors = $this->categoryModel->errors();
-			return redirect()->to('/admin/categories/new');
+			return redirect()->route('admin-categories-new')->withInput()
+					->with('errors', $this->categoryModel->errors());
 		}
 
-		return redirect()->to('/admin/categories');
+		return redirect()->route('admin-categories-show', [$result])->with('message', lang('admin/Category.created'));
 	}
 
 	//--------------------------------------------------------------------
@@ -66,11 +74,10 @@ class CategoryController extends AdminController
 
 		if (! $result)
 		{
-			$viewData['errors'] = $this->categoryModel->errors();
-			return redirect()->to("/admin/categories/$id", $viewData);
+			return redirect()->route('admin-categories-show', [$id])->with('errors', $this->categoryModel->errors());
 		}
 
-		return redirect()->to('/admin/categories');
+		return redirect()->route('admin-categories')->with('message', lang('admin/Category.deleted'));
 	}
 
 	//--------------------------------------------------------------------
@@ -83,11 +90,14 @@ class CategoryController extends AdminController
 		];
 
 		$result = $this->categoryModel->update($id, $data);
+
 		if (! $result)
 		{
-			$viewData['errors'] = $this->categoryModel->errors();
-			return redirect()->to("/admin/categories/$id", $viewData);
+			return redirect()->route('admin-categories-show', [$id])->with('errors', $this->categoryModel->errors());
 		}
-		return redirect()->to("/admin/categories/$id");
+
+		return redirect()->route('admin-categories-show', [$id])->with('message', lang('admin/Category.updated'));
 	}
+
+	//--------------------------------------------------------------------
 }
