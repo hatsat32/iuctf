@@ -30,8 +30,8 @@ class LogController extends AdminController
 								->orderBy('submits.created_at', 'DESC');
 
 		$viewData = [
-			'submits' => $query->paginate(100),
-			'pager'   => $query->pager,
+			'submits' => $submitModel->paginate(100),
+			'pager'   => $submitModel->pager,
 		];
 
 		return $this->render('log/submits', $viewData);
