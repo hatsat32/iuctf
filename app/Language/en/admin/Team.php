@@ -21,6 +21,16 @@ return [
 	'doUnban'		=> 'Unban The Team',
 	'banned'		=> 'Your team has been banned!',
 
+	'createdSuccessfully' => 'Team created successfully',
+	'updatedSuccessfully' => 'Team updated successfully',
+	'deletedSuccessfully' => 'Team deleted successfully',
+	'leaderMustInTeam'    => 'Leader must be a member of team',
+	'markedAsSolved'      => 'Marked as solved',
+	'markAsUnsolved'      => 'Marked as unsolved',
+	'bannedSuccessfully'  => 'Team Banned Successfully',
+	'unbannedSuccessfully'=> 'Team unbanned successfully',
+	'authCodeChanged'     => 'Team auth code changed successfully',
+
 	// challenges and solves
 	'selectUser'	=> 'Select User',
 	'selectChallenge' => 'Select Challenge',

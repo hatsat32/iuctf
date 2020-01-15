@@ -21,6 +21,16 @@ return [
 	'doUnban'		=> 'Takımın Engelini Kaldır',
 	'banned'		=> 'Takımın engellendi!',
 
+	'createdSuccessfully' => 'Takım başarıyla oluşturuldu',
+	'updatedSuccessfully' => 'Takım başarıyla güncellendi',
+	'deletedSuccessfully' => 'Takım başarıyla silindi',
+	'leaderMustInTeam'    => 'Lider takım üyelerinden biri olmak zorunda',
+	'markedAsSolved'      => 'Çözüldü olarak işaretlendi', 
+	'markAsUnsolved'      => 'Çözülmedi olarak işaretlendi',
+	'bannedSuccessfully'  => 'Takım başarıyla engellendi',
+	'unbannedSuccessfully'=> 'Takım engeli başarıyla kaldırıldı',
+	'authCodeChanged'     => 'Takım doğrulama kodu başarıyla değiştirildi',
+
 	// challenges and solves
 	'selectUser'	=> 'Yarışmacı Seç',
 	'selectChallenge' => 'Soru Seç',

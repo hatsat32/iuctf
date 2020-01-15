@@ -14,29 +14,17 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Team.addTeam') ?></div>
 		<div class="card-body">
-			<?php if (session()->has('error')) : ?>
-				<div class="alert alert-danger">
-					<?= session('error') ?>
-				</div>
-			<?php endif ?>
-
-			<?php if (session()->has('errors')) : ?>
-				<ul class="alert alert-danger">
-				<?php foreach (session('errors') as $error) : ?>
-					<li><?= $error ?></li>
-				<?php endforeach ?>
-				</ul>
-			<?php endif ?>
-
+			<?= $this->include('admin/templates/message_block') ?>
 			<form action="/admin/teams/" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="leader_username"><?= lang('admin/Team.leaderUsername') ?></label>
-					<input type="username" name="leader_username" class="form-control" id="leader_username">
+					<input type="username" name="leader_username" class="form-control" id="leader_username"
+							value="<?= esc(old('leader_username')) ?>">
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('General.name') ?></label>
-					<input type="name" name="name" class="form-control" id="name">
+					<input type="name" name="name" class="form-control" id="name" value="<?= esc(old('name')) ?>">
 				</div>
 				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Team.addTeam') ?></button>
 			</form>
