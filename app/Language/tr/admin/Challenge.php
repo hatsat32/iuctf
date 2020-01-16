@@ -32,11 +32,19 @@ return [
 	],
 
 	'fileUploadSuccessful' => 'Dosya yükleme başarılı',
-	'FileUploadError'      => 'Dosya yüklerken bir hata oldu',
+	'FileUploadError'      => 'Dosya yüklenirken bir hata oldu',
 	'fileUploadPhpError'   => 'Php dosyalarına asla izin verilmez!',
+	'fileDeleted'          => 'Dosya başarıyla silindi',
 
 	// messages
 	'created' => 'Soru başarıyla oluşturuldu',
 	'updated' => 'Soru başarıyla güncellendi',
 	'deleted' => 'Soru başarıyla silindi',
+
+	'hintCreated' => 'İpucu başarıyla oluşturuldu',
+	'hintUpdated' => 'İpucu başarıyla güncellendi',
+	'hintDeleted' => 'İpucu başarıyla silindi',
+
+	'flagCreated' => 'Bayrak başarıyla oluşturuldu',
+	'flagDeleted' => 'Bayrak başarıyla silindi',
 ];

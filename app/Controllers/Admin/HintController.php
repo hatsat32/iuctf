@@ -31,10 +31,11 @@ class HintController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->hintModel->errors();
-			return redirect()->to("/admin/challenges/$challengeID");
+			return redirect()->route('admin-challenges-show', [$challengeID])->with('hint-errors', $errors);
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->route('admin-challenges-show', [$challengeID])
+				->with('hint-message', lang('admin/Challenge.hintCreated'));
 	}
 
 	//--------------------------------------------------------------------
@@ -45,11 +46,10 @@ class HintController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->hintModel->errors();
-			return redirect()->back()->with('errors', $errors);
+			return redirect()->back()->with('hint-errors', $this->hintModel->errors());
 		}
 
-		return redirect()->back();
+		return redirect()->back()->with('hint-message', lang('admin/Challenge.hintDeleted'));
 	}
 
 	//--------------------------------------------------------------------
@@ -66,10 +66,11 @@ class HintController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->hintModel->errors();
-			return redirect()->back()->with('errors', $errors);
+			return redirect()->back()->with('errors', $this->hintModel->errors());
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('hint-message', lang('admin/Challenge.hintUpdated'));
 	}
+
+	//--------------------------------------------------------------------
 }

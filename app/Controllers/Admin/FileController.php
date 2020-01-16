@@ -26,14 +26,14 @@ class FileController extends AdminController
 		// php file extension forbidden
 		if (preg_match('/php/', $file->getExtension()) === 1)
 		{
-			return redirect()->to("/admin/challenges/$challengeID")->with('file-error', lang('admin/Challenge.fileUploadPhpError'));
+			return redirect()->back()->with('file-error', lang('admin/Challenge.fileUploadPhpError'));
 		}
 
 		$name = $file->getRandomName();
 
 		if (! $file->isValid() || file_exists(FCPATH.'uploads'.DIRECTORY_SEPARATOR.$name))
 		{
-			return redirect()->to("/admin/challenges/$challengeID")->with('file-errors', lang('admin/Challenge.FileUploadError'));
+			return redirect()->back()->with('file-error', lang('admin/Challenge.FileUploadError'));
 		}
 
 		$file->move(FCPATH.'uploads', $name);
@@ -45,10 +45,10 @@ class FileController extends AdminController
 
 		if (! $this->fileModel->insert($data))
 		{
-			return redirect()->to("/admin/challenges/$challengeID")->with('file-errors', lang('admin/Challenge.FileUploadError'));
+			return redirect()->back()->with('file-error', lang('admin/Challenge.FileUploadError'));
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID")->with('file-message', lang('admin/Challenge.fileUploadSuccessful'));
+		return redirect()->back()->with('file-message', lang('admin/Challenge.fileUploadSuccessful'));
 	}
 
 	//--------------------------------------------------------------------
@@ -61,12 +61,13 @@ class FileController extends AdminController
 
 		if (file_exists($filePath) && unlink($filePath))
 		{
-			$this->fileModel->delete($fileID);
-
-			return redirect()->to("/admin/challenges/$challengeID");
+			if (! $this->fileModel->delete($fileID))
+			{
+				return redirect()->back()->with('file-errors', $this->fileModel->errors());
+			}
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('file-message', lang('admin/Challenge.fileDeleted'));
 	}
 
 	//--------------------------------------------------------------------

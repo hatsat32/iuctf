@@ -29,11 +29,10 @@ class FlagController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->flagModel->errors();
-			return redirect()->to("/admin/challenges/$challengeID");
+			return redirect()->back()->with('flag-errors', $this->flagModel->errors());
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('flag-message', lang('admin/Challenge.flagCreated'));
 	}
 
 	//--------------------------------------------------------------------
@@ -44,11 +43,10 @@ class FlagController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->flagModel->errors();
-			return redirect()->to("/admin/challenges/$challengeID");
+			return redirect()->back()->with('flag-errors', $this->flagModel->errors());
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('flag-message', lang('admin/Challenge.flagDeleted'));
 	}
 
 	//--------------------------------------------------------------------
