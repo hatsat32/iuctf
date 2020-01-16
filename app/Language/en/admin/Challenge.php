@@ -34,4 +34,9 @@ return [
 	'fileUploadSuccessful' => 'File uploaded Successfully',
 	'FileUploadError'      => 'There was an error while upload successfully',
 	'fileUploadPhpError'   => 'Php files newer allowed!',
+
+	// messages
+	'created' => 'Challenge created successfully',
+	'updated' => 'Challenge updated successfully',
+	'deleted' => 'Challenge deleted successfully',
 ];

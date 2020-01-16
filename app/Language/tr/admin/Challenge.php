@@ -34,4 +34,9 @@ return [
 	'fileUploadSuccessful' => 'Dosya yükleme başarılı',
 	'FileUploadError'      => 'Dosya yüklerken bir hata oldu',
 	'fileUploadPhpError'   => 'Php dosyalarına asla izin verilmez!',
+
+	// messages
+	'created' => 'Soru başarıyla oluşturuldu',
+	'updated' => 'Soru başarıyla güncellendi',
+	'deleted' => 'Soru başarıyla silindi',
 ];

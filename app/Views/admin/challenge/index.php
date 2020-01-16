@@ -15,8 +15,9 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-user-friends"></i>
-			Sorular</div>
+			<?= lang('General.challenges') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<div class="table-responsive">
 				<table class="table table-bordered" id="challenges-table" width="100%" cellspacing="0">
 					<thead>

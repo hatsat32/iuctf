@@ -10,16 +10,18 @@
 			<a href="/admin/challenges"><?= lang('General.challenges') ?></a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="/admin/challenges/<?= $challenge->id ?>"/><?= $challenge->name ?></a>
+			<a href="/admin/challenges/<?= $challenge->id ?>"/><?= esc($challenge->name) ?></a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('General.edit') ?></li>
 	</ol>
 
+	<!-- CHALLENGE DETAILS -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Challenge.editChallenge') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<form action="/admin/challenges/<?= esc($challenge->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
@@ -96,11 +98,13 @@
 		</div>
 	</div>
 
+	<!-- FLAGS -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Challenge.flags') ?></div>
 		<div class="card-body">
+			<?= $this->setData(['name' => 'flag'])->include('admin/templates/message_block') ?>
 			<form action="/admin/challenges/<?= esc($challenge->id) ?>/flags" method="post">
 				<?= csrf_field() ?>
 				<div class="form-row">
@@ -154,11 +158,13 @@
 		</div>
 	</div>
 
+	<!-- HINTS -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
 			<?= lang('General.hints') ?></div>
 		<div class="card-body">
+			<?= $this->setData(['name' => 'hint'])->include('admin/templates/message_block') ?>
 			<form action="/admin/challenges/<?= esc($challenge->id) ?>/hints" method="post">
 				<?= csrf_field() ?>
 				<div class="form-row">
@@ -219,21 +225,13 @@
 		</div>
 	</div>
 
+	<!-- FILES -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
 			<?= lang('General.files') ?></div>
 		<div class="card-body">
-			<?php if (session()->has('file-message')) : ?>
-				<div class="alert alert-success">
-					<?= session('file-message') ?>
-				</div>
-			<?php endif ?>
-			<?php if (session()->has('file-error')) : ?>
-				<div class="alert alert-success">
-					<?= session('file-error') ?>
-				</div>
-			<?php endif ?>
+			<?= $this->setData(['name' => 'file'])->include('admin/templates/message_block') ?>
 			<form action="/admin/challenges/<?= esc($challenge->id) ?>/files" method="post" enctype="multipart/form-data">
 				<?= csrf_field() ?>
 				<div class="form-row">

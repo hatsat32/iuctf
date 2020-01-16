@@ -22,7 +22,7 @@ class ChallengeModel extends Model
 
 	protected $validationRules = [
 		'category_id'   => 'numeric',
-		'name'          => 'required|min_length[2]',
+		'name'          => 'required|min_length[2]|is_unique[challenges.name,id,{id}]',
 		'point'         => 'required|numeric',
 		'description'   => 'required',
 		'max_attempts'  => ['rules' => 'numeric'],

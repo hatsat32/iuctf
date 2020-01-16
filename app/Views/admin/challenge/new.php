@@ -17,13 +17,7 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Challenge.addChallenge') ?></div>
 		<div class="card-body">
-			<?php if(! empty($errors)): ?>
-				<?php foreach($errors as $key => $message): ?>
-				<div class="alert alert-danger" role="alert">
-					<?= $message ?>
-				</div>
-				<?php endforeach ?>
-			<?php endif; ?>
+			<?= $this->include('admin/templates/message_block') ?>
 
 			<?php if(empty($categories)) : ?>
 				<div class="alert alert-warning" role="alert">

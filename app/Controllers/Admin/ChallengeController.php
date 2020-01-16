@@ -3,9 +3,7 @@
 use App\Core\AdminController;
 use \App\Models\ChallengeModel;
 use \App\Models\CategoryModel;
-use \App\Models\FlagModel;
-use \App\Models\HintModel;
-use \App\Models\FileModel;
+use App\Entities\Challenge;
 
 class ChallengeController extends AdminController
 {
@@ -42,15 +40,15 @@ class ChallengeController extends AdminController
 
 	public function show($id = null)
 	{
-		$hintModel = new HintModel();
-		$fileModel = new FileModel();
-		$flagModel = new FlagModel();
+		$challange = $this->challengeModel->find($id);
 
-		$viewData['challenge']  = $this->challengeModel->find($id);
-		$viewData['categories'] = $this->categoryModel->findAll();
-		$viewData['flags']      = $flagModel->where('challenge_id', $id)->findAll();
-		$viewData['hints']      = $hintModel->where('challenge_id', $id)->findAll();
-		$viewData['files']      = $fileModel->where('challenge_id', $id)->findAll();
+		$viewData = [
+			'challenge'  => $challange,
+			'categories' => $this->categoryModel->findAll(),
+			'flags'      => $challange->flags(),
+			'hints'      => $challange->hints(),
+			'files'      => $challange->files(),
+		];
 
 		return $this->render('challenge/detail', $viewData);
 	}
@@ -59,26 +57,25 @@ class ChallengeController extends AdminController
 
 	public function create()
 	{
-		$data = [
-			'category_id'  => $this->request->getPost('category_id'),
-			'name'         => $this->request->getPost('name'),
-			'description'  => $this->request->getPost('description'),
-			'point'        => $this->request->getPost('point'),
-			'max_attempts' => empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
-			'type'         => $this->request->getPost('type'),
-			'is_active'    => $this->request->getPost('is_active'),
-		];
+		$challange = new Challenge();
+		$challange->fill($this->request->getPost());
 
-		$result = $this->challengeModel->insert($data);
+		try
+		{
+			$result = $this->challengeModel->insert($challange);
+		}
+		catch (\Exception $e)
+		{
+			return redirect()->route('admin-challenges-new')->withInput()->with('error', $e->getMessage());
+		}
 
 		if (! $result)
 		{
-			$viewData['errors']     = $this->challengeModel->errors();
-			$viewData['categories'] = $this->categoryModel->findAll();
-			return redirect()->to('/admin/challenges/new')->withInput();
+			$errors = $this->challengeModel->errors();
+			return redirect()->route('admin-challenges-new')->withInput()->with('errors', $errors);
 		}
 
-		return redirect()->to('/admin/challenges');
+		return redirect()->route('admin-challenges-show', [$result])->with('message', lang('admin/Challenge.created'));
 	}
 
 	//--------------------------------------------------------------------
@@ -89,33 +86,27 @@ class ChallengeController extends AdminController
 
 		if (! $result)
 		{
-			$viewData['errors'] = $this->challengeModel->errors();
-			return redirect()->to("/admin/challenges/$id", $viewData);
+			return redirect()->route('admin-challenges-show', [$id])->with('errors', $this->challengeModel->errors());
 		}
 
-		return redirect()->to('/admin/challenges');
+		return redirect('admin-challenges')->with('message', lang('admin/Challenge.deleted'));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function update($id = null)
 	{
-		$data = [
-			'category_id'  => $this->request->getPost('category_id'),
-			'name'         => $this->request->getPost('name'),
-			'description'  => $this->request->getPost('description'),
-			'point'        => $this->request->getPost('point'),
-			'max_attempts' => empty($this->request->getPost('max_attempts')) ? 0 : $this->request->getPost('max_attempts'),
-			'type'         => $this->request->getPost('type'),
-			'is_active'    => $this->request->getPost('is_active'),
-		];
+		$challange = $this->challengeModel->find($id);
 
-		$result = $this->challengeModel->update($id, $data);
+		$challange->fill($this->request->getPost());
+
+		$result = $this->challengeModel->save($challange);
+
 		if (! $result)
 		{
-			$viewData['errors'] = $this->challengeModel->errors();
-			return redirect()->to("/admin/challenges/$id");
+			return redirect()->route('admin-challenges-show', [$id])->with('errors', $this->challengeModel->errors());
 		}
-		return redirect()->to("/admin/challenges/$id");
+
+		return redirect()->route('admin-challenges-show', [$id])->with('message', lang('admin/Challenge.updated'));
 	}
 }
