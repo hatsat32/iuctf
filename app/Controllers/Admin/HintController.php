@@ -5,6 +5,7 @@ use \App\Models\HintModel;
 
 class HintController extends AdminController
 {
+	/** @var HintModel **/
 	private $hintModel;
 
 	public function initController($request, $response, $logger)
@@ -12,34 +13,6 @@ class HintController extends AdminController
 		parent::initController($request, $response, $logger);
 
 		$this->hintModel = new HintModel();
-	}
-
-	//--------------------------------------------------------------------
-
-	public function index()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function new()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function show($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -58,10 +31,11 @@ class HintController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->hintModel->errors();
-			return redirect()->to("/admin/challenges/$challengeID");
+			return redirect()->route('admin-challenges-show', [$challengeID])->with('hint-errors', $errors);
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->route('admin-challenges-show', [$challengeID])
+				->with('hint-message', lang('admin/Challenge.hintCreated'));
 	}
 
 	//--------------------------------------------------------------------
@@ -72,11 +46,10 @@ class HintController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->hintModel->errors();
-			return redirect()->back()->with('errors', $errors);
+			return redirect()->back()->with('hint-errors', $this->hintModel->errors());
 		}
 
-		return redirect()->back();
+		return redirect()->back()->with('hint-message', lang('admin/Challenge.hintDeleted'));
 	}
 
 	//--------------------------------------------------------------------
@@ -93,10 +66,11 @@ class HintController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->hintModel->errors();
-			return redirect()->back()->with('errors', $errors);
+			return redirect()->back()->with('errors', $this->hintModel->errors());
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('hint-message', lang('admin/Challenge.hintUpdated'));
 	}
+
+	//--------------------------------------------------------------------
 }

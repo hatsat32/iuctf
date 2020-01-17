@@ -1,6 +1,7 @@
 <?= $this->extend("admin/templates/base") ?>
 
 <?= $this->section('content') ?>
+
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
 			<a href="/admin">Dashboard</a>
@@ -13,6 +14,7 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Category.editCategory') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<form action="/admin/categories/<?= esc($category['id']) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
@@ -46,4 +48,5 @@
 			</div>
 		</div>
 	</div>
+
 <?= $this->endSection() ?>

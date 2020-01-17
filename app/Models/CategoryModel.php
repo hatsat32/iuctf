@@ -12,8 +12,8 @@ class CategoryModel extends Model
 	];
 
 	protected $validationRules = [
-		'name'        => 'required|alpha_numeric_space',
-		'description' => 'alpha_numeric_space',
+		'name'        => 'required|string',
+		'description' => 'string',
 	];
 
 	protected $useTimestamps = true;

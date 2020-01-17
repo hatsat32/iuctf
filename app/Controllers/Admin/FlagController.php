@@ -5,6 +5,7 @@ use \App\Models\FlagModel;
 
 class FlagController extends AdminController
 {
+	/** @var FlagModel **/
 	private $flagModel;
 
 	public function initController($request, $response, $logger)
@@ -12,34 +13,6 @@ class FlagController extends AdminController
 		parent::initController($request, $response, $logger);
 
 		$this->flagModel = new FlagModel();
-	}
-
-	//--------------------------------------------------------------------
-
-	public function index()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function new()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function show($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -56,11 +29,10 @@ class FlagController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->flagModel->errors();
-			return redirect()->to("/admin/challenges/$challengeID");
+			return redirect()->back()->with('flag-errors', $this->flagModel->errors());
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('flag-message', lang('admin/Challenge.flagCreated'));
 	}
 
 	//--------------------------------------------------------------------
@@ -71,17 +43,11 @@ class FlagController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->flagModel->errors();
-			return redirect()->to("/admin/challenges/$challengeID");
+			return redirect()->back()->with('flag-errors', $this->flagModel->errors());
 		}
 
-		return redirect()->to("/admin/challenges/$challengeID");
+		return redirect()->back()->with('flag-message', lang('admin/Challenge.flagDeleted'));
 	}
 
 	//--------------------------------------------------------------------
-
-	public function update($id = null)
-	{
-
-	}
 }

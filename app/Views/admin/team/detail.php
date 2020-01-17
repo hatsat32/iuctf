@@ -14,6 +14,7 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Team.editTeam') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<form action="/admin/teams/<?= esc($team->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
@@ -96,10 +97,10 @@
 					<tbody>
 						<?php foreach ($teamMembers as $member) : ?>
 						<tr>
-							<td><?= $member->id ?></td>
-							<td><?= $member->username ?></td>
-							<td><?= $member->name ?></td>
-							<td><?= $member->email ?></td>
+							<td><?= esc($member->id) ?></td>
+							<td><?= esc($member->username) ?></td>
+							<td><?= esc($member->name) ?></td>
+							<td><?= esc($member->email) ?></td>
 							<td>
 								<a href="/admin/users/<?= $member->id ?>" class="btn btn-primary btn-block"><?= lang('General.detail') ?></a>
 							</td>
@@ -116,6 +117,7 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Team.markAsSolved') ?></div>
 		<div class="card-body">
+			<?= $this->setData(['name' => 'mark-solved'])->include('admin/templates/message_block') ?>
 			<form action="/admin/teams/<?= $team->id ?>/solves" method="post">
 				<?= csrf_field() ?>
 				<div class="form-row">

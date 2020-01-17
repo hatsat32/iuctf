@@ -129,93 +129,87 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function(RouteCollection $routes) {
-	$routes->get('/', 'DashboardController::index');
+	$routes->get('/', 'DashboardController::index', ['as' => 'admin-dashboard']);
 
 	$routes->group('teams', function(RouteCollection $routes) {
-		$routes->get('/', 				'TeamController::index');
-		$routes->get('new', 			'TeamController::new');
-		$routes->get('(:num)/edit', 	'TeamController::edit/$1');
-		$routes->get('(:num)', 			'TeamController::show/$1');
-		$routes->post('/', 				'TeamController::create');
-		$routes->post('(:num)/delete',	'TeamController::delete/$1');
-		$routes->post('(:num)', 		'TeamController::update/$1');
+		$routes->get('/',              'TeamController::index',   ['as' => 'admin-teams']);
+		$routes->get('new',            'TeamController::new',     ['as' => 'admin-teams-new']);
+		$routes->get('(:num)',         'TeamController::show/$1', ['as' => 'admin-teams-show']);
+		$routes->post('/',             'TeamController::create');
+		$routes->post('(:num)/delete', 'TeamController::delete/$1');
+		$routes->post('(:num)',        'TeamController::update/$1');
 
 		$routes->post('(:num)/authcode','TeamController::changeAuthCode/$1');
-		$routes->post('(:num)/ban',		'TeamController::ban/$1');
-		$routes->post('(:num)/unban',	'TeamController::unBan/$1');
+		$routes->post('(:num)/ban',     'TeamController::ban/$1');
+		$routes->post('(:num)/unban',   'TeamController::unBan/$1');
 
-		$routes->post('(:num)/solves', 	'TeamController::markAsSolved/$1');
-		$routes->post('(:num)/solves/(:num)/delete', 	'TeamController::markAsUnsolved/$1/$2');
+		$routes->post('(:num)/solves',  'TeamController::markAsSolved/$1');
+		$routes->post('(:num)/solves/(:num)/delete', 'TeamController::markAsUnsolved/$1/$2');
 	});
 
 	$routes->group('users', function(RouteCollection $routes) {
-		$routes->get('/', 				'UserController::index');
-		$routes->get('new', 			'UserController::new');
-		$routes->get('(:num)/edit', 	'UserController::edit/$1');
-		$routes->get('(:num)', 			'UserController::show/$1');
-		$routes->post('/', 				'UserController::create');
-		$routes->post('(:num)/delete',	'UserController::delete/$1');
-		$routes->post('(:num)', 		'UserController::update/$1');
-		$routes->post('(:num)/change-password',	'UserController::changePassword/$1');
+		$routes->get('/',              'UserController::index',   ['as' => 'admin-users']);
+		$routes->get('new',            'UserController::new',     ['as' => 'admin-users-new']);
+		$routes->get('(:num)',         'UserController::show/$1', ['as' => 'admin-users-show']);
+		$routes->post('/',             'UserController::create');
+		$routes->post('(:num)/delete', 'UserController::delete/$1');
+		$routes->post('(:num)',        'UserController::update/$1');
+
+		$routes->post('(:num)/change-password', 'UserController::changePassword/$1');
 		$routes->post('(:num)/addadmin', 'UserController::addAdmin/$1');
-		$routes->post('(:num)/rmadmin', 'UserController::rmAdmin/$1');
-		$routes->post('(:num)/ban',     'UserController::ban/$1');
-		$routes->post('(:num)/unban',   'UserController::unban/$1');
+		$routes->post('(:num)/rmadmin',  'UserController::rmAdmin/$1');
+		$routes->post('(:num)/ban',      'UserController::ban/$1');
+		$routes->post('(:num)/unban',    'UserController::unban/$1');
 	});
 
 	$routes->group('categories', function(RouteCollection $routes) {
-		$routes->get('/', 				'CategoryController::index');
-		$routes->get('new', 			'CategoryController::new');
-		$routes->get('(:num)/edit', 	'CategoryController::edit/$1');
-		$routes->get('(:num)', 			'CategoryController::show/$1');
-		$routes->post('/', 				'CategoryController::create');
-		$routes->post('(:num)/delete',	'CategoryController::delete/$1');
-		$routes->post('(:num)', 		'CategoryController::update/$1');
+		$routes->get('/',              'CategoryController::index',   ['as' => 'admin-categories']);
+		$routes->get('new',            'CategoryController::new',     ['as' => 'admin-categories-new']);
+		$routes->get('(:num)',         'CategoryController::show/$1', ['as' => 'admin-categories-show']);
+		$routes->post('/',             'CategoryController::create');
+		$routes->post('(:num)/delete', 'CategoryController::delete/$1');
+		$routes->post('(:num)',        'CategoryController::update/$1');
 	});
 
 	$routes->group('challenges', function(RouteCollection $routes) {
-		$routes->get('/', 				'ChallengeController::index');
-		$routes->get('new', 			'ChallengeController::new');
-		$routes->get('(:num)/edit', 	'ChallengeController::edit/$1');
-		$routes->get('(:num)', 			'ChallengeController::show/$1');
-		$routes->post('/', 				'ChallengeController::create');
-		$routes->post('(:num)/delete',	'ChallengeController::delete/$1');
-		$routes->post('(:num)', 		'ChallengeController::update/$1');
+		$routes->get('/',              'ChallengeController::index',   ['as' => 'admin-challenges']);
+		$routes->get('new',            'ChallengeController::new',     ['as' => 'admin-challenges-new']);
+		$routes->get('(:num)',         'ChallengeController::show/$1', ['as' => 'admin-challenges-show']);
+		$routes->post('/',             'ChallengeController::create');
+		$routes->post('(:num)/delete', 'ChallengeController::delete/$1');
+		$routes->post('(:num)',        'ChallengeController::update/$1');
 	});
 
 	$routes->group('challenges/(:num)/flags', function(RouteCollection $routes) {
-		$routes->get('/', 				'FlagController::index$1');
-		$routes->get('new', 			'FlagController::new$1');
-		$routes->get('(:num)/edit', 	'FlagController::edit/$1/$2');
-		$routes->get('(:num)', 			'FlagController::show/$1/$2');
-		$routes->post('/', 				'FlagController::create/$1');
-		$routes->post('(:num)/delete',	'FlagController::delete/$1/$2');
-		$routes->post('(:num)', 		'FlagController::update/$1/$2');
+		$routes->get('/',              'FlagController::index$1',    ['as' => 'admin-flags']);
+		$routes->get('new',            'FlagController::new$1',      ['as' => 'admin-flags-new']);
+		$routes->get('(:num)',         'FlagController::show/$1/$2', ['as' => 'admin-flags-show']);
+		$routes->post('/',             'FlagController::create/$1');
+		$routes->post('(:num)/delete', 'FlagController::delete/$1/$2');
+		$routes->post('(:num)',        'FlagController::update/$1/$2');
 	});
 
 	$routes->group('challenges/(:num)/hints', function(RouteCollection $routes) {
-		$routes->get('/', 				'HintController::index$1');
-		$routes->get('new', 			'HintController::new$1');
-		$routes->get('(:num)/edit', 	'HintController::edit/$1/$2');
-		$routes->get('(:num)', 			'HintController::show/$1/$2');
-		$routes->post('/', 				'HintController::create/$1');
-		$routes->post('(:num)/delete',	'HintController::delete/$1/$2');
-		$routes->post('(:num)', 		'HintController::update/$1/$2');
+		$routes->get('/',              'HintController::index$1',    ['as' => 'admin-hints']);
+		$routes->get('new',            'HintController::new$1',      ['as' => 'admin-hints-new']);
+		$routes->get('(:num)',         'HintController::show/$1/$2', ['as' => 'admin-hints-show']);
+		$routes->post('/',             'HintController::create/$1');
+		$routes->post('(:num)/delete', 'HintController::delete/$1/$2');
+		$routes->post('(:num)',        'HintController::update/$1/$2');
 	});
 
 	$routes->group('challenges/(:num)/files', function(RouteCollection $routes) {
-		$routes->post('/',				'FileController::create/$1');
-		$routes->post('(:num)/delete',	'FileController::delete/$1/$2');
+		$routes->post('/',             'FileController::create/$1');
+		$routes->post('(:num)/delete', 'FileController::delete/$1/$2');
 	});
 
 	$routes->group('notifications', function(RouteCollection $routes) {
-		$routes->get('/', 				'NotificationController::index');
-		$routes->get('new', 			'NotificationController::new');
-		$routes->get('(:num)/edit', 	'NotificationController::edit/$1');
-		$routes->get('(:num)', 			'NotificationController::show/$1');
-		$routes->post('/', 				'NotificationController::create');
-		$routes->post('(:num)/delete',	'NotificationController::delete/$1');
-		$routes->post('(:num)', 		'NotificationController::update/$1');
+		$routes->get('/',              'NotificationController::index',   ['as' => 'admin-notf']);
+		$routes->get('new',            'NotificationController::new',     ['as' => 'admin-notf-new']);
+		$routes->get('(:num)',         'NotificationController::show/$1', ['as' => 'admin-notf-show']);
+		$routes->post('/',             'NotificationController::create');
+		$routes->post('(:num)/delete', 'NotificationController::delete/$1');
+		$routes->post('(:num)',        'NotificationController::update/$1');
 	});
 
 	$routes->group('settings', function(RouteCollection $routes) {
@@ -236,8 +230,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 	});
 
 	$routes->group('logs', function(RouteCollection $routes) {
-		$routes->get('submits', 	'LogController::submits', ['as' => 'admin-log-flag']);
-		$routes->get('login', 		'LogController::login', ['as' => 'admin-log-login']);
+		$routes->get('submits', 'LogController::submits', ['as' => 'admin-log-flag']);
+		$routes->get('login',   'LogController::login',   ['as' => 'admin-log-login']);
 	});
 });
 

@@ -18,6 +18,7 @@
 			<i class="fas fa-user-friends"></i>
 			<?= lang('General.teams') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<div class="table-responsive">
 				<table class="table table-bordered" id="teams-table" width="100%" cellspacing="0">
 					<thead>

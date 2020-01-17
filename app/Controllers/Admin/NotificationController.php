@@ -7,6 +7,7 @@ use \App\Entities\Notification;
 
 class NotificationController extends AdminController
 {
+	/** @var NotificationModel **/
 	protected $notificationModel = null;
 
 	public function initController($request, $response, $logger)
@@ -29,13 +30,6 @@ class NotificationController extends AdminController
 	public function new()
 	{
 		return $this->render('notification/new');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------

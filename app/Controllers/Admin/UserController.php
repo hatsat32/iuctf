@@ -37,13 +37,6 @@ class UserController extends AdminController
 
 	//--------------------------------------------------------------------
 
-	public function edit($id = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
 	public function show($id = null)
 	{
 		$user = $this->userModel->find($id);
@@ -188,7 +181,7 @@ class UserController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->authUserModel->errors();
+			$errors = $authUserModel->errors();
 			return redirect()->to("/admin/users/$id")->with('errors', $errors);
 		}
 
@@ -207,7 +200,7 @@ class UserController extends AdminController
 
 		if (! $result)
 		{
-			$errors = $this->authUserModel->errors();
+			$errors = $authUserModel->errors();
 			return redirect()->to("/admin/users/$id")->with('errors', $errors);
 		}
 

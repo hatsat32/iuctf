@@ -1,6 +1,7 @@
 <?= $this->extend("admin/templates/base") ?>
 
 <?= $this->section('content') ?>
+
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
 			<a href="/admin">Dashboard</a>
@@ -12,12 +13,13 @@
 		<a class="btn btn-primary btn-block" href="/admin/categories/new"><?= lang('General.add') ?></a>
 	</div>
 
-<!-- DataTables Example -->
-<div class="card mb-3">
+	<!-- TEAM TABLE -->
+	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-user-friends"></i>
 			<?= lang('General.categories') ?></div>
 		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 			<div class="table-responsive">
 				<table class="table table-bordered" id="teams-table" width="100%" cellspacing="0">
 					<thead>
@@ -56,4 +58,5 @@
 			$("#teams-table").DataTable();
 		});
 	</script>
+
 <?= $this->endSection() ?>

@@ -8,8 +8,11 @@ use \App\Models\SolvesModel;
 
 class TeamController extends AdminController
 {
+	/** @var TeamModel **/
 	private $teamModel;
+	/** @var UserModel **/
 	private $userModel;
+	/** @var ChallengeModel **/
 	private $challengeModel;
 
 	public function initController($request, $response, $logger)
@@ -35,13 +38,6 @@ class TeamController extends AdminController
 	public function new()
 	{
 		return $this->render('team/new');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function edit($id = null)
-	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -77,22 +73,21 @@ class TeamController extends AdminController
 		// make sure user found
 		if ($leader === null)
 		{
-			$error = lang('admin/Team.noUserFound');
-			return redirect()->to('/admin/teams/new')->withInput()->with('error', $error);
+			return redirect('admin-teams-new')->withInput()->with('error', lang('admin/Team.noUserFound'));
 		}
 
 		// user dont have team
 		if ($leader->team_id !== null)
 		{
 			$error = lang('admin/Team.userAlreadyHaveTeam');
-			return redirect()->to('/admin/teams/new')->withInput()->with('error', $error);
+			return redirect('admin-teams-new')->withInput()->with('error', $error);
 		}
 
 		$data = [
 			'leader_id' => $leader->id,
 			'name'      => $this->request->getPost('name'),
 			'is_banned' => '0',
-			'auth_code' => bin2hex(random_bytes(32)),
+			'auth_code' => bin2hex(random_bytes(config('Iuctf')->authCodeSize)),
 		];
 
 		try
@@ -104,16 +99,16 @@ class TeamController extends AdminController
 			// team exist with this name
 			if ($e->getCode() === 1062)
 			{
-				return redirect()->to('/admin/teams/new')->withInput()->with('error', lang('admin/Team.teamExistWithThisName'));
+				return redirect('admin-teams-new')->withInput()->with('error', lang('admin/Team.teamExistWithThisName'));
 			}
 
-			return redirect()->to('/admin/teams/new')->withInput()->with('error', $e->getMessage());
+			return redirect('admin-teams-new')->withInput()->with('error', $e->getMessage());
 		}
 
 		if (! $teamID)
 		{
 			$errors = $this->teamModel->errors();
-			return redirect()->to('/admin/teams/new')->withInput()->with('errors', $errors);
+			return redirect('admin-teams-new')->withInput()->with('errors', $errors);
 		}
 
 		// add user to new team
@@ -123,10 +118,10 @@ class TeamController extends AdminController
 		if (! $userUpdate)
 		{
 			$errors = $this->userModel->errors();
-			return redirect()->to('/admin/teams/new')->withInput()->with('errors', $errors);
+			return redirect('admin-teams-new')->withInput()->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/teams/$teamID");
+		return redirect()->route('admin-teams-show', [$teamID])->with('message', lang('admin/Team.createdSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -137,11 +132,10 @@ class TeamController extends AdminController
 
 		if (! $result)
 		{
-			$viewData['errors'] = $this->teamModel->errors();
-			return redirect()->to("/admin/teams/$id", $viewData);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $this->teamModel->errors());
 		}
 
-		return redirect()->to('/admin/teams');
+		return redirect('admin-teams')->with('message', lang('admin/Team.deletedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -157,18 +151,17 @@ class TeamController extends AdminController
 
 		if (! in_array($this->request->getPost('leader_id'), $teamMembers))
 		{
-			return redirect()->to("/admin/teams/$id");
+			return redirect()->route('admin-teams-show', [$id])->with('error', lang('admin/Team.leaderMustInTeam'));
 		}
 
 		$result = $this->teamModel->update($id, $data);
 
 		if (! $result)
 		{
-			$viewData['errors'] = $this->teamModel->errors();
-			return redirect()->to("/admin/teams/$id", $viewData);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $this->teamModel->errors());
 		}
 
-		return redirect()->to("/admin/teams/$id");
+		return redirect()->route('admin-teams-show', [$id])->with('message', lang('admin/Team.updatedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -176,17 +169,17 @@ class TeamController extends AdminController
 	public function changeAuthCode($id = null)
 	{
 		$data = [
-			'auth_code' => bin2hex(random_bytes(32)),
+			'auth_code' => bin2hex(random_bytes(config('Iuctf')->authCodeSize)),
 		];
 
 		$result = $this->teamModel->update($id, $data);
 
 		if (! $result)
 		{
-			$viewData['errors'] = $this->teamModel->errors();
-			return redirect()->to("/admin/teams/$id", $viewData);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $this->teamModel->errors());
 		}
-		return redirect()->to("/admin/teams/$id");
+		return redirect()->route('admin-teams-show', [$id])
+				->with('message', lang('admin/Team.authCodeChanged'));
 	}
 
 	//--------------------------------------------------------------------
@@ -206,10 +199,11 @@ class TeamController extends AdminController
 		if (! $result)
 		{
 			$errors = $solvesModel->errors();
-			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+			return redirect()->route('admin-teams-show', [$id])->with('mark-solved-errors', $errors);
 		}
 
-		return redirect()->to("/admin/teams/$id");
+		return redirect()->route('admin-teams-show', [$id])
+				->with('mark-solved-message', lang('admin/Team.markedAsSolved'));
 	}
 
 	//--------------------------------------------------------------------
@@ -223,10 +217,11 @@ class TeamController extends AdminController
 		if (! $result)
 		{
 			$errors = $solvesModel->errors();
-			return redirect()->to("/admin/teams/$teamID")->with('errors', $errors);
+			return redirect()->route('admin-teams-show', [$teamID])->with('mark-solved-errors', $errors);
 		}
 
-		return redirect()->to("/admin/teams/$teamID");
+		return redirect()->route('admin-teams-show', [$teamID])
+				->with('mark-solved-message', lang('admin/Team.markAsUnsolved'));
 	}
 
 	//--------------------------------------------------------------------
@@ -238,7 +233,7 @@ class TeamController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->teamModel->errors();
-			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $errors);
 		}
 
 		// ban all the users
@@ -247,10 +242,10 @@ class TeamController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->userModel->errors();
-			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/teams/$id");
+		return redirect()->route('admin-teams-show', [$id])->with('message', lang('admin/Team.bannedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -262,7 +257,7 @@ class TeamController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->teamModel->errors();
-			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $errors);
 		}
 
 		// unban all the users
@@ -271,10 +266,10 @@ class TeamController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->userModel->errors();
-			return redirect()->to("/admin/teams/$id")->with('errors', $errors);
+			return redirect()->route('admin-teams-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/teams/$id");
+		return redirect()->route('admin-teams-show', [$id])->with('message', lang('admin/Team.unbannedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------

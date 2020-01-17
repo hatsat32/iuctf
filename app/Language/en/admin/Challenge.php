@@ -32,6 +32,19 @@ return [
 	],
 
 	'fileUploadSuccessful' => 'File uploaded Successfully',
-	'FileUploadError'      => 'There was an error while upload successfully',
+	'FileUploadError'      => 'There was an error while upload',
 	'fileUploadPhpError'   => 'Php files newer allowed!',
+	'fileDeleted'          => 'File deleted successfully',
+
+	// messages
+	'created' => 'Challenge created successfully',
+	'updated' => 'Challenge updated successfully',
+	'deleted' => 'Challenge deleted successfully',
+
+	'hintCreated' => 'Hint created successfully',
+	'hintUpdated' => 'Hint updated successfully',
+	'hintDeleted' => 'Hint deleted successfully',
+
+	'flagCreated' => 'Flag created successfully',
+	'flagDeleted' => 'Flag deleted successfully',
 ];
