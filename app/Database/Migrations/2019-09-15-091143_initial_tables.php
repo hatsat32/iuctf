@@ -101,7 +101,7 @@ class InitialTables extends Migration
 		$this->forge->addForeignKey('challenge_id', 'challenges', 'id');
 		$this->forge->addForeignKey('user_id', 'users', 'id');
 		$this->forge->addForeignKey('team_id', 'teams', 'id');
-		$this->forge->createTable('submits');
+		$this->forge->createTable('submissions');
 
 		//--------------------------------------------------------------------
 
@@ -190,7 +190,7 @@ class InitialTables extends Migration
 		$this->forge->dropTable('categories', true);
 		$this->forge->dropTable('challenges', true);
 		$this->forge->dropTable('solves', true);
-		$this->forge->dropTable('submits', true);
+		$this->forge->dropTable('submissions', true);
 		$this->forge->dropTable('flags', true);
 		$this->forge->dropTable('notifications', true);
 		$this->forge->dropTable('hints', true);

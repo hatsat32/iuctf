@@ -113,7 +113,7 @@ class ChallengeController extends UserController
 			}
 		}
 
-		$submitModel = new \App\Models\SubmitModel();
+		$submissionModel = new \App\Models\SubmissionModel();
 		$data = [
 			'challenge_id' => $challengeID,
 			'user_id'      => user()->id,
@@ -122,7 +122,7 @@ class ChallengeController extends UserController
 			'provided'     => $submited_flag,
 			'type'         => $result ? '1':'0',
 		];
-		$submitModel->insert($data);
+		$submissionModel->insert($data);
 
 		if (! $result)
 		{

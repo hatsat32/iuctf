@@ -2,10 +2,11 @@
 
 use CodeIgniter\Model;
 
-class SubmitModel extends Model
+class SubmissionModel extends Model
 {
-	protected $table      = 'submits';
+	protected $table      = 'submissions';
 	protected $primaryKey = 'id';
+	protected $returnType = 'object';
 
 	protected $allowedFields = [
 		'challenge_id', 'user_id', 'team_id', 'ip', 'provided', 'type'
@@ -21,5 +22,5 @@ class SubmitModel extends Model
 	];
 
 	protected $useTimestamps = true;
-	protected $updatedField  = null; // no need for update_at when logs submits
+	protected $updatedField  = null; // no need for update_at when logs submissions
 }

@@ -41,7 +41,7 @@
 			<span><?= lang('admin/Templates.logs') ?></span>
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-			<a class="dropdown-item" href="/admin/logs/submits"><?= lang('admin/Templates.flagSubmits') ?></a>
+			<a class="dropdown-item" href="/admin/logs/submission"><?= lang('admin/Templates.flagSubmissions') ?></a>
 			<a class="dropdown-item" href="/admin/logs/login"><?= lang('admin/Templates.loginLogs') ?></a>
 		</div>
 	</li>

@@ -1,7 +1,7 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use \App\Models\SubmitModel;
+use \App\Models\SubmissionModel;
 
 class LogController extends AdminController
 {
@@ -14,27 +14,27 @@ class LogController extends AdminController
 
 	//--------------------------------------------------------------------
 
-	public function submits()
+	public function submission()
 	{
-		$submitModel = new SubmitModel();
+		$submissionModel = new SubmissionModel();
 
-		$submitBuilder = $submitModel->builder();
-		$query = $submitBuilder->select(['submits.id', 'users.username', 'submits.ip',
-											'submits.provided', 'submits.type', 'submits.created_at'])
-								->select('teams.name as tname', false)
-								->select('challenges.name as chname', false)
-								->from(['users', 'teams', 'challenges'])
-								->where('submits.user_id', 'users.id', false)
-								->where('submits.team_id', 'teams.id', false)
-								->where('submits.challenge_id', 'challenges.id', false)
-								->orderBy('submits.created_at', 'DESC');
+		$submissionBuilder = $submissionModel->builder();
+		$submissionBuilder->select(['submissions.id', 'users.username', 'submissions.ip', 'submissions.provided', 
+					'submissions.type', 'submissions.created_at'])
+				->select('teams.name as tname', false)
+				->select('challenges.name as chname', false)
+				->from(['users', 'teams', 'challenges'])
+				->where('submissions.user_id', 'users.id', false)
+				->where('submissions.team_id', 'teams.id', false)
+				->where('submissions.challenge_id', 'challenges.id', false)
+				->orderBy('submissions.created_at', 'DESC');
 
 		$viewData = [
-			'submits' => $submitModel->paginate(100),
-			'pager'   => $submitModel->pager,
+			'submissions' => $submissionModel->paginate(100),
+			'pager'       => $submissionModel->pager,
 		];
 
-		return $this->render('log/submits', $viewData);
+		return $this->render('log/submission', $viewData);
 	}
 
 	//--------------------------------------------------------------------

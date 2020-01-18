@@ -13,7 +13,7 @@ return [
 	'notifications'		=> 'Notifications',
 	'logs'				=> 'Logs',
 	'loginLogs'			=> 'Login Logs',
-	'flagSubmits'		=> 'Flag Logs',
+	'flagSubmissions'	=> 'Flag Logs',
 	'settings'			=> 'Settings',
 
 	// footer

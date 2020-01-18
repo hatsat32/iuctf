@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'flagSubmits'	=> 'Girilen Bayraklar',
+	'flagSubmissions' => 'Girilen Bayraklar',
 	'ip'			=> 'IP',
 	'provided'		=> 'Girilen',
 	'type'			=> 'Tip',
