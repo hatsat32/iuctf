@@ -30,4 +30,14 @@ class Services extends CoreServices
 	//
 	//        return new \CodeIgniter\Example();
 	//    }
+
+	public static function settings(bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('settings');
+		}
+
+		return config('Settings');
+	}
 }

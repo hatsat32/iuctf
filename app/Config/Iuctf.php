@@ -5,6 +5,11 @@ use CodeIgniter\Config\BaseConfig;
 class Iuctf extends BaseConfig
 {
 	/**
+	 * The current version of Iuctf Platform
+	 */
+	const IUCTF_VERSION = null;
+
+	/**
 	 * List of available locales.
 	 * Default English
 	 */

@@ -19,4 +19,19 @@ class SettingsModel extends Model
 	];
 	
 	protected $useTimestamps = true;
+
+	//--------------------------------------------------------------------
+
+	public function getAllSettings()
+	{
+		$settings = new \stdClass();
+
+		foreach ($this->findAll() as $setting) {
+			$settings->{$setting->key} = $setting->value;
+		}
+
+		return $settings;
+	}
+
+	//--------------------------------------------------------------------
 }
