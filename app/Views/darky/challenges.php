@@ -14,11 +14,11 @@
 <div class="row">
 	<div class="col-md-4 my-2">
 		<?php foreach ($categories as $category) : ?>
-			<?php if (isset($category['challenges']) === true): ?>
+			<?php if (isset($category->challenges) === true): ?>
 				<div class="card border-secondary mb-3">
-					<h4 class="card-header"><?= esc($category['name']) ?></h4>
+					<h4 class="card-header"><?= esc($category->name) ?></h4>
 					<div class="list-group list-group-flush">
-						<?php foreach ($category['challenges'] as $ch): ?>
+						<?php foreach ($category->challenges as $ch): ?>
 							<a href="/challenges/<?= $ch->id ?>" class="list-group-item list-group-item-action p-2 <?= in_array($ch->id, $solves) ? 'text-success':'text-danger' ?>">
 								<?= esc($ch->name) ?> (<?= esc($ch->point) ?>)</a>
 						<?php endforeach ?>

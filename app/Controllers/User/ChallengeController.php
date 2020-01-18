@@ -49,12 +49,12 @@ class ChallengeController extends UserController
 
 		foreach ($categories as $c_key => $c_val) {
 			$arr = array_filter($challenges, function($challenge) use ($c_val) {
-				return $challenge->category_id == $c_val['id'];
+				return $challenge->category_id == $c_val->id;
 			});
 
 			if(! empty($arr))
 			{
-				$categories[$c_key]['challenges'] = $arr;
+				$categories[$c_key]->challenges = $arr;
 			}
 		}
 

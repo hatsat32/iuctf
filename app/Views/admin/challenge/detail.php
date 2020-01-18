@@ -32,8 +32,8 @@
 					<label for="category_id"><?= lang('admin/Challenge.selectCategory') ?></label>
 					<select name="category_id" class="form-control" id="category_id">
 						<?php foreach($categories as $category): ?>
-							<option <?= $challenge->id === $category['id'] ? 'selected':'' ?> value="<?= esc($category['id']) ?>">
-								<?= esc($category['name']) ?>
+							<option <?= $challenge->category_id === $category->id ? 'selected':'' ?> value="<?= esc($category->id) ?>">
+								<?= esc($category->name) ?>
 							</option>
 						<?php endforeach; ?>
 					</select>

@@ -15,33 +15,33 @@
 			<?= lang('admin/Category.editCategory') ?></div>
 		<div class="card-body">
 			<?= $this->include('admin/templates/message_block') ?>
-			<form action="/admin/categories/<?= esc($category['id']) ?>" method="post">
+			<form action="/admin/categories/<?= esc($category->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="id"><?= lang('General.id') ?></label>
-					<input disabled class="form-control" id="id" value="<?= esc($category['id']) ?>">
+					<input disabled class="form-control" id="id" value="<?= esc($category->id) ?>">
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('admin/Category.categoryName') ?></label>
-					<input type="text" name="name" class="form-control" id="name" value="<?= esc($category['name']) ?>">
+					<input type="text" name="name" class="form-control" id="name" value="<?= esc($category->name) ?>">
 				</div>
 				<div class="form-group">
 					<label for="description"><?= lang('General.description') ?></label>
-					<textarea class="form-control" id="description" name="description" rows="3"><?= esc($category['description']) ?></textarea>
+					<textarea class="form-control" id="description" name="description" rows="3"><?= esc($category->description) ?></textarea>
 				</div>
 				<div class="form-group">
 					<label for="created_at"><?= lang('General.createdAt') ?></label>
-					<input disabled class="form-control" id="created_at" value="<?= esc($category['created_at']) ?>">
+					<input disabled class="form-control" id="created_at" value="<?= esc($category->created_at) ?>">
 				</div>
 				<div class="form-group">
 					<label for="updated_at"><?= lang('General.updatedAt') ?></label>
-					<input disabled class="form-control" id="updated_at" value="<?= esc($category['updated_at']) ?>">
+					<input disabled class="form-control" id="updated_at" value="<?= esc($category->updated_at) ?>">
 				</div>
 				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Category.updateCategory') ?></button>
 			</form>
 
 			<div class="mt-4">
-				<form action="/admin/categories/<?= esc($category['id']) ?>/delete" method="post">
+				<form action="/admin/categories/<?= esc($category->id) ?>/delete" method="post">
 					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Category.deleteCategory') ?></button>
 				</form>

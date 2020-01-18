@@ -2,6 +2,7 @@
 
 use App\Core\AdminController;
 use \App\Models\CategoryModel;
+use App\Entities\Category;
 
 class CategoryController extends AdminController
 {
@@ -42,14 +43,12 @@ class CategoryController extends AdminController
 
 	public function create()
 	{
-		$data = [
-			'name'          => $this->request->getPost('name'),
-			'description'   => $this->request->getPost('description'),
-		];
+		$category = new Category();
+		$category->fill($this->request->getPost());
 
 		try
 		{
-			$result = $this->categoryModel->insert($data);
+			$result = $this->categoryModel->insert($category);
 		}
 		catch (\Exception $e)
 		{
@@ -84,12 +83,11 @@ class CategoryController extends AdminController
 
 	public function update($id = null)
 	{
-		$data = [
-			'name'          => $this->request->getPost('name'),
-			'description'   => $this->request->getPost('description'),
-		];
+		$category = $this->categoryModel->find($id);
 
-		$result = $this->categoryModel->update($id, $data);
+		$category->fill($this->request->getPost());
+
+		$result = $this->categoryModel->save($category);
 
 		if (! $result)
 		{
