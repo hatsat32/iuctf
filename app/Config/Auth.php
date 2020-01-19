@@ -18,26 +18,19 @@ class Auth extends \Myth\Auth\Config\Auth
     //--------------------------------------------------------------------
 
     public $views = [
-        // 'login' => 'Myth\Auth\Views\login',
-        'login' => 'App\Views\darky\auth\login',
-        // 'register' => 'Myth\Auth\Views\register',
-        'register' => 'App\Views\darky\auth\register',
-        // 'forgot' => 'Myth\Auth\Views\forgot',
-        'forgot' => 'App\Views\darky\auth\forgot',
-        // 'reset' => 'Myth\Auth\Views\reset',
-        'reset' => 'App\Views\darky\auth\reset',
-        // 'emailForgot' => 'Myth\Auth\Views\emails\forgot',
-        'emailForgot' => 'App\Views\darky\auth\emails\forgot',
-        // 'emailActivation' => 'Myth\Auth\Views\emails\activation',
-        'emailActivation' => 'App\Views\darky\auth\emails\activation',
+        'login'           => 'auth/login',
+        'register'        => 'auth/register',
+        'forgot'          => 'auth/forgot',
+        'reset'           => 'auth/reset',
+        'emailForgot'     => 'auth/emails/forgot',
+        'emailActivation' => 'auth/emails/activation',
     ];
 
     //--------------------------------------------------------------------
     // Layout for the views to extend
     //--------------------------------------------------------------------
 
-    // public $viewLayout = 'Myth\Auth\Views\layout';
-    public $viewLayout = 'App\Views\darky\templates\base';
+    public $viewLayout = 'templates/base';
 
     //--------------------------------------------------------------------
     // Authentication
