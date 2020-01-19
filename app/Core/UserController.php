@@ -5,7 +5,7 @@ use App\Controllers\BaseController;
 class UserController extends BaseController
 {
 	// default theme for now
-	protected $theme = 'darky';
+	protected $theme = 'default';
 
 	//--------------------------------------------------------------------
 
@@ -16,11 +16,19 @@ class UserController extends BaseController
 
 	//--------------------------------------------------------------------
 
-	protected function render(string $view, array $data = [], array $options = [])
+	protected function render(string $name, array $data = [], array $options = [])
 	{
-		$view = $this->theme . DIRECTORY_SEPARATOR . $view;
+		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR."$this->theme";
+		$renderer = \Config\Services::renderer($path, null, false);
 
-		return view($view, $data, $options);
+		$saveData = null;
+		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		{
+			$saveData = (bool) $options['saveData'];
+			unset($options['saveData']);
+		}
+
+		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 
 	//--------------------------------------------------------------------

@@ -6,8 +6,10 @@ class Home extends BaseController
 
 	public function index()
 	{
-		return view('darky/index');
+		return $this->render('index');
 	}
+
+	//--------------------------------------------------------------------
 
 	public function language()
 	{
@@ -26,4 +28,23 @@ class Home extends BaseController
 
 		return redirect()->back();
 	}
+
+	//--------------------------------------------------------------------
+
+	protected function render(string $name, array $data = [], array $options = [])
+	{
+		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR."default";
+		$renderer = \Config\Services::renderer($path, null, false);
+
+		$saveData = null;
+		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		{
+			$saveData = (bool) $options['saveData'];
+			unset($options['saveData']);
+		}
+
+		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
+	}
+
+	//--------------------------------------------------------------------
 }

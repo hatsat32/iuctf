@@ -10,7 +10,7 @@
 	<script src="/js/jquery.min.js"></script>
 </head>
 <body>
-	<?= $this->include('darky/templates/header') ?>
+	<?= $this->include('templates/header') ?>
 
 	<div class="container">
 		<?= $this->renderSection("content") ?>

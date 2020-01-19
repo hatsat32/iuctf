@@ -1,4 +1,4 @@
-<?= $this->extend("darky/templates/base") ?>
+<?= $this->extend("templates/base") ?>
 
 <?= $this->section('content') ?>
 
