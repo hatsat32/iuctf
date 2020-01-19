@@ -1,11 +1,15 @@
 <?php namespace App\Models;
 
+
 use CodeIgniter\Model;
+use CodeIgniter\Entity;
+
 
 class HintUnlockModel extends Model
 {
 	protected $table      = 'hint_unlocks';
 	protected $primaryKey = 'id';
+	protected $returnType = Entity::class;
 
 	protected $allowedFields = [
 		'hint_id', 'user_id', 'team_id', 'challenge_id'

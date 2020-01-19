@@ -1,12 +1,14 @@
 <?php namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Entity;
+
 
 class SubmissionModel extends Model
 {
 	protected $table      = 'submissions';
 	protected $primaryKey = 'id';
-	protected $returnType = 'object';
+	protected $returnType = Entity::class;
 
 	protected $allowedFields = [
 		'challenge_id', 'user_id', 'team_id', 'ip', 'provided', 'type'

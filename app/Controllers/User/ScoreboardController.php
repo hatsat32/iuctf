@@ -142,7 +142,7 @@ class ScoreboardController extends UserController
 	protected function teamSolves(array $solves, int $teamID)
 	{
 		$teamSolves = array_filter($solves, function ($solve) use ($teamID) {
-			return $solve['team_id'] == $teamID;
+			return $solve->team_id == $teamID;
 		});
 
 		return $teamSolves;

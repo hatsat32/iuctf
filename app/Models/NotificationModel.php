@@ -1,14 +1,15 @@
 <?php namespace App\Models;
 
+
 use CodeIgniter\Model;
-use App\Entities\Notification;
+use CodeIgniter\Entity;
+
 
 class NotificationModel extends Model
 {
 	protected $table      = 'notifications';
 	protected $primaryKey = 'id';
-
-	protected $returnType = Notification::class;
+	protected $returnType = Entity::class;
 
 	protected $allowedFields = [
 		'title', 'content',

@@ -57,7 +57,7 @@ class FileController extends AdminController
 	{
 		$file = $this->fileModel->find($fileID);
 
-		$filePath = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . $file['location'];
+		$filePath = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . $file->location;
 
 		if (file_exists($filePath) && unlink($filePath))
 		{
