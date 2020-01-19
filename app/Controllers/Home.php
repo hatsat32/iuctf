@@ -33,7 +33,7 @@ class Home extends BaseController
 
 	protected function render(string $name, array $data = [], array $options = [])
 	{
-		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR."default";
+		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR.ss()->theme;
 		$renderer = \Config\Services::renderer($path, null, false);
 
 		$saveData = null;

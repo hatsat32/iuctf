@@ -13,3 +13,19 @@
  *
  * @link: https://codeigniter4.github.io/CodeIgniter4/
  */
+
+use Config\Services;
+use Config\Settings;
+
+
+/**
+ * Just wrapper for service('settings')
+ * 
+ * @param array  ...$params
+ *
+ * @return Settings
+ */
+function ss(...$params)
+{
+	return Services::settings(...$params);
+}
