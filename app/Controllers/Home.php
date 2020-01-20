@@ -1,7 +1,11 @@
 <?php namespace App\Controllers;
 
+use App\Core\ThemeTrait;
+
 class Home extends BaseController
 {
+	use ThemeTrait;
+
 	//--------------------------------------------------------------------
 
 	public function index()
@@ -27,23 +31,6 @@ class Home extends BaseController
 		$session->set('language', $language);
 
 		return redirect()->back();
-	}
-
-	//--------------------------------------------------------------------
-
-	protected function render(string $name, array $data = [], array $options = [])
-	{
-		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR.ss()->theme;
-		$renderer = \Config\Services::renderer($path, null, false);
-
-		$saveData = null;
-		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
-		{
-			$saveData = (bool) $options['saveData'];
-			unset($options['saveData']);
-		}
-
-		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 
 	//--------------------------------------------------------------------

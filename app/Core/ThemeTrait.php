@@ -9,43 +9,12 @@ trait ThemeTrait
 	protected $theme = 'default';
 
 	/** @var View **/
-	protected $renderer;
+	protected $renderer = null;
 
-	/** @var MetaCollection **/
-	protected $meta;
+	/** @var string **/
+	protected $escape = 'raw';
 
-	/**
-	 * Stores a single var to be available to views during $this->render() calls.
-	 *
-	 * @param string $key
-	 * @param null   $value
-	 * @param string $context	The escaping context that should be used.
-	 *
-	 * @return $this
-	 */
-	protected function setVar(string $key, $value = null, string $context = 'html')
-	{
-		$renderer = $this->getRenderer();
-
-		$renderer->setVar($key, $value, $context);
-
-		return $this;
-	}
-
-	/**
-	 * A simple method to allow the use of layouts and views.
-	 *
-	 * @param string $view
-	 * @param array  $data
-	 *
-	 * @return string
-	 */
-	public function render(string $view, array $data = [])
-	{
-		$data['meta'] = $this->meta;
-
-		return $this->renderView($view, $data, ['saveData' => true]);
-	}
+	//--------------------------------------------------------------------
 
 	/**
 	 * Same as the global view() helper, but uses our instance of the
@@ -57,7 +26,7 @@ trait ThemeTrait
 	 *
 	 * @return string
 	 */
-	protected function renderView(string $name, array $data = [], array $options = [])
+	protected function render(string $name, array $data = [], array $options = [])
 	{
 		$renderer = $this->getRenderer();
 
@@ -68,8 +37,10 @@ trait ThemeTrait
 			unset($options['saveData']);
 		}
 
-		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
+		return $renderer->setData($data, $this->escape)->render($name, $options, $saveData);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Gets an instance of our theme-based renderer and caches it locally.
@@ -83,10 +54,19 @@ trait ThemeTrait
 			return $this->renderer;
 		}
 
-		$path = ROOTPATH ."themes/{$this->theme}";
+		if ($this->theme === 'default')
+		{
+			$path = APPPATH.'Views'.DIRECTORY_SEPARATOR.'default';
+		}
+		else
+		{
+			$path = ROOTPATH .'themes'.DIRECTORY_SEPARATOR."{$this->theme}";
+		}
 
 		$this->renderer = Services::renderer($path, null, false);
 
 		return $this->renderer;
 	}
+
+	//--------------------------------------------------------------------
 }
