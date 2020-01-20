@@ -1,6 +1,5 @@
 <?php
 
-#
 return [
 	'scoreboard'		=> 'Puan Tablosu',
 	'hash'				=> 'Hash',
@@ -12,6 +11,7 @@ return [
 	'logout'			=> 'Çıkış Yap',
 	'register'			=> 'Kaydol',
 	
+	// team
 	'teamMembers'		=> 'Takım Üyeleri',
 	'teamInfo'			=> 'Takım Bilgisi',
 	'teamLeader'		=> 'Takım Lideri',
@@ -20,6 +20,10 @@ return [
 	'joinTeam'			=> 'Bir Takıma Katıl',
 	'createTeam'		=> 'Takım Oluştur',
 	'noTeamMember'		=> 'Şu anda herhangi bir takıma dahil değilsiniz. Bir takıma katılın yada yeni bir tane oluşturun!',
+	'alreadyHaveTeam'   => 'Zaten bir takımın var',
+	'teamCreated'       => 'Takım başarıyla oluşturuldu',
+	'joinedTeam'        => 'Takıma katıldın',
+	'teamNotFound'      => 'Takım bulunamadı',
 
 	'updateInfo'		=> 'Bilgileri Güncelle',
 	'enterUsername'		=> 'Kullanıcı Adı Gir',

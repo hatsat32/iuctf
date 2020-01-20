@@ -10,7 +10,8 @@ return [
 	'login'				=> 'Login',
 	'logout'			=> 'Logout',
 	'register'			=> 'Register',
-	
+
+	// team
 	'teamMembers'		=> 'Team Members',
 	'teamInfo'			=> 'Team Information',
 	'teamLeader'		=> 'Team Leader',
@@ -19,6 +20,10 @@ return [
 	'joinTeam'			=> 'Join a Team',
 	'createTeam'		=> 'Create a Team',
 	'noTeamMember'		=> 'You have not join any team. Join a team or create a new one.',
+	'alreadyHaveTeam'   => 'You already have a team',
+	'teamCreated'       => 'Team successfully created',
+	'joinedTeam'        => 'You joined the team',
+	'teamNotFound'      => 'Team not found',
 
 	'updateInfo'		=> 'Update Information',
 	'enterUsername'		=> 'Enter Username',

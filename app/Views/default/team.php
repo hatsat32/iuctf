@@ -8,6 +8,10 @@
 			<?= lang('Home.noTeamMember') ?>
 		</div>
 
+		<div class="w-100 m-2">
+			<?= $this->include('templates/message_block') ?>
+		</div>
+
 		<div class="card w-100 m-2">
 			<div class="card-header">
 				<i class="fas fa-chart-area"></i>
@@ -41,6 +45,10 @@
 		</div>
 
 	<?php else: ?>
+
+		<div class="m-2">
+			<?= $this->include('templates/message_block') ?>
+		</div>
 
 		<div class="card m-2">
 			<h3 class="card-header"><?= lang('Home.teamMembers') ?></h3>
