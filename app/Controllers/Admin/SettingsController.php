@@ -56,7 +56,7 @@ class SettingsController extends AdminController
 			],
 			'allow_register' => [
 				'label' => lang('admin/Settings.allowRegister'),
-				'rules' => 'required|in_list[allow,disallow]'
+				'rules' => 'required|in_list[true,false]'
 			],
 			'need_hash' => [
 				'label' => lang('admin/Settings.needHashTitle'),

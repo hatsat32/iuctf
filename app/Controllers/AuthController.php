@@ -28,6 +28,8 @@ class AuthController extends BaseController
 
 		$this->config = config('Auth');
 		$this->auth = Services::authentication();
+
+		$this->config->allowRegistration = ss()->allow_register;
 	}
 
 	//--------------------------------------------------------------------

@@ -42,9 +42,11 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/login"><?= lang('Home.login') ?></a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/register"><?= lang('Home.register') ?></a>
-					</li>
+					<?php if (ss()->allow_register) : ?>
+						<li class="nav-item">
+							<a class="nav-link" href="/register"><?= lang('Home.register') ?></a>
+						</li>
+					<?php endif ?>
 				<?php endif ?>
 				<form action="/language" method="get" id="language-form">
 					<div class="input-group">
