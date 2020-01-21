@@ -1,9 +1,10 @@
 <?php namespace App\Controllers\User;
 
+
 use App\Core\UserController;
-use \App\Models\TeamModel;
-use \App\Models\UserModel;
-use Myth\Auth\Config\Services;
+use App\Models\TeamModel;
+use App\Models\UserModel;
+
 
 class TeamController extends UserController
 {
@@ -86,6 +87,12 @@ class TeamController extends UserController
 		if ($team === null)
 		{
 			return redirect('team')->with('error', lang('Home.teamNotFound'));
+		}
+
+		$teamMemberCount = $this->userModel->where('team_id', $team->id)->countAllResults();
+		if ($teamMemberCount >= ss()->team_member_limit)
+		{
+			return redirect('team')->with('error', lang('Home.teamMaxMember'));
 		}
 
 		$result = $this->userModel->update(user()->id, ['team_id'=> $team->id]);

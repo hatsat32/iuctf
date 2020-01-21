@@ -24,6 +24,7 @@ return [
 	'teamCreated'       => 'Takım başarıyla oluşturuldu',
 	'joinedTeam'        => 'Takıma katıldın',
 	'teamNotFound'      => 'Takım bulunamadı',
+	'teamMaxMember'     => 'Takım maximum üye limitine çoktan ulaştı. Bu takıma katılamazsın!',
 
 	'updateInfo'		=> 'Bilgileri Güncelle',
 	'enterUsername'		=> 'Kullanıcı Adı Gir',

@@ -24,6 +24,7 @@ return [
 	'teamCreated'       => 'Team successfully created',
 	'joinedTeam'        => 'You joined the team',
 	'teamNotFound'      => 'Team not found',
+	'teamMaxMember'     => 'Team already reached max member limit. You can\'t join this team!',
 
 	'updateInfo'		=> 'Update Information',
 	'enterUsername'		=> 'Enter Username',

@@ -4,7 +4,7 @@
 
 	<?php if(isset($no_team) && $no_team): ?>
 
-		<div class="alert alert-danger w-100 m-2" role="alert">
+		<div class="alert alert-warning w-100 m-2" role="alert">
 			<?= lang('Home.noTeamMember') ?>
 		</div>
 
