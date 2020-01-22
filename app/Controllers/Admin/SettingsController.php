@@ -64,7 +64,7 @@ class SettingsController extends AdminController
 			],
 			'hash_secret_key' => [
 				'label' => lang('admin/Settings.hashSecretKey'),
-				'rules' => 'permit_empty'
+				'rules' => 'permit_empty|in_list[on,off]'
 			],
 		];
 
@@ -89,11 +89,15 @@ class SettingsController extends AdminController
 				'key'   => 'need_hash',
 				'value' => $this->request->getPost('need_hash')
 			],
-			[
-				'key'   => 'hash_secret_key',
-				'value' => $this->request->getPost('hash_secret_key')
-			],
 		];
+
+		if ($this->request->getPost('hash_secret_key') === 'on')
+		{
+			$data[] = [
+				'key'   => 'hash_secret_key',
+				'value' => bin2hex(random_bytes(8)),
+			];
+		}
 
 		if (! $this->validate($rules))
 		{

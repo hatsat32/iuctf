@@ -29,6 +29,7 @@ return [
 	'needHashDesc'         => 'Bu ayar aktifleştiğinde flagler için panelden hash almak zorunlu olacak. Aksi taktirde flag kabul edilmeyecek.',
 	'needHashKeyDesc'      => 'Bu anahtar flag hash alınmadan önce flagin sonuna eklenir.',
 	'hashSecretKey'        => 'Hash Gizli Anahtar',
+	'regenHashSecretKey'   => 'Gizli Kodu Tekrar Oluştur',
 
 	// timer settings
 	'ctfTimer'             => 'CTF Zamanlayıcı',
