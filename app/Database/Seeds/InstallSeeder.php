@@ -33,7 +33,7 @@ class InstallSeeder extends \CodeIgniter\Database\Seeder
 			],
 			[
 				'key'   => 'allow_register',
-				'value' => 'allow',
+				'value' => 'true',
 			],
 			[
 				'key'   => 'home_page',
