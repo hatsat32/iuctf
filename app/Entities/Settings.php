@@ -1,6 +1,7 @@
 <?php namespace App\Entities;
 
 use CodeIgniter\Entity;
+use CodeIgniter\I18n\Time;
 
 class Settings extends Entity
 {
@@ -17,6 +18,10 @@ class Settings extends Entity
 
 	protected $intValues = [
 		'team_member_limit'
+	];
+
+	protected $dateValues = [
+		'ctf_start_time', 'ctf_end_time'
 	];
 
 	public function setKey(string $key)
@@ -43,6 +48,11 @@ class Settings extends Entity
 		if (in_array($this->attributes['key'], $this->intValues))
 		{
 			return filter_var($this->attributes['value'], FILTER_VALIDATE_INT);
+		}
+
+		if (in_array($this->attributes['key'], $this->dateValues))
+		{
+			return Time::parse($this->attributes['value']);
 		}
 
 		return $this->attributes['value'];

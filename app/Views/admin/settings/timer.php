@@ -27,7 +27,7 @@
 					<div class="form-group">
 						<label class="col-form-label" for="ctf_timer"><?= lang('admin/Settings.ctfTimer') ?></label>
 						<select class="custom-select " id="ctf_timer" name="ctf_timer">
-							<?php if($settings->ctf_timer === 'on') : ?>
+							<?php if($settings->ctf_timer === true) : ?>
 								<option selected value="on"><?= lang('General.on') ?></option>
 								<option value="off"><?= lang('General.off') ?></option>
 							<?php else : ?>
@@ -41,7 +41,7 @@
 
 			<hr>
 
-			<fieldset id="timer-box" <?= $settings->ctf_timer === 'off' ? 'disabled' : '' ?>>
+			<fieldset id="timer-box" <?= $settings->ctf_timer === false ? 'disabled' : '' ?>>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="start_time"><?= lang('admin/Settings.startTime') ?></label>

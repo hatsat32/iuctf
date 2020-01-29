@@ -118,12 +118,7 @@ class SettingsController extends AdminController
 
 	public function timer()
 	{
-		$settings = new \stdClass();
-
-		foreach ($this->SettingsModel->findAll() as $row)
-		{
-			$settings->{$row->key} = $row->value;
-		}
+		$settings = ss();
 
 		return $this->render('settings/timer', ['settings' => $settings]);
 	}
