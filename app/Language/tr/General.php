@@ -34,8 +34,8 @@ return [
 	'files'			=> 'Dosyalar',
 	'solve'         => 'Çözüm',
 	'solves'        => 'Çözümler',
-	'submit'        => 'Deneme',
-	'submits'       => 'Denemeler',
+	'submission'    => 'Deneme',
+	'submissions'   => 'Denemeler',
 	'date'			=> 'Tarih',
 	'time'			=> 'Zaman',
 

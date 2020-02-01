@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container">
-		<a class="navbar-brand" href="/">IUCTF</a>
+		<a class="navbar-brand" href="/"><?= esc(ss()->ctf_name) ?></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -16,9 +16,11 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/notifications"><?= lang('General.notifications') ?></a>
 				</li>
+				<?php if (ss()->need_hash == 'true') : ?>
 				<li class="nav-item">
 					<a class="nav-link" href="/hash"><?= lang('Home.hash') ?></a>
 				</li>
+				<?php endif ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(logged_in()): ?>
@@ -40,9 +42,11 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/login"><?= lang('Home.login') ?></a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/register"><?= lang('Home.register') ?></a>
-					</li>
+					<?php if (ss()->allow_register) : ?>
+						<li class="nav-item">
+							<a class="nav-link" href="/register"><?= lang('Home.register') ?></a>
+						</li>
+					<?php endif ?>
 				<?php endif ?>
 				<form action="/language" method="get" id="language-form">
 					<div class="input-group">

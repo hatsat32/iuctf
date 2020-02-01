@@ -49,12 +49,12 @@ class ChallengeController extends UserController
 
 		foreach ($categories as $c_key => $c_val) {
 			$arr = array_filter($challenges, function($challenge) use ($c_val) {
-				return $challenge->category_id == $c_val['id'];
+				return $challenge->category_id == $c_val->id;
 			});
 
 			if(! empty($arr))
 			{
-				$categories[$c_key]['challenges'] = $arr;
+				$categories[$c_key]->challenges = $arr;
 			}
 		}
 
@@ -113,7 +113,7 @@ class ChallengeController extends UserController
 			}
 		}
 
-		$submitModel = new \App\Models\SubmitModel();
+		$submissionModel = new \App\Models\SubmissionModel();
 		$data = [
 			'challenge_id' => $challengeID,
 			'user_id'      => user()->id,
@@ -122,7 +122,7 @@ class ChallengeController extends UserController
 			'provided'     => $submited_flag,
 			'type'         => $result ? '1':'0',
 		];
-		$submitModel->insert($data);
+		$submissionModel->insert($data);
 
 		if (! $result)
 		{

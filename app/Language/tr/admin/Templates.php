@@ -13,7 +13,7 @@ return [
 	'notifications'		=> 'Duyurular',
 	'logs'				=> 'Loglar',
 	'loginLogs'			=> 'Giriş Logları',
-	'flagSubmits'		=> 'Bayrak Logları',
+	'flagSubmissions'	=> 'Bayrak Logları',
 	'settings'			=> 'Ayarlar',
 
 	// footer

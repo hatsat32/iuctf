@@ -1,17 +1,20 @@
 <?php namespace App\Controllers\User;
 
+
 use App\Core\UserController;
-use \App\Models\TeamModel;
-use \App\Models\UserModel;
-use Myth\Auth\Config\Services;
+use App\Models\TeamModel;
+use App\Models\UserModel;
+
 
 class TeamController extends UserController
 {
-	private $teamModel;
-	private $userModel;
+	/** @var TeamModel **/
+	protected $teamModel;
 
-	private $auth;
-	private $authorize;
+	/** @var UserModel **/
+	protected $userModel;
+
+	//--------------------------------------------------------------------
 
 	public function initController($request, $response, $logger)
 	{
@@ -19,9 +22,6 @@ class TeamController extends UserController
 
 		$this->teamModel = new TeamModel();
 		$this->userModel = new UserModel();
-
-		$this->auth = Services::authentication();
-		$this->authorize = Services::authorization();
 	}
 
 	//--------------------------------------------------------------------
@@ -49,7 +49,7 @@ class TeamController extends UserController
 	{
 		if (user()->team_id !== null)
 		{
-			redirect()->to('/team');
+			return redirect('team')->with('message', lang('Home.alreadyHaveTeam'));
 		}
 
 		$data = [
@@ -65,11 +65,10 @@ class TeamController extends UserController
 
 		if ((! $team_id) && (! $result))
 		{
-			$errors = $this->teamModel->errors();
-			return redirect()->to('/createteam')->withInput()->with('errors', $errors);
+			return redirect('team')->withInput()->with('errors', $this->teamModel->errors());
 		}
 
-		return redirect()->to('/team');
+		return redirect('team')->with('message', lang('Home.teamCreated'));
 	}
 
 	//--------------------------------------------------------------------
@@ -78,7 +77,7 @@ class TeamController extends UserController
 	{
 		if (user()->team_id !== null)
 		{
-			redirect()->to('/team');
+			return redirect('team')->with('message', lang('Home.alreadyHaveTeam'));
 		}
 
 		$auth_code = $this->request->getPost('auth_code');
@@ -87,19 +86,23 @@ class TeamController extends UserController
 
 		if ($team === null)
 		{
-			#FIXME add warning for no team found
-			return redirect()->to('/team');
+			return redirect('team')->with('error', lang('Home.teamNotFound'));
+		}
+
+		$teamMemberCount = $this->userModel->where('team_id', $team->id)->countAllResults();
+		if ($teamMemberCount >= ss()->team_member_limit)
+		{
+			return redirect('team')->with('error', lang('Home.teamMaxMember'));
 		}
 
 		$result = $this->userModel->update(user()->id, ['team_id'=> $team->id]);
 
 		if (! $result)
 		{
-			$errors = $this->teamModel->errors();
-			return redirect()->to('/createteam')->withInput();
+			return redirect('team')->withInput()->with('errors', $this->teamModel->errors());
 		}
 
-		return redirect()->to('/team');
+		return redirect('team')->with('message', lang('Home.joinedTeam'));
 	}
 
 	//--------------------------------------------------------------------

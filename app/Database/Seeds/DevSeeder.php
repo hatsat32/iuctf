@@ -51,7 +51,7 @@ class DevSeeder extends \CodeIgniter\Database\Seeder
 		// passwords same as username
 		$builder->insertBatch([
 			[
-				'id'               => '1',
+				'id'               => '2',
 				'team_id'          => '1',
 				'email'            => 'hatsat32@mail.com',
 				'username'         => 'hatsat32',
@@ -61,7 +61,7 @@ class DevSeeder extends \CodeIgniter\Database\Seeder
 				'force_pass_reset' => '0',
 			],
 			[
-				'id'               => '2',
+				'id'               => '3',
 				'team_id'          => '1',
 				'email'            => 'mnykmct@mail.com',
 				'username'         => 'mnykmct',
@@ -71,7 +71,7 @@ class DevSeeder extends \CodeIgniter\Database\Seeder
 				'force_pass_reset' => '0',
 			],
 			[
-				'id'               => '3',
+				'id'               => '4',
 				'team_id'          => '2',
 				'email'            => 'talha@mail.com',
 				'username'         => 'talha',
@@ -81,7 +81,7 @@ class DevSeeder extends \CodeIgniter\Database\Seeder
 				'force_pass_reset' => '0',
 			],
 			[
-				'id'               => '4',
+				'id'               => '5',
 				'team_id'          => '3',
 				'email'            => 'user3@mail.com',
 				'username'         => 'user3',
@@ -91,7 +91,7 @@ class DevSeeder extends \CodeIgniter\Database\Seeder
 				'force_pass_reset' => '0',
 			],
 			[
-				'id'               => '5',
+				'id'               => '6',
 				'team_id'          => '4',
 				'email'            => 'banned@mail.com',
 				'username'         => 'banned',
@@ -104,7 +104,7 @@ class DevSeeder extends \CodeIgniter\Database\Seeder
 				'force_pass_reset' => '0',
 			],
 		]);
-		$builder->where('id', '5')->set(['status' => 'banned', 'status_message' => 'banned message'])->update();
+		$builder->where('id', '6')->set(['status' => 'banned', 'status_message' => 'banned message'])->update();
 		$this->db->enableForeignKeyChecks();
 
 		//--------------------------------------------------------------------

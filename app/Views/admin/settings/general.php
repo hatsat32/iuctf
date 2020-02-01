@@ -79,13 +79,13 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<div class="custom-control custom-radio">
-								<input type="radio" class="custom-control-input" id="allow" name="allow_register" value="allow"
-										<?= $settings->allow_register === 'allow' ? 'checked':'' ?> required>
+								<input type="radio" class="custom-control-input" id="allow" name="allow_register" value="true"
+										<?= $settings->allow_register === true ? 'checked':'' ?> required>
 								<label class="custom-control-label" for="allow"><?= lang('admin/Settings.allowRegister') ?></label>
 							</div>
 							<div class="custom-control custom-radio">
-								<input type="radio" class="custom-control-input" id="disallow" name="allow_register" value="disallow"
-										<?= $settings->allow_register === 'disallow' ? 'checked':'' ?> required>
+								<input type="radio" class="custom-control-input" id="disallow" name="allow_register" value="false"
+										<?= $settings->allow_register === false ? 'checked':'' ?> required>
 								<label class="custom-control-label" for="disallow"><?= lang('admin/Settings.disallowRegister') ?></label>
 							</div>
 						</div>
@@ -104,19 +104,21 @@
 						<div class="form-group">
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" id="need-hash" name="need_hash" value="true"
-										<?= $settings->need_hash === 'true' ? 'checked':'' ?> required>
+										<?= $settings->need_hash === true ? 'checked':'' ?> required>
 								<label class="custom-control-label" for="need-hash"><?= lang('admin/Settings.needHash') ?></label>
 							</div>
 							<div class="custom-control custom-radio">
 								<input type="radio" class="custom-control-input" id="no-need-hash" name="need_hash" value="false"
-										<?= $settings->need_hash === 'false' ? 'checked':'' ?> required>
+										<?= $settings->need_hash === false ? 'checked':'' ?> required>
 								<label class="custom-control-label" for="no-need-hash"><?= lang('admin/Settings.noNeedHash') ?></label>
 							</div>
 						</div>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="hash-secret-key" name="hash_secret_key">
+							<label class="custom-control-label" for="hash-secret-key"><?= lang('admin/Settings.regenHashSecretKey') ?></label>
+						</div>
 						<div class="form-group">
-							<label for="hash-secret-key"><?= lang('admin/Settings.hashSecretKey') ?></label>
-							<input type="text" name="hash_secret_key" class="form-control" id="hash-secret-key"
-									value="<?= esc($settings->hash_secret_key) ?>">
+							<input type="text" class="form-control" value="<?= esc($settings->hash_secret_key) ?>" disabled>
 						</div>
 					</div>
 				</div>

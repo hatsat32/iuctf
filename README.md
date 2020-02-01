@@ -34,6 +34,7 @@ You must install these php extensions. These extensions need for codeigniter 4.
 
 ```
 php-curl
+php-zip
 php-intl
 php7.3-mbstring
 php-xml

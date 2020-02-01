@@ -28,6 +28,8 @@ class AuthController extends BaseController
 
 		$this->config = config('Auth');
 		$this->auth = Services::authentication();
+
+		$this->config->allowRegistration = ss()->allow_register;
 	}
 
 	//--------------------------------------------------------------------
@@ -51,7 +53,7 @@ class AuthController extends BaseController
 			return redirect()->to($redirectURL);
 		}
 
-		echo view($this->config->views['login'], ['config' => $this->config]);
+		return $this->render($this->config->views['login'], ['config' => $this->config]);
 	}
 
 	/**
@@ -138,7 +140,7 @@ class AuthController extends BaseController
 			return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
 		}
 
-		echo view($this->config->views['register'], ['config' => $this->config]);
+		return $this->render($this->config->views['register'], ['config' => $this->config]);
 	}
 
 	/**
@@ -204,7 +206,7 @@ class AuthController extends BaseController
 	 */
 	public function forgotPassword()
 	{
-		echo view($this->config->views['forgot'], ['config' => $this->config]);
+		return $this->render($this->config->views['forgot'], ['config' => $this->config]);
 	}
 
 	/**
@@ -232,7 +234,7 @@ class AuthController extends BaseController
 		$sent = $email->setFrom($config->fromEmail, $config->fromEmail)
 			  ->setTo($user->email)
 			  ->setSubject(lang('Auth.forgotSubject'))
-			  ->setMessage(view($this->config->views['emailForgot'], ['hash' => $user->reset_hash]))
+			  ->setMessage($this->render($this->config->views['emailForgot'], ['hash' => $user->reset_hash]))
 			  ->setMailType('html')
 			  ->send();
 
@@ -252,7 +254,7 @@ class AuthController extends BaseController
 	{
 		$token = $this->request->getGet('token');
 
-		echo view($this->config->views['reset'], [
+		return $this->render($this->config->views['reset'], [
 			'config' => $this->config,
 			'token'  => $token,
 		]);
@@ -348,5 +350,24 @@ class AuthController extends BaseController
 		$users->save($user);
 
 		return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function render(string $name, array $data = [], array $options = [])
+	{
+		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR.ss()->theme;
+		// d($path);
+		// dd($name);
+		$renderer = \Config\Services::renderer($path, null, false);
+
+		$saveData = null;
+		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		{
+			$saveData = (bool) $options['saveData'];
+			unset($options['saveData']);
+		}
+
+		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 }

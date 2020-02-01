@@ -34,8 +34,8 @@ return [
 	'files'			=> 'Files',
 	'solve'         => 'Solve',
 	'solves'        => 'Solves',
-	'submit'        => 'Submit',
-	'submits'       => 'Submits',
+	'submission'    => 'Submission',
+	'submissions'   => 'Submissions',
 	'date'			=> 'Date',
 	'time'			=> 'Time',
 

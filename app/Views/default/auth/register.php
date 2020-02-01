@@ -7,7 +7,7 @@
 		<h2 class="card-header"><?=lang('Auth.register')?></h2>
 		<div class="card-body">
 
-			<?= view('App\Views\darky\templates\message_block') ?>
+			<?= $this->include('templates/message_block') ?>
 
 			<form action="<?= route_to('register') ?>" method="post">
 				<?= csrf_field() ?>

@@ -1,11 +1,15 @@
-<?= $this->extend("darky/templates/base") ?>
+<?= $this->extend("templates/base") ?>
 
 <?= $this->section('content') ?>
 
 	<?php if(isset($no_team) && $no_team): ?>
 
-		<div class="alert alert-danger w-100 m-2" role="alert">
+		<div class="alert alert-warning w-100 m-2" role="alert">
 			<?= lang('Home.noTeamMember') ?>
+		</div>
+
+		<div class="w-100 m-2">
+			<?= $this->include('templates/message_block') ?>
 		</div>
 
 		<div class="card w-100 m-2">
@@ -41,6 +45,10 @@
 		</div>
 
 	<?php else: ?>
+
+		<div class="m-2">
+			<?= $this->include('templates/message_block') ?>
+		</div>
 
 		<div class="card m-2">
 			<h3 class="card-header"><?= lang('Home.teamMembers') ?></h3>

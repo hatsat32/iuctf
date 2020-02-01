@@ -27,7 +27,7 @@
 	<div class="col-xl-3 col-sm-6 mb-1">
 		<div class="card text-white bg-warning o-hidden h-100">
 			<div class="card-body">
-				<h5 class="mb-0"><?= esc($status['submits']->Rows) ?> <?= lang('General.submit') ?></h5>
+				<h5 class="mb-0"><?= esc($status['submissions']->Rows) ?> <?= lang('General.submission') ?></h5>
 			</div>
 		</div>
 	</div>

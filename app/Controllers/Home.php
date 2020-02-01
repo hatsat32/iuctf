@@ -1,13 +1,19 @@
 <?php namespace App\Controllers;
 
+use App\Core\ThemeTrait;
+
 class Home extends BaseController
 {
+	use ThemeTrait;
+
 	//--------------------------------------------------------------------
 
 	public function index()
 	{
-		return view('darky/index');
+		return $this->render('index');
 	}
+
+	//--------------------------------------------------------------------
 
 	public function language()
 	{
@@ -26,4 +32,6 @@ class Home extends BaseController
 
 		return redirect()->back();
 	}
+
+	//--------------------------------------------------------------------
 }

@@ -230,8 +230,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 	});
 
 	$routes->group('logs', function(RouteCollection $routes) {
-		$routes->get('submits', 'LogController::submits', ['as' => 'admin-log-flag']);
-		$routes->get('login',   'LogController::login',   ['as' => 'admin-log-login']);
+		$routes->get('submission', 'LogController::submission', ['as' => 'admin-log-flag']);
+		$routes->get('login',      'LogController::login',   ['as' => 'admin-log-login']);
 	});
 });
 

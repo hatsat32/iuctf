@@ -32,8 +32,8 @@
 					<label for="category_id"><?= lang('admin/Challenge.selectCategory') ?></label>
 					<select name="category_id" class="form-control" id="category_id">
 						<?php foreach($categories as $category): ?>
-							<option <?= $challenge->id === $category['id'] ? 'selected':'' ?> value="<?= esc($category['id']) ?>">
-								<?= esc($category['name']) ?>
+							<option <?= $challenge->category_id === $category->id ? 'selected':'' ?> value="<?= esc($category->id) ?>">
+								<?= esc($category->name) ?>
 							</option>
 						<?php endforeach; ?>
 					</select>
@@ -191,12 +191,12 @@
 			
 			<?php foreach($hints as $hint): ?>
 				<hr>
-				<form action="/admin/challenges/<?= esc($challenge->id) ?>/hints/<?= $hint['id'] ?>" method="post">
+				<form action="/admin/challenges/<?= esc($challenge->id) ?>/hints/<?= $hint->id ?>" method="post">
 					<?= csrf_field() ?>
 					<div class="form-row">
 						<div class="form-group col-6">
 							<select name="is_active" class="form-control" id="is_active_hint">
-								<?php if($hint['is_active'] == '0'): ?>
+								<?php if($hint->is_active == '0'): ?>
 									<option selected value="0"><?= lang('General.passive') ?></option>
 									<option value="1"><?= lang('General.active') ?></option>
 								<?php else: ?>
@@ -206,18 +206,18 @@
 							</select>
 						</div>
 						<div class="form-group col-6">
-							<input type="number" class="form-control" name="cost" id="cost" value="<?= $hint['cost'] ?>">
+							<input type="number" class="form-control" name="cost" id="cost" value="<?= $hint->cost ?>">
 						</div>
 					</div>
 					<div class="form-group form-row">
 						<div class="col-12">
-							<textarea class="form-control" name="content" id="content_hint" rows="3"><?= $hint['content'] ?></textarea>
+							<textarea class="form-control" name="content" id="content_hint" rows="3"><?= $hint->content ?></textarea>
 						</div>
 					</div>
 					<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
 				</form>
 
-				<form class="my-2" action="/admin/challenges/<?= esc($challenge->id) ?>/hints/<?= $hint['id'] ?>/delete" method="post">
+				<form class="my-2" action="/admin/challenges/<?= esc($challenge->id) ?>/hints/<?= $hint->id ?>/delete" method="post">
 					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block"><?= lang('General.delete') ?></button>
 				</form>
@@ -261,12 +261,12 @@
 					<?php foreach($files as $file): ?>
 						<tr>
 							<td>
-								<a href="/uploads/<?= $file['location'] ?>"><?= $file['location'] ?></a>
+								<a href="/uploads/<?= $file->location ?>"><?= $file->location ?></a>
 							</td>
 							<td>
-								<form action="/admin/challenges/<?= esc($challenge->id) ?>/files/<?= $file['id'] ?>/delete" method="post">
+								<form action="/admin/challenges/<?= esc($challenge->id) ?>/files/<?= $file->id ?>/delete" method="post">
 									<?= csrf_field() ?>
-									<input type="hidden" name="file" value=" <?= esc($file['id']) ?>">
+									<input type="hidden" name="file" value=" <?= esc($file->id) ?>">
 									<button class="btn btn-danger btn-block" type="submit"><?= lang('General.delete') ?></button>
 								</form>
 							</td>

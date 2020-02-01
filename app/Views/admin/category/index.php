@@ -35,13 +35,13 @@
 					<tbody>
 					<?php foreach($categories as $cat): ?>
 						<tr>
-							<td><?= esc($cat["id"]) ?></td>
-							<td><?= esc($cat["name"]) ?></td>
-							<td><?= esc($cat["description"]) ?></td>
-							<td><?= esc($cat["created_at"]) ?></td>
-							<td><?= esc($cat["updated_at"]) ?></td>
+							<td><?= esc($cat->id) ?></td>
+							<td><?= esc($cat->name) ?></td>
+							<td><?= esc($cat->description) ?></td>
+							<td><?= esc($cat->created_at) ?></td>
+							<td><?= esc($cat->updated_at) ?></td>
 							<td>
-								<a class="btn btn-info btn-block" href="/admin/categories/<?= esc($cat["id"]) ?>">
+								<a class="btn btn-info btn-block" href="/admin/categories/<?= esc($cat->id) ?>">
 									<?= lang('General.detail') ?>
 								</a>
 							</td>

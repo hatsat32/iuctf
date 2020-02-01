@@ -29,6 +29,7 @@ return [
 	'needHashDesc'         => 'New user register allow or dissallow',
 	'needHashKeyDesc'      => 'This key adds end of the flag before hash.',
 	'hashSecretKey'        => 'Hash Secret Key',
+	'regenHashSecretKey'   => 'Regenerate Hash Secret Key',
 
 	// timer settings
 	'ctfTimer'             => 'CTF Timer',

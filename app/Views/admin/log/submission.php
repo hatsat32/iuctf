@@ -5,7 +5,7 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-user-friends"></i>
-			<?= lang('admin/Log.flagSubmits') ?></div>
+			<?= lang('admin/Log.flagSubmissions') ?></div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="teams-table" width="100%" cellspacing="0">
@@ -22,22 +22,22 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php foreach($submits as $submit): ?>
+					<?php foreach($submissions as $submission): ?>
 						<tr>
-							<td><?= esc($submit['id']) ?></td>
-							<td><?= esc($submit['chname']) ?></td>
-							<td><?= esc($submit['username']) ?></td>
-							<td><?= esc($submit['tname']) ?></td>
-							<td><?= esc($submit['ip']) ?></td>
-							<td><?= esc($submit['provided']) ?></td>
+							<td><?= esc($submission->id) ?></td>
+							<td><?= esc($submission->chname) ?></td>
+							<td><?= esc($submission->username) ?></td>
+							<td><?= esc($submission->tname) ?></td>
+							<td><?= esc($submission->ip) ?></td>
+							<td><?= esc($submission->provided) ?></td>
 							<td>
-								<?php if ($submit['type'] === '0'): ?>
+								<?php if ($submission->type === '0'): ?>
 									<i class="fas fa-times text-danger"></i>
 								<?php else: ?>
 									<i class="fas fa-check text-success"></i>
 								<?php endif ?>
 							</td>
-							<td><?= esc($submit["created_at"]) ?></td>
+							<td><?= esc($submission->created_at) ?></td>
 						</tr>
 					<?php endforeach ?>
 					</tbody>

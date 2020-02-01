@@ -1,4 +1,4 @@
-<?= $this->extend("darky/templates/base") ?>
+<?= $this->extend("templates/base") ?>
 
 <?= $this->section('content') ?>
 
@@ -14,11 +14,11 @@
 <div class="row">
 	<div class="col-md-4 my-2">
 		<?php foreach ($categories as $category) : ?>
-			<?php if (isset($category['challenges']) === true): ?>
+			<?php if (isset($category->challenges) === true): ?>
 				<div class="card border-secondary mb-3">
-					<h4 class="card-header"><?= esc($category['name']) ?></h4>
+					<h4 class="card-header"><?= esc($category->name) ?></h4>
 					<div class="list-group list-group-flush">
-						<?php foreach ($category['challenges'] as $ch): ?>
+						<?php foreach ($category->challenges as $ch): ?>
 							<a href="/challenges/<?= $ch->id ?>" class="list-group-item list-group-item-action p-2 <?= in_array($ch->id, $solves) ? 'text-success':'text-danger' ?>">
 								<?= esc($ch->name) ?> (<?= esc($ch->point) ?>)</a>
 						<?php endforeach ?>
@@ -45,8 +45,7 @@
 						<ul class="list-group list-group-flush">
 							<?php foreach($files as $file): ?>
 								<li class="list-group-item text-info">
-									
-									<a href="/uploads/<?= esc($file['location']) ?>"><?= esc($file['location']) ?></a>
+									<a href="/uploads/<?= esc($file->location) ?>"><?= esc($file->location) ?></a>
 								</li>
 							<?php endforeach ?>
 						</ul>
@@ -57,16 +56,16 @@
 					<div class="">
 						<?php foreach($hints as $hint): ?>
 							<ul class="list-group list-group-flush">
-								<?php if(in_array($hint['id'], $hints_unlocks)): ?>
+								<?php if(in_array($hint->id, $hints_unlocks)): ?>
 								<li class="list-group-item text-info">
-									<?= esc($hint['content']) ?>
+									<?= esc($hint->content) ?>
 								</li>
 								<?php else: ?>
 								<li class="list-group-item text-info">
-									<form action="/challenges/<?= esc($challenge->id) ?>/hints/<?= esc($hint['id']) ?>" method="post">
+									<form action="/challenges/<?= esc($challenge->id) ?>/hints/<?= esc($hint->id) ?>" method="post">
 										<?= csrf_field() ?>
 										<button class="btn btn-primary btn-block" type="submit">
-											<?= lang('Home.hintUnlock').' ('.$hint['cost'].' '.lang('General.point').')' ?>
+											<?= lang('Home.hintUnlock').' ('.$hint->cost.' '.lang('General.point').')' ?>
 										</button>
 									</form>
 								</li>
@@ -81,7 +80,7 @@
 						<div class="col-9 row">
 							<div class="col-sm-6 text-danger"><?= lang('Home.firstBlood') ?></div>
 							<?php if(! empty($firstblood)): ?>
-								<div class="col-sm-6 text-success"><?= esc($firstblood['name']) ?></div>
+								<div class="col-sm-6 text-success"><?= esc($firstblood->name) ?></div>
 							<?php endif ?>
 						</div>
 						<div class="col-3">
@@ -140,8 +139,8 @@
 									<tbody>
 										<?php foreach ($solvers as $solver) : ?>
 											<tr>
-												<td><?= esc($solver['name']) ?></td>
-												<td><?= esc($solver['date']) ?></td>
+												<td><?= esc($solver->name) ?></td>
+												<td><?= esc($solver->date) ?></td>
 											</tr>
 										<?php endforeach ?>
 									</tbody>
