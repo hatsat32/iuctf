@@ -81,8 +81,16 @@ class SettingTest extends CIUnitTestCase
 	{
 		$setting = new Settings($data);
 
-		$this->assertTrue($setting->value instanceof Time);
-		$this->assertTrue($setting->value->equals(Time::parse($result)));
+		$this->assertTrue($setting->value instanceof Time || $setting->value === null);
+
+		if ($setting->value === null)
+		{
+			$this->assertNull($setting->value);
+		}
+		else
+		{
+			$this->assertTrue($setting->value->equals($result));
+		}
 	}
 
 	public function dateValueProvider()
@@ -95,6 +103,14 @@ class SettingTest extends CIUnitTestCase
 			[
 				['key'   => 'ctf_end_time', 'value' => '2020-01-10T22:00'],
 				'2020-01-10T22:00'
+			],
+			[
+				['key'   => 'ctf_start_time', 'value' => null],
+				null
+			],
+			[
+				['key'   => 'ctf_end_time', 'value' => null],
+				null
 			],
 		];
 	}
