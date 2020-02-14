@@ -72,6 +72,11 @@ class ProfileController extends UserController
 		$users = new \Myth\Auth\Models\UserModel();
 		$user = user();
 
+		if ($this->request->getPost('email') !== user()->email)
+		{
+			return redirect()->back();
+		}
+
 		$rules = [
 			'password-old'     => 'required',
 			'password'         => 'required|strong_password',

@@ -67,6 +67,7 @@
 
 			<form action="/profile/change-password" method="post">
 				<?= csrf_field() ?>
+				<input type="hidden" name="email" value="<?= user()->email ?>">
 				<div class="form-group">
 					<label for="password-old"><?= lang('General.password') ?></label>
 					<input type="password" name="password-old" class="form-control form-control-lg" id="password-old">
