@@ -22,4 +22,18 @@ class SolvesModel extends Model
 
 	protected $useTimestamps = true;
 	protected $updatedField  = null; // no need for update_at when logs solves
+
+	/**
+	 * return true if team solved the challenge, else false
+	 * 
+	 * @param mixed $teamID
+	 * @param mixed $challengeID
+	 * @return bool
+	 */
+	public function isSolved($teamID, $challengeID)
+	{
+		$solve = $this->where('team_id', $teamID)->where('challenge_id', $challengeID)->find();
+
+		return ! empty($solve);
+	}
 }
