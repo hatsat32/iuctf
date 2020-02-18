@@ -35,6 +35,7 @@
 				<div class="form-group">
 					<label for="team_id"><?= lang('admin/User.selectTeam') ?></label>
 					<select name="team_id" class="form-control" id="team_id">
+						<option disabled selected value>--- <?= lang('admin/User.pickATeam') ?> ---</option>
 						<?php foreach($teams as $team): ?>
 							<option <?= $user->team_id === $team->id ? "selected":"" ?> value="<?= esc($team->id) ?>"><?= esc($team->name) ?></option>
 						<?php endforeach; ?>
@@ -50,6 +51,17 @@
 					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.deleteUser') ?></button>
 				</form>
 			</div>
+
+			<?php if ($user->team_id !== null) : ?>
+				<div class="mt-4">
+					<form action="/admin/users/<?= esc($user->id) ?>/remove-from-team" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/User.removeFromTeamConfirm') ?>">
+						<?= csrf_field() ?>
+						<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.removeFromTeam') ?></button>
+					</form>
+				</div>
+			<?php endif ?>
 
 			<?php if(Config\Services::authorization()->inGroup('admin', $user->id)): ?>
 				<div class="mt-4">

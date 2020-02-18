@@ -160,6 +160,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)/rmadmin',  'UserController::rmAdmin/$1');
 		$routes->post('(:num)/ban',      'UserController::ban/$1');
 		$routes->post('(:num)/unban',    'UserController::unban/$1');
+		$routes->post('(:num)/remove-from-team', 'UserController::removeFromTeam/$1');
 	});
 
 	$routes->group('categories', function(RouteCollection $routes) {
