@@ -113,8 +113,8 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 	$routes->post('challenges/(:num)/hints/(:num)', 'ChallengeController::hint/$1/$2', ['as' => 'challenge-hints']);
 
 	$routes->get('team',        'TeamController::index', ['as' => 'team']);
-	$routes->post('createteam', 'TeamController::createTeam');
-	$routes->post('jointeam',   'TeamController::joinTeam');
+	$routes->post('createteam', 'TeamController::createTeam', ['as' => 'createteam']);
+	$routes->post('jointeam',   'TeamController::joinTeam', ['as' => 'jointeam']);
 
 	$routes->get('profile',                  'ProfileController::index', ['as' => 'profile']);
 	$routes->post('profile',                 'ProfileController::updateProfile');

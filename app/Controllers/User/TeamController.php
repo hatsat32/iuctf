@@ -30,8 +30,7 @@ class TeamController extends UserController
 	{
 		if (user()->team_id === null)
 		{
-			$viewData['no_team'] = true;
-			return $this->render('team', $viewData);
+			return $this->render('noteam');
 		}
 
 		$team = $this->teamModel->find(user()->team_id);
@@ -65,7 +64,7 @@ class TeamController extends UserController
 
 		if ((! $team_id) && (! $result))
 		{
-			return redirect('team')->withInput()->with('errors', $this->teamModel->errors());
+			return redirect('team')->withInput()->with('createteam-errors', $this->teamModel->errors());
 		}
 
 		return redirect('team')->with('message', lang('Home.teamCreated'));
@@ -86,20 +85,20 @@ class TeamController extends UserController
 
 		if ($team === null)
 		{
-			return redirect('team')->with('error', lang('Home.teamNotFound'));
+			return redirect('team')->with('jointeam-error', lang('Home.teamNotFound'));
 		}
 
 		$teamMemberCount = $this->userModel->where('team_id', $team->id)->countAllResults();
 		if ($teamMemberCount >= ss()->team_member_limit)
 		{
-			return redirect('team')->with('error', lang('Home.teamMaxMember'));
+			return redirect('team')->with('jointeam-error', lang('Home.teamMaxMember'));
 		}
 
 		$result = $this->userModel->update(user()->id, ['team_id'=> $team->id]);
 
 		if (! $result)
 		{
-			return redirect('team')->withInput()->with('errors', $this->teamModel->errors());
+			return redirect('team')->withInput()->with('jointeam-errors', $this->teamModel->errors());
 		}
 
 		return redirect('team')->with('message', lang('Home.joinedTeam'));
