@@ -18,8 +18,14 @@ return [
 
 	'makeAdmin'			=> 'Admin Grubuna Ekle',
 	'unmakeAdmin'		=> 'Admin Grubundan Çıkar',
+	'rmadminError'      => 'Bir admin kullanıcı kendisini admin grubundan çıkaramaz!',
 
 	'pickATeam'			=> 'Bir Takım Seçebilirsin',
 
 	'updatedSuccessfully' => 'Kullanıcı başarıyla Güncellendi',
+
+	'removeFromTeam'        => 'Kullanıcıyı Takımdan Sil',
+	'removeFromTeamConfirm' => 'Kullanıcıyı takımdan silmek istediğine eminmisin?',
+	'removeFromTeamError'   => 'Kullanıcı takımdan silinemedi',
+	'userRemovedFromTeam'   => 'Kullanıcı takımdan başarıyla silindi',
 ];

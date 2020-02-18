@@ -7,9 +7,10 @@ use App\Models\TeamModel;
 class UserController extends AdminController
 {
 	/** @var UserModel **/
-	private $userModel;
+	protected $userModel;
+
 	/** @var TeamModel **/
-	private $teamModel;
+	protected $teamModel;
 
 	public function initController($request, $response, $logger)
 	{
@@ -164,6 +165,11 @@ class UserController extends AdminController
 	{
 		$authorize = \Myth\Auth\Config\Services::authorization();
 
+		if ($user_id == user()->id)
+		{
+			return redirect()->back()->with('error', lang('admin/User.rmadminError'));
+		}
+
 		$authorize->removeUserFromGroup($user_id, 'admin');
 
 		return redirect()->to("/admin/users/$user_id");
@@ -205,6 +211,48 @@ class UserController extends AdminController
 		}
 
 		return redirect()->to("/admin/users/$id");
+	}
+
+	//--------------------------------------------------------------------
+
+	public function removeFromTeam($id = null)
+	{
+		$user = $this->userModel->find($id);
+		$team = $this->teamModel->find($user->team_id);
+
+		// 1 -> remove team_id field from user
+		$user->team_id = null;
+		if (! $this->userModel->save($user))
+		{
+			return redirect()->back()->with('error', lang('admin/User.removeFromTeamError'));
+		}
+
+
+		// 2 -> if user is the team_leader, edit team leader
+		if ($team->leader_id === $user->id)
+		{
+			$new_leader = $this->userModel->where('team_id', $team->id)->first();
+
+			// 3 -> if no team member found, delete the team
+			if ($new_leader === null)
+			{
+				if (! $this->teamModel->delete($team->id))
+				{
+					return redirect()->back()->with('error', lang('admin/User.removeFromTeamError'));
+				}
+
+				return redirect()->back()->with('message', lang('admin/User.userRemovedFromTeam'));
+			}
+
+			// 4 -> change team leader
+			$team->leader_id = $new_leader->id;
+			if (! $this->teamModel->save($team))
+			{
+				return redirect()->back()->with('error', lang('admin/User.removeFromTeamError'));
+			}
+		}
+
+		return redirect()->back()->with('message', lang('admin/User.userRemovedFromTeam'));
 	}
 
 	//--------------------------------------------------------------------
