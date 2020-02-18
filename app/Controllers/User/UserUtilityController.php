@@ -1,24 +1,13 @@
 <?php namespace App\Controllers\User;
 
 use App\Core\UserController;
-use App\Models\ChallengeModel;
-use App\Models\HintUnlockModel;
-use App\Models\SolvesModel;
-use App\Models\TeamModel;
-use App\Libraries\Flag;
+use App\Models\NotificationModel;
 
 class UserUtilityController extends UserController
 {
-	public function initController($request, $response, $logger)
-	{
-		parent::initController($request, $response, $logger);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function notifications()
 	{
-		$notificationModel = new \App\Models\NotificationModel();
+		$notificationModel = new NotificationModel();
 		$viewData['notifications'] = $notificationModel
 									->orderBy('created_at', 'DESC')
 									->findAll();
