@@ -108,9 +108,9 @@ $routes->group('', ['namespace' => 'App\Controllers'], function(RouteCollection 
 
 $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'], function(RouteCollection $routes) {
 	$routes->get('challenges',                      'ChallengeController::challenges', ['as' => 'challenges']);
-	$routes->get('challenges/(:num)',               'ChallengeController::challenges/$1', ['as' => 'challenge-detail']);
+	$routes->get('challenges/(:num)',               'ChallengeController::challenge/$1', ['as' => 'challenge-detail']);
 	$routes->post('challenges/(:num)',              'ChallengeController::flagSubmit/$1');
-	$routes->post('challenges/(:num)/hints/(:num)', 'ChallengeController::hint/$1/$2');
+	$routes->post('challenges/(:num)/hints/(:num)', 'ChallengeController::hint/$1/$2', ['as' => 'challenge-hints']);
 
 	$routes->get('team',        'TeamController::index', ['as' => 'team']);
 	$routes->post('createteam', 'TeamController::createTeam');

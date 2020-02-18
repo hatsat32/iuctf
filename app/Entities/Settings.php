@@ -31,13 +31,6 @@ class Settings extends Entity
 		return $this;
 	}
 
-	public function setValue(string $value)
-	{
-		$this->attributes['value'] = $value;
-
-		return $this;
-	}
-
 	public function getValue()
 	{
 		if (in_array($this->attributes['key'], $this->boolValues))
@@ -50,7 +43,7 @@ class Settings extends Entity
 			return filter_var($this->attributes['value'], FILTER_VALIDATE_INT);
 		}
 
-		if (in_array($this->attributes['key'], $this->dateValues))
+		if (in_array($this->attributes['key'], $this->dateValues) && $this->attributes['value'] !== null)
 		{
 			return Time::parse($this->attributes['value']);
 		}

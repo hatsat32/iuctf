@@ -33,6 +33,9 @@ return [
 	'updatePassword'	=> 'Update Password',
 	'newPassword'		=> 'New Password',
 	'confirmNewPass'	=> 'Confirm New Password',
+	'wrongPassword'     => 'Wrong Password. Please try again!',
+	'updatedSuccessfully' => 'Profile information updated successfully',
+	'passwordChanged'   => 'Password changed successfully',
 
 	'wrongAnswer'		=> 'Wrong Answer',
 	'rightAnswer'		=> 'Right Answer',

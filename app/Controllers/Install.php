@@ -14,7 +14,7 @@ class Install extends Controller
 		// install check
 		if ($db->tableExists('settings'))
 		{
-			return redirect()->to('/installed')->with('message', lang('Install.alreadyInstalled'));
+			return redirect('installed')->with('message', lang('Install.alreadyInstalled'));
 		}
 
 		return view('install/install');
@@ -42,7 +42,7 @@ class Install extends Controller
 		// if settings table exist, platform already installed
 		if ($db->tableExists('settings'))
 		{
-			return redirect()->to('/installed');
+			return redirect('installed');
 		}
 
 		$users = new \Myth\Auth\Models\UserModel();
@@ -111,7 +111,7 @@ class Install extends Controller
 		}
 
 		// success
-		return redirect()->to('/installed')->with('message', lang('Install.installationSuccessfull'));
+		return redirect('installed')->with('message', lang('Install.installationSuccessfull'));
 	}
 
 	//--------------------------------------------------------------------

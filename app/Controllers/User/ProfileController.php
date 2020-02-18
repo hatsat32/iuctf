@@ -1,17 +1,16 @@
 <?php namespace App\Controllers\User;
 
 use App\Core\UserController;
-use \App\Models\TeamModel;
-use \App\Models\UserModel;
+use App\Models\UserModel;
 use Myth\Auth\Config\Services;
 
 
 class ProfileController extends UserController
 {
-	private $teamModel;
-	private $userModel;
+	/** @var UserModel **/
+	protected $userModel;
 
-	private $auth;
+	protected $auth;
 
 	//--------------------------------------------------------------------
 
@@ -21,7 +20,6 @@ class ProfileController extends UserController
 
 		$this->auth = Services::authentication();
 
-		$this->teamModel = new TeamModel();
 		$this->userModel = new UserModel();
 	}
 
@@ -45,7 +43,7 @@ class ProfileController extends UserController
 
 		if (! $this->auth->validate($credentials))
 		{
-			return redirect()->back()->with('profile-errors', ['error' => 'Parola Hatalı']);
+			return redirect('profile')->with('profile-errors', [lang('Home.wrongPassword')]);
 		}
 
 		$data = [
@@ -58,11 +56,10 @@ class ProfileController extends UserController
 
 		if (! $result)
 		{
-			$errors = $this->userModel->errors();
-			return redirect()->to("/profile")->with('profile-errors', $errors);
+			return redirect('profile')->with('profile-errors', $this->userModel->errors());
 		}
 
-		return redirect()->to('profile')->with('profile-success', 'Profil Bilgileri Başarı İle Güncellendi');
+		return redirect('profile')->with('profile-success', lang('Home.updatedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -71,6 +68,11 @@ class ProfileController extends UserController
 	{
 		$users = new \Myth\Auth\Models\UserModel();
 		$user = user();
+
+		if ($this->request->getPost('email') !== user()->email)
+		{
+			return redirect()->back();
+		}
 
 		$rules = [
 			'password-old'     => 'required',
@@ -90,13 +92,17 @@ class ProfileController extends UserController
 
 		if (! $this->auth->validate($credentials))
 		{
-			return redirect()->back()->withInput()->with('errors', ['error' => 'incorrect password']);
+			return redirect()->back()->withInput()->with('errors', [lang('Home.wrongPassword')]);
 		}
 
 		$user->password = $this->request->getPost('password');
-		$users->save($user);
 
-		return redirect()->to('/profile')->with('success', 'Parola Başarı İle Değiştirildi');
+		if (! $users->save($user))
+		{
+			return redirect()->back()->with('errors', $users->errors());
+		}
+
+		return redirect()->back()->with('success', lang('Home.passwordChanged'));
 	}
 
 	//--------------------------------------------------------------------

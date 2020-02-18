@@ -33,6 +33,9 @@ return [
 	'updatePassword'	=> 'Parola Güncelle',
 	'newPassword'		=> 'Yeni Parola',
 	'confirmNewPass'	=> 'Yeni Parolayı Doğrula',
+	'wrongPassword'     => 'Parola hatalı. Lütfen tekrar deneyin!',
+	'updatedSuccessfully' => 'Profil Bilgileri Başarı İle Güncellendi',
+	'passwordChanged'   => 'Parola başarıyla değiştirildi',
 
 	'wrongAnswer'		=> 'Yanlış Cevap',
 	'rightAnswer'		=> 'Doğru Cevap',
