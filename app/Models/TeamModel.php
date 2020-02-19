@@ -14,12 +14,12 @@ class TeamModel extends Model
 	];
 
 	protected $validationRules = [
-		'leader_id' => 'required|numeric',
-		'name'      => 'required|min_length[3]|alpha_numeric_space',
+		'leader_id' => 'required|numeric|is_unique[teams.leader_id]',
+		'name'      => 'required|min_length[3]|alpha_numeric_space|is_unique[teams.name]',
 		'auth_code' => 'required',
 		'is_banned' => 'required',
 	];
-	
+
 	protected $useSoftDeletes = true;
 	protected $useTimestamps = true;
 }

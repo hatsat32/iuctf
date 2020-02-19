@@ -16,7 +16,7 @@
 					<div class="w-100">
 						<?= $this->setData(['name' => 'createteam'])->include('templates/message_block') ?>
 					</div>
-					<form action="/createteam" method="post">
+					<form action="<?= route_to('createteam') ?>" method="post">
 						<?= csrf_field() ?>
 						<div class="form-group">
 							<label for="name"><?= lang('Home.teamName') ?></label>
@@ -37,7 +37,7 @@
 					<div class="w-100">
 						<?= $this->setData(['name' => 'jointeam'])->include('templates/message_block') ?>
 					</div>
-					<form action="/jointeam" method="post">
+					<form action="<?= route_to('jointeam') ?>" method="post">
 						<?= csrf_field() ?>
 						<div class="form-group">
 							<label for="auth_code"><?= lang('Home.authCode') ?></label>
