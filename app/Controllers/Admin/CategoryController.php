@@ -35,8 +35,12 @@ class CategoryController extends AdminController
 
 	public function show($id = null)
 	{
-		$viewData['category'] = $this->categoryModel->find($id);
-		return $this->render('category/detail', $viewData);
+		$category = $this->categoryModel->find($id);
+
+		return $this->render('category/detail', [
+			'category'   => $category,
+			'challenges' => $category->challenges(),
+		]);
 	}
 
 	//--------------------------------------------------------------------

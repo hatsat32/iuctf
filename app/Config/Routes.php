@@ -168,7 +168,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->get('new',            'CategoryController::new',     ['as' => 'admin-categories-new']);
 		$routes->get('(:num)',         'CategoryController::show/$1', ['as' => 'admin-categories-show']);
 		$routes->post('/',             'CategoryController::create');
-		$routes->post('(:num)/delete', 'CategoryController::delete/$1');
+		$routes->post('(:num)/delete', 'CategoryController::delete/$1', ['as' => 'admin-categories-delete']);
 		$routes->post('(:num)',        'CategoryController::update/$1');
 	});
 
