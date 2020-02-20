@@ -24,8 +24,15 @@ class ChallengeController extends AdminController
 
 	public function index()
 	{
-		$viewData['challenges'] = $this->challengeModel->findAll();
-		return $this->render('challenge/index', $viewData);
+		$challenges = $this->challengeModel
+				->select(['challenges.id', 'categories.id AS cat_id', 'categories.name AS cat_name',
+						'challenges.name', 'challenges.point', 'challenges.is_active'])
+				->join('categories', 'challenges.category_id = categories.id', 'left')
+				->findAll();
+
+		return $this->render('challenge/index', [
+			'challenges' => $challenges,
+		]);
 	}
 
 	//--------------------------------------------------------------------
