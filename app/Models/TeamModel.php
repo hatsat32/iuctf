@@ -14,8 +14,8 @@ class TeamModel extends Model
 	];
 
 	protected $validationRules = [
-		'leader_id' => 'required|numeric|is_unique[teams.leader_id]',
-		'name'      => 'required|min_length[3]|alpha_numeric_space|is_unique[teams.name]',
+		'leader_id' => 'required|numeric|is_unique[teams.leader_id,leader_id,{leader_id}]',
+		'name'      => 'required|min_length[3]|alpha_numeric_space|is_unique[teams.name,name,{name}]',
 		'auth_code' => 'required',
 		'is_banned' => 'required',
 	];

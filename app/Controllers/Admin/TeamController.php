@@ -1,26 +1,28 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use \App\Models\TeamModel;
-use \App\Models\UserModel;
-use \App\Models\ChallengeModel;
-use \App\Models\SolvesModel;
+use App\Models\TeamModel;
+use App\Models\UserModel;
+use App\Models\ChallengeModel;
+use App\Models\SolvesModel;
 
 class TeamController extends AdminController
 {
 	/** @var TeamModel **/
-	private $teamModel;
+	protected $teamModel;
+
 	/** @var UserModel **/
-	private $userModel;
+	protected $userModel;
+
 	/** @var ChallengeModel **/
-	private $challengeModel;
+	protected $challengeModel;
 
 	public function initController($request, $response, $logger)
 	{
 		parent::initController($request, $response, $logger);
 
-		$this->teamModel = new TeamModel();
-		$this->userModel = new UserModel();
+		$this->teamModel      = new TeamModel();
+		$this->userModel      = new UserModel();
 		$this->challengeModel = new ChallengeModel();
 	}
 
@@ -28,9 +30,14 @@ class TeamController extends AdminController
 
 	public function index()
 	{
-		$viewData['teams'] = $this->teamModel->findAll();
+		$teams = $this->teamModel
+				->select(['teams.id', 'teams.leader_id', 'users.name AS leader_name', 'teams.name', 'teams.is_banned'])
+				->join('users', 'teams.leader_id = users.id', 'left')
+				->findAll();
 
-		return $this->render('team/index', $viewData);
+		return $this->render('team/index', [
+			'teams' => $teams
+		]);
 	}
 
 	//--------------------------------------------------------------------
