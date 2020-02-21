@@ -20,7 +20,7 @@
 		<div class="card-body">
 			<?= $this->include('admin/templates/message_block') ?>
 			<div class="table-responsive">
-				<table class="table table-bordered" id="challenges-table" width="100%" cellspacing="0">
+				<table class="table table-bordered table-striped" id="challenges-table" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th><?= lang('General.id') ?></th>
@@ -49,7 +49,7 @@
 										<?= lang('General.passive') ?>
 									<?php endif ?>
 								</td>
-								<td>
+								<td class="p-1">
 									<a class="btn btn-info btn-block" href="<?= route_to('admin-challenges-show', $challenge->id) ?>">
 										<?= lang('General.detail') ?>
 									</a>
