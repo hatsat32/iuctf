@@ -1,15 +1,16 @@
 <?= $this->extend("admin/templates/base") ?>
 
 <?= $this->section('content') ?>
+
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="<?= route_to('admin-dashboard') ?>">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('General.challenges') ?></li>
 	</ol>
 
 	<div class="my-4">
-		<a class="btn btn-primary btn-block" href="/admin/challenges/new"><?= lang('General.add') ?></a>
+		<a class="btn btn-primary btn-block" href="<?= route_to('admin-challenges-new') ?>"><?= lang('General.add') ?></a>
 	</div>
 
 	<div class="card mb-3">
@@ -19,7 +20,7 @@
 		<div class="card-body">
 			<?= $this->include('admin/templates/message_block') ?>
 			<div class="table-responsive">
-				<table class="table table-bordered" id="challenges-table" width="100%" cellspacing="0">
+				<table class="table table-bordered table-striped" id="challenges-table" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th><?= lang('General.id') ?></th>
@@ -31,20 +32,30 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php foreach($challenges as $challenge): ?>
-						<tr>
-							<td><?= esc($challenge->id) ?></td>
-							<td><?= esc($challenge->category_id) ?></td>
-							<td><?= esc($challenge->name) ?></td>
-							<td><?= esc($challenge->point) ?></td>
-							<td><?= esc($challenge->is_active) ?></td>
-							<td>
-								<a class="btn btn-info btn-block" href="/admin/challenges/<?= esc($challenge->id) ?>">
-									<?= lang('General.detail') ?>
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
+						<?php foreach($challenges as $challenge): ?>
+							<tr>
+								<td><?= esc($challenge->id) ?></td>
+								<td>
+									<a href="<?= route_to('admin-categories-show', $challenge->cat_id) ?>">
+										<?= esc($challenge->cat_name) ?>
+									</a>
+								</td>
+								<td><?= esc($challenge->name) ?></td>
+								<td><?= esc($challenge->point) ?></td>
+								<td>
+									<?php if ($challenge->is_active == '1') : ?>
+										<?= lang('General.active') ?>
+									<?php else : ?>
+										<?= lang('General.passive') ?>
+									<?php endif ?>
+								</td>
+								<td class="p-1">
+									<a class="btn btn-info btn-block" href="<?= route_to('admin-challenges-show', $challenge->id) ?>">
+										<?= lang('General.detail') ?>
+									</a>
+								</td>
+							</tr>
+						<?php endforeach ?>
 					</tbody>
 				</table>
 			</div>
@@ -56,4 +67,5 @@
 			$("#challenges-table").DataTable();
 		});
 	</script>
+
 <?= $this->endSection() ?>

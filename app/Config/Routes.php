@@ -136,15 +136,15 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->get('new',            'TeamController::new',     ['as' => 'admin-teams-new']);
 		$routes->get('(:num)',         'TeamController::show/$1', ['as' => 'admin-teams-show']);
 		$routes->post('/',             'TeamController::create');
-		$routes->post('(:num)/delete', 'TeamController::delete/$1');
+		$routes->post('(:num)/delete', 'TeamController::delete/$1', ['as' => 'admin-teams-delete']);
 		$routes->post('(:num)',        'TeamController::update/$1');
 
-		$routes->post('(:num)/authcode','TeamController::changeAuthCode/$1');
-		$routes->post('(:num)/ban',     'TeamController::ban/$1');
-		$routes->post('(:num)/unban',   'TeamController::unBan/$1');
+		$routes->post('(:num)/authcode','TeamController::changeAuthCode/$1', ['as' => 'admin-teams-authcode']);
+		$routes->post('(:num)/ban',     'TeamController::ban/$1', ['as' => 'admin-teams-ban']);
+		$routes->post('(:num)/unban',   'TeamController::unBan/$1', ['as' => 'admin-teams-unban']);
 
-		$routes->post('(:num)/solves',  'TeamController::markAsSolved/$1');
-		$routes->post('(:num)/solves/(:num)/delete', 'TeamController::markAsUnsolved/$1/$2');
+		$routes->post('(:num)/solves',  'TeamController::markAsSolved/$1', ['as' => 'admin-teams-solves']);
+		$routes->post('(:num)/solves/(:num)/delete', 'TeamController::markAsUnsolved/$1/$2', ['as' => 'admin-teams-solves-delete']);
 	});
 
 	$routes->group('users', function(RouteCollection $routes) {
@@ -152,15 +152,15 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->get('new',            'UserController::new',     ['as' => 'admin-users-new']);
 		$routes->get('(:num)',         'UserController::show/$1', ['as' => 'admin-users-show']);
 		$routes->post('/',             'UserController::create');
-		$routes->post('(:num)/delete', 'UserController::delete/$1');
+		$routes->post('(:num)/delete', 'UserController::delete/$1', ['as' => 'admin-users-delete']);
 		$routes->post('(:num)',        'UserController::update/$1');
 
-		$routes->post('(:num)/change-password', 'UserController::changePassword/$1');
-		$routes->post('(:num)/addadmin', 'UserController::addAdmin/$1');
-		$routes->post('(:num)/rmadmin',  'UserController::rmAdmin/$1');
-		$routes->post('(:num)/ban',      'UserController::ban/$1');
-		$routes->post('(:num)/unban',    'UserController::unban/$1');
-		$routes->post('(:num)/remove-from-team', 'UserController::removeFromTeam/$1');
+		$routes->post('(:num)/change-password', 'UserController::changePassword/$1', ['as' => 'admin-users-chpass']);
+		$routes->post('(:num)/addadmin', 'UserController::addAdmin/$1', ['as' => 'admin-users-addadmin']);
+		$routes->post('(:num)/rmadmin',  'UserController::rmAdmin/$1', ['as' => 'admin-users-rmadmin']);
+		$routes->post('(:num)/ban',      'UserController::ban/$1', ['as' => 'admin-users-ban']);
+		$routes->post('(:num)/unban',    'UserController::unban/$1', ['as' => 'admin-users-unban']);
+		$routes->post('(:num)/remove-from-team', 'UserController::removeFromTeam/$1', ['as' => 'admin-users-rmfromteam']);
 	});
 
 	$routes->group('categories', function(RouteCollection $routes) {
@@ -168,7 +168,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->get('new',            'CategoryController::new',     ['as' => 'admin-categories-new']);
 		$routes->get('(:num)',         'CategoryController::show/$1', ['as' => 'admin-categories-show']);
 		$routes->post('/',             'CategoryController::create');
-		$routes->post('(:num)/delete', 'CategoryController::delete/$1');
+		$routes->post('(:num)/delete', 'CategoryController::delete/$1', ['as' => 'admin-categories-delete']);
 		$routes->post('(:num)',        'CategoryController::update/$1');
 	});
 

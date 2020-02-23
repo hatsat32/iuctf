@@ -50,4 +50,5 @@ return [
 
 	'on'            => 'Açık',
 	'off'           => 'Kapalı',
+	'banned'        => 'Banlandı',
 ];

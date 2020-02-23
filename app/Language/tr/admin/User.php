@@ -28,4 +28,10 @@ return [
 	'removeFromTeamConfirm' => 'Kullanıcıyı takımdan silmek istediğine eminmisin?',
 	'removeFromTeamError'   => 'Kullanıcı takımdan silinemedi',
 	'userRemovedFromTeam'   => 'Kullanıcı takımdan başarıyla silindi',
+
+	'deleteUserConfirm'      => 'Kullanıcı {0} \'ı silmek istediğinizden emin misiniz ?',
+	'removeFromAdminConfirm' => 'Kullanıcı {0} \'ı takımdan çıkarmak istediğinizden emin misiniz ?',
+	'addToAdminConfirm'      => 'Kullanıcı {0} \'ı admin grubuna eklemek istediğinizden emin misiniz ?',
+	'unbanUserConfirm'       => 'Kullanıcı {0} \'ı yasaklamak istediğinizden emin misiniz ?',
+	'banUserConfirm'         => 'Kullanıcı {0} \'ı yasağını kaldırmak istediğinizden emin misiniz ?',
 ];
