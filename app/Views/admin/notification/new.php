@@ -1,9 +1,10 @@
 <?= $this->extend("admin/templates/base") ?>
 
 <?= $this->section('content') ?>
+
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="<?= route_to('admin-dashboard') ?>">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('admin/Notification.addNotification') ?></li>
 	</ol>
@@ -13,16 +14,8 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Notification.addNotification') ?></div>
 		<div class="card-body">
-		
-			<?php if (session()->has('errors')) : ?>
-				<ul class="alert alert-danger">
-				<?php foreach (session('errors') as $error) : ?>
-					<li><?= $error ?></li>
-				<?php endforeach ?>
-				</ul>
-			<?php endif ?>
-
-			<form action="/admin/notifications" method="post">
+			<?= $this->include('admin/templates/message_block') ?>
+			<form action="<?= route_to('admin-notf') ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="title"><?= lang('General.title') ?></label>
@@ -36,4 +29,5 @@
 			</form>
 		</div>
 	</div>
+
 <?= $this->endSection() ?>
