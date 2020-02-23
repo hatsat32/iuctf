@@ -28,4 +28,10 @@ return [
 	'removeFromTeamConfirm' => 'Are you sure you want to remove user from team?',
 	'removeFromTeamError'   => 'User can not removed from team.',
 	'userRemovedFromTeam'   => 'User successfully removed from team.',
+
+	'deleteUserConfirm'      => 'Are you sure you want to delete the user: {0} ?',
+	'removeFromAdminConfirm' => 'Are you sure you want to remove user {0} from admin group ?',
+	'addToAdminConfirm'      => 'Are you sure you want to add user {0} to admin group ?',
+	'unbanUserConfirm'       => 'Are you sure you want to unban the user: {0} ?',
+	'banUserConfirm'         => 'Are you sure you want to ban the user: {0} ?',
 ];

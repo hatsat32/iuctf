@@ -4,91 +4,100 @@
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="<?= route_to('admin-dashboard') ?>">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('admin/User.userDetail') ?></li>
 	</ol>
 
+	<!-- UPDATE USER -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/User.userDetail') ?></div>
 		<div class="card-body">
 			<?= $this->include('admin/templates/message_block') ?>
-			<form action="/admin/users/<?= esc($user->id) ?>" method="post">
+			<form action="<?= route_to('admin-users-show', $user->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="username"><?= lang('admin/User.enterUsername') ?></label>
-					<input type="text" name="username" class="form-control" id="username" placeholder="Kullanıcı adı"
-							value="<?= esc($user->username) ?>">
+					<input type="text" name="username" class="form-control" id="username" value="<?= esc($user->username) ?>">
 				</div>
 				<div class="form-group">
 					<label for="email"><?= lang('admin/User.enterEmail') ?></label>
-					<input type="email" name="email" class="form-control" id="email" placeholder="Emailiniz"
-							value="<?= esc($user->email) ?>">
+					<input type="email" name="email" class="form-control" id="email" value="<?= esc($user->email) ?>">
 				</div>
 				<div class="form-group">
 					<label for="name"><?= lang('General.name') ?></label>
-					<input type="text" name="name" class="form-control" id="name" placeholder="İsminiz"
-							value="<?= esc($user->name) ?>">
+					<input type="text" name="name" class="form-control" id="name" value="<?= esc($user->name) ?>">
 				</div>
 				<div class="form-group">
 					<label for="team_id"><?= lang('admin/User.selectTeam') ?></label>
 					<select name="team_id" class="form-control" id="team_id">
 						<option disabled selected value>--- <?= lang('admin/User.pickATeam') ?> ---</option>
-						<?php foreach($teams as $team): ?>
+						<?php foreach($teams as $team) : ?>
 							<option <?= $user->team_id === $team->id ? "selected":"" ?> value="<?= esc($team->id) ?>"><?= esc($team->name) ?></option>
-						<?php endforeach; ?>
+						<?php endforeach ?>
 					</select>
 				</div>
 				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/User.updateUser') ?></button>
 			</form>
 
+			<!-- DELETE THE USER -->
 			<div class="mt-4">
-				<form action="/admin/users/<?= esc($user->id) ?>/delete" method="post"
-						onsubmit="return confirm('Kullanıcıyı silmek istediğine eminmisin??')">
+				<form action="<?= route_to('admin-users-delete', $user->id) ?>" method="post"
+						onsubmit="return confirm(this.getAttribute('confirm_message'))"
+						confirm_message="<?= lang('admin/User.deleteUserConfirm', [$user->username]) ?>">
 					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.deleteUser') ?></button>
 				</form>
 			</div>
 
+			<!-- REMOVE USER FROM TEAM -->
 			<?php if ($user->team_id !== null) : ?>
 				<div class="mt-4">
-					<form action="/admin/users/<?= esc($user->id) ?>/remove-from-team" method="post"
+					<form action="<?= route_to('admin-users-rmfromteam', $user->id) ?>" method="post"
 							onsubmit="return confirm(this.getAttribute('confirm_message'))"
-							confirm_message="<?= lang('admin/User.removeFromTeamConfirm') ?>">
+							confirm_message="<?= lang('admin/User.removeFromTeamConfirm', [$user->username]) ?>">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.removeFromTeam') ?></button>
 					</form>
 				</div>
 			<?php endif ?>
 
-			<?php if(Config\Services::authorization()->inGroup('admin', $user->id)): ?>
+			<!-- ADD/REMOVE USER TO/FROM ADMIN GROUP -->
+			<?php if(Config\Services::authorization()->inGroup('admin', $user->id)) : ?>
 				<div class="mt-4">
-					<form action="/admin/users/<?= esc($user->id) ?>/rmadmin" method="post"
-							onsubmit="return confirm('Admin grubundan silmek istediğine eminmisin')">
+					<form action="<?= route_to('admin-users-rmadmin', $user->id) ?>" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/User.removeFromAdminConfirm', [$user->username]) ?>">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.unmakeAdmin') ?></button>
 					</form>
 				</div>
-			<?php else: ?>
+			<?php else : ?>
 				<div class="mt-4">
-					<form action="/admin/users/<?= esc($user->id) ?>/addadmin" method="post"
-							onsubmit="return confirm('Admin grubuna eklemek istediğine eminmisin')">
+					<form action="<?= route_to('admin-users-addadmin', $user->id) ?>" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/User.addToAdminConfirm', [$user->username]) ?>">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.makeAdmin') ?></button>
 					</form>
 				</div>
 			<?php endif ?>
 
+			<!-- BAN/UNBAN THE USER -->
 			<div class="mt-4">
 				<?php if ($user->status == 'banned') : ?>
-					<form action="/admin/users/<?= esc($user->id) ?>/unban" method="post">
+					<form action="<?= route_to('admin-users-unban', $user->id) ?>" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/User.unbanUserConfirm', [$user->username]) ?>">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.doUnBan') ?></button>
 					</form>
 				<?php else : ?>
-					<form action="/admin/users/<?= esc($user->id) ?>/ban" method="post">
+					<form action="<?= route_to('admin-users-ban', $user->id) ?>" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/User.banUserConfirm', [$user->username]) ?>">
 						<?= csrf_field() ?>
 						<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/User.doBan') ?></button>
 					</form>
@@ -97,28 +106,16 @@
 		</div>
 	</div>
 
+	<!-- CHANGE USER'S PASSWORD -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
 			<?= lang('Home.updatePassword') ?></div>
 		<div class="card-body">
-
-			<?php if (session()->has('success')) : ?>
-				<div class="alert alert-success" role="alert">
-					<?= session('success') ?>
-				</div>
-			<?php endif ?>
-
-			<?php if (session()->has('errors')) : ?>
-				<ul class="alert alert-danger" role="alert">
-				<?php foreach (session('errors') as $error) : ?>
-					<li><?= $error ?></li>
-				<?php endforeach ?>
-				</ul>
-			<?php endif ?>
-
-			<form action="/admin/users/<?= esc($user->id) ?>/change-password" method="post">
+			<?= $this->setData(['name' => 'chpass'])->include('admin/templates/message_block') ?>
+			<form action="<?= route_to('admin-users-chpass', $user->id) ?>" method="post">
 				<?= csrf_field() ?>
+				<input type="hidden" name="email" value="<?= esc($user->email) ?>">
 				<div class="form-group">
 					<label for="password"><?= lang('admin/User.enterPassword') ?></label>
 					<input type="password" name="password" class="form-control" id="password">

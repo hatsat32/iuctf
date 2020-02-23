@@ -24,8 +24,11 @@ class UserController extends AdminController
 
 	public function index()
 	{
-		$viewData['users'] = $this->userModel->findAll();
-		return $this->render('user/index', $viewData);
+		$users = $this->userModel
+				->select(['users.*', 'teams.name AS team_name'])
+				->join('teams', 'users.team_id = teams.id', 'left')
+				->findAll();
+		return $this->render('user/index', ['users' => $users]);
 	}
 
 	//--------------------------------------------------------------------
@@ -44,7 +47,7 @@ class UserController extends AdminController
 
 		if (empty($user))
 		{
-			return redirect()->to('/admin/users');
+			return redirect('admin-users');
 		}
 
 		$viewData['user'] = $user;
@@ -88,7 +91,7 @@ class UserController extends AdminController
 		}
 
 		// success
-		return redirect()->to('/admin/users');
+		return redirect('admin-users');
 	}
 
 	//--------------------------------------------------------------------
@@ -100,10 +103,10 @@ class UserController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->userModel->errors();
-			return redirect()->to("admin/users/$id");
+			return redirect()->route('admin-users-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/users");
+		return redirect('admin-users');
 	}
 
 	//--------------------------------------------------------------------
@@ -119,10 +122,10 @@ class UserController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->userModel->errors();
-			return redirect()->to("/admin/users/$id")->with('errors', $errors);
+			return redirect()->route('admin-users-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/users/$id")->with('message', lang('admin/User.updatedSuccessfully'));
+		return redirect()->route('admin-users-show', [$id])->with('message', lang('admin/User.updatedSuccessfully'));
 	}
 
 	//--------------------------------------------------------------------
@@ -132,6 +135,11 @@ class UserController extends AdminController
 		$authUserModel = new \Myth\Auth\Models\UserModel();
 		$user = $authUserModel->find($user_id);
 
+		if ($this->request->getPost('email') !== $user->email)
+		{
+			return redirect()->back();
+		}
+
 		$rules = [
 			'password'         => 'required|strong_password',
 			'password-confirm' => 'required|matches[password]',
@@ -139,13 +147,13 @@ class UserController extends AdminController
 
 		if (! $this->validate($rules))
 		{
-			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+			return redirect()->back()->withInput()->with('chpass-errors', $this->validator->getErrors());
 		}
 
 		$user->password = $this->request->getPost('password');
 		$authUserModel->save($user);
 
-		return redirect()->back()->with('success', 'Password updated successfully');
+		return redirect()->back()->with('chpass-message', 'Password updated successfully');
 	}
 
 	//--------------------------------------------------------------------
@@ -156,7 +164,7 @@ class UserController extends AdminController
 
 		$authorize->addUserToGroup($user_id, 'admin');
 
-		return redirect()->to("/admin/users/$user_id");
+		return redirect()->route('admin-users-show', [$user_id]);
 	}
 
 	//--------------------------------------------------------------------
@@ -172,7 +180,7 @@ class UserController extends AdminController
 
 		$authorize->removeUserFromGroup($user_id, 'admin');
 
-		return redirect()->to("/admin/users/$user_id");
+		return redirect()->route('admin-users-show', [$user_id]);
 	}
 
 	//--------------------------------------------------------------------
@@ -188,10 +196,10 @@ class UserController extends AdminController
 		if (! $result)
 		{
 			$errors = $authUserModel->errors();
-			return redirect()->to("/admin/users/$id")->with('errors', $errors);
+			return redirect()->route('admin-users-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/users/$id");
+		return redirect()->route('admin-users-show', [$id]);
 	}
 
 	//--------------------------------------------------------------------
@@ -207,10 +215,10 @@ class UserController extends AdminController
 		if (! $result)
 		{
 			$errors = $authUserModel->errors();
-			return redirect()->to("/admin/users/$id")->with('errors', $errors);
+			return redirect()->route('admin-users-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/users/$id");
+		return redirect()->route('admin-users-show', [$id]);
 	}
 
 	//--------------------------------------------------------------------
@@ -236,7 +244,7 @@ class UserController extends AdminController
 			// 3 -> if no team member found, delete the team
 			if ($new_leader === null)
 			{
-				if (! $this->teamModel->delete($team->id))
+				if (! $this->teamModel->delete($team->id, true))
 				{
 					return redirect()->back()->with('error', lang('admin/User.removeFromTeamError'));
 				}
