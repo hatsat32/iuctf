@@ -2,11 +2,14 @@
 
 return [
 	'flagSubmissions' => 'Flag Submissions',
-	'ip'			=> 'IP',
-	'provided'		=> 'Provided',
-	'type'			=> 'Type',
+	'ip'              => 'IP',
+	'provided'        => 'Provided',
+	'type'            => 'Type',
 
-	'loginLogs'		=> 'Login Logs',
-	'userId'		=> 'User ID',
-	'success'		=> 'Success'
+	'loginLogs'       => 'Login Logs',
+	'userId'          => 'User ID',
+	'success'         => 'Success',
+
+	'log'             => 'Log',
+	'logs'            => 'Logs',
 ];

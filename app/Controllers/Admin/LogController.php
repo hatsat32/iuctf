@@ -1,7 +1,7 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use \App\Models\SubmissionModel;
+use App\Models\SubmissionModel;
 
 class LogController extends AdminController
 {
@@ -9,7 +9,7 @@ class LogController extends AdminController
 
 	public function index()
 	{
-		return redirect()->to('/admin');
+		return redirect('admin-dashboard');
 	}
 
 	//--------------------------------------------------------------------
@@ -18,15 +18,11 @@ class LogController extends AdminController
 	{
 		$submissionModel = new SubmissionModel();
 
-		$submissionBuilder = $submissionModel->builder();
-		$submissionBuilder->select(['submissions.id', 'users.username', 'submissions.ip', 'submissions.provided', 
-					'submissions.type', 'submissions.created_at'])
-				->select('teams.name as tname', false)
-				->select('challenges.name as chname', false)
-				->from(['users', 'teams', 'challenges'])
-				->where('submissions.user_id', 'users.id', false)
-				->where('submissions.team_id', 'teams.id', false)
-				->where('submissions.challenge_id', 'challenges.id', false)
+		$submissionModel->select(['submissions.*', 'users.username', 'users.id', 'teams.name AS team_name',
+				'teams.id AS team_id', 'challenges.name AS ch_name', 'challenges.id AS ch_id'])
+				->join('users', 'submissions.user_id = users.id')
+				->join('teams', 'submissions.team_id = teams.id')
+				->join('challenges', 'submissions.challenge_id = challenges.id')
 				->orderBy('submissions.created_at', 'DESC');
 
 		$viewData = [
@@ -42,7 +38,9 @@ class LogController extends AdminController
 	public function login()
 	{
 		$loginModel = new \Myth\Auth\Models\LoginModel();
-		$loginModel->asArray();
+		$loginModel->select(['auth_logins.*', 'users.username'])
+				->join('users', 'auth_logins.user_id = users.id', 'left')
+				->orderBy('date', 'DESC');
 
 		$viewData = [
 			'logins' => $loginModel->paginate(100),
