@@ -4,7 +4,13 @@
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="<?= route_to('admin-dashboard') ?>">Dashboard</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="<?= route_to('admin-notf') ?>"><?= lang('General.notifications') ?></a>
+		</li>
+		<li class="breadcrumb-item active">
+			<a href="<?= route_to('admin-notf-show', $notification->id) ?>"><?= esc($notification->title) ?></a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('admin/Notification.editNotification') ?></li>
 	</ol>
@@ -14,16 +20,8 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Notification.editNotification') ?></div>
 		<div class="card-body">
-		
-			<?php if (session()->has('errors')) : ?>
-				<ul class="alert alert-danger">
-				<?php foreach (session('errors') as $error) : ?>
-					<li><?= $error ?></li>
-				<?php endforeach ?>
-				</ul>
-			<?php endif ?>
-
-			<form action="/admin/notifications/<?= $notification->id ?>" method="post">
+			<?= $this->include('admin/templates/message_block') ?>
+			<form action="<?= route_to('admin-notf-show', $notification->id) ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="title"><?= lang('General.title') ?></label>
@@ -35,10 +33,12 @@
 				</div>
 				<button type="submit" class="btn btn-primary btn-block"><?= lang('admin/Notification.updateNotification') ?></button>
 			</form>
-			
+
+			<!-- DELETE THE NOTIFICATION -->
 			<div class="mt-4">
-				<form action="/admin/notifications/<?= esc($notification->id) ?>/delete" method="post"
-							onsubmit="return confirm('Duyuruyu silmek istediğine eminmisin??')">
+				<form action="<?= route_to('admin-notf-delete', $notification->id) ?>" method="post"
+						onsubmit="return confirm(this.getAttribute('confirm_message'))"
+						confirm_message="<?= lang('admin/Notification.deleteConfirm') ?>">
 					<?= csrf_field() ?>
 					<button type="submit" class="btn btn-danger btn-block"><?= lang('admin/Notification.deleteNotification') ?></button>
 				</form>

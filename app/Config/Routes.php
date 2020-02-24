@@ -209,7 +209,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->get('new',            'NotificationController::new',     ['as' => 'admin-notf-new']);
 		$routes->get('(:num)',         'NotificationController::show/$1', ['as' => 'admin-notf-show']);
 		$routes->post('/',             'NotificationController::create');
-		$routes->post('(:num)/delete', 'NotificationController::delete/$1');
+		$routes->post('(:num)/delete', 'NotificationController::delete/$1', ['as' => 'admin-notf-delete']);
 		$routes->post('(:num)',        'NotificationController::update/$1');
 	});
 

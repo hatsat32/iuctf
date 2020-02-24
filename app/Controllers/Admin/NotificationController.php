@@ -1,8 +1,8 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use \App\Models\NotificationModel;
-use \App\Entities\Notification;
+use App\Models\NotificationModel;
+use CodeIgniter\Entity;
 
 
 class NotificationController extends AdminController
@@ -45,20 +45,20 @@ class NotificationController extends AdminController
 
 	public function create()
 	{
-		$notification = new Notification();
+		$notification = new Entity();
 
 		$notification->title = $this->request->getPost('title');
 		$notification->content = $this->request->getPost('content');
 
-		$result = $this->notificationModel->save($notification);
+		$result = $this->notificationModel->insert($notification);
 
 		if (! $result)
 		{
 			$errors = $this->notificationModel->errors();
-			return redirect()->to('/admin/notifications/new')->withInput()->with('errors', $errors);
+			return redirect('admin-notf-new')->withInput()->with('errors', $errors);
 		}
 
-		return redirect()->to('/admin/notifications');
+		return redirect()->route('admin-notf-show', [$result])->with('message', lang('admin/Notification.created'));
 	}
 
 	//--------------------------------------------------------------------
@@ -70,10 +70,10 @@ class NotificationController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->notificationModel->errors();
-			return redirect()->to("admin/notifications/$id")->with('errors', $errors);
+			return redirect()->route("admin-notf-show", [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/notifications");
+		return redirect('admin-notf')->with('message', lang('admin/Notification.deleted'));
 	}
 
 	//--------------------------------------------------------------------
@@ -90,9 +90,9 @@ class NotificationController extends AdminController
 		if (! $result)
 		{
 			$errors = $this->notificationModel->errors();
-			return redirect()->to("/admin/notifications/$id")->with('errors', $errors);
+			return redirect()->route('admin-notf-show', [$id])->with('errors', $errors);
 		}
 
-		return redirect()->to("/admin/notifications/$id");
+		return redirect()->route('admin-notf-show', [$id])->with('message', lang('admin/Notification.updated'));
 	}
 }
