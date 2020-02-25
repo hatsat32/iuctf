@@ -118,7 +118,7 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 
 	$routes->get('profile',                  'ProfileController::index', ['as' => 'profile']);
 	$routes->post('profile',                 'ProfileController::updateProfile');
-	$routes->post('profile/change-password', 'ProfileController::updatePassword');
+	$routes->post('profile/change-password', 'ProfileController::updatePassword', ['as' => 'change-password']);
 
 	$routes->get('scoreboard',    'ScoreboardController::index', ['as' => 'scoreboard']);
 	$routes->get('notifications', 'UserUtilityController::notifications', ['as' => 'notifications']);

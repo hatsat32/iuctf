@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container">
-		<a class="navbar-brand" href="/"><?= esc(ss()->ctf_name) ?></a>
+		<a class="navbar-brand" href="<?= route_to('/') ?>"><?= esc(ss()->ctf_name) ?></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -8,43 +8,43 @@
 		<div class="collapse navbar-collapse" id="navbar-header">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="/challenges"><?= lang('General.challenges') ?></a>
+					<a class="nav-link" href="<?= route_to('challenges') ?>"><?= lang('General.challenges') ?></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/scoreboard"><?= lang('Home.scoreboard') ?></a>
+					<a class="nav-link" href="<?= route_to('scoreboard') ?>"><?= lang('Home.scoreboard') ?></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/notifications"><?= lang('General.notifications') ?></a>
+					<a class="nav-link" href="<?= route_to('notifications') ?>"><?= lang('General.notifications') ?></a>
 				</li>
 				<?php if (ss()->need_hash == 'true') : ?>
-				<li class="nav-item">
-					<a class="nav-link" href="/hash"><?= lang('Home.hash') ?></a>
-				</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= route_to('hash') ?>"><?= lang('Home.hash') ?></a>
+					</li>
 				<?php endif ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(logged_in()): ?>
 					<li class="nav-item">
-						<a class="nav-link" href="/team"><?= lang('General.team') ?></a>
+						<a class="nav-link" href="<?= route_to('team') ?>"><?= lang('General.team') ?></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/profile"><?= lang('Home.profile') ?></a>
+						<a class="nav-link" href="<?= route_to('profile') ?>"><?= lang('Home.profile') ?></a>
 					</li>
 					<?php if(in_groups('admin')): ?>
 						<li class="nav-item">
-							<a class="nav-link" href="/admin"><?= lang('Home.admin') ?></a>
+							<a class="nav-link" href="<?= route_to('admin-dashboard') ?>"><?= lang('Home.admin') ?></a>
 						</li>
 					<?php endif ?>
 					<li class="nav-item">
-						<a class="nav-link" href="/logout"><?= lang('Home.logout') ?></a>
+						<a class="nav-link" href="<?= route_to('logout') ?>"><?= lang('Home.logout') ?></a>
 					</li>
 				<?php else: ?>
 					<li class="nav-item">
-						<a class="nav-link" href="/login"><?= lang('Home.login') ?></a>
+						<a class="nav-link" href="<?= route_to('login') ?>"><?= lang('Home.login') ?></a>
 					</li>
 					<?php if (ss()->allow_register) : ?>
 						<li class="nav-item">
-							<a class="nav-link" href="/register"><?= lang('Home.register') ?></a>
+							<a class="nav-link" href="<?= route_to('register') ?>"><?= lang('Home.register') ?></a>
 						</li>
 					<?php endif ?>
 				<?php endif ?>

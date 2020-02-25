@@ -1,5 +1,11 @@
 <?= $this->extend("templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('Home.scoreboard') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<div class="my-4 text-center">
@@ -15,11 +21,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($scores as $score): ?>
-				<tr class="table-active">
-					<td><?= esc($score->name) ?></th>
-					<td><?= esc($score->final) ?></td>
-				</tr>
+				<?php foreach($scores as $score) : ?>
+					<tr class="table-active">
+						<td><?= esc($score->name) ?></th>
+						<td><?= esc($score->final) ?></td>
+					</tr>
 				<?php endforeach ?>
 			</tbody>
 		</table>

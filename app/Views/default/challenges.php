@@ -1,8 +1,14 @@
 <?= $this->extend("templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('General.challenges') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
-	<?php if (user()->team_id === null): ?>
+	<?php if (user()->team_id === null) : ?>
 		<div class="alert alert-danger m-2" role="alert">
 			<h3 class="alert-heading"><?= lang('Home.watchOut') ?></h3>
 			<p><?= lang('Home.findTeamToComp') ?></p>

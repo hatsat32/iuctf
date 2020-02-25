@@ -1,5 +1,11 @@
 <?= $this->extend("templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('General.team') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<div class="m-2">
