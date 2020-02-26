@@ -114,11 +114,12 @@
 							</div>
 						</div>
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="hash-secret-key" name="hash_secret_key">
+							<input type="checkbox" class="custom-control-input" id="hash-secret-key" name="hash_secret_key"
+									<?= $settings->need_hash === false ? 'disabled':'' ?>>
 							<label class="custom-control-label" for="hash-secret-key"><?= lang('admin/Settings.regenHashSecretKey') ?></label>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" value="<?= esc($settings->hash_secret_key) ?>" disabled>
+							<input type="text" id="hash_secret_key" class="form-control" value="<?= esc($settings->hash_secret_key) ?>" disabled>
 						</div>
 					</div>
 				</div>
@@ -127,5 +128,21 @@
 			</form>
 		</div>
 	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('input:radio[name=need_hash]').change(function () {
+				if ($(this).val() == "false") {
+					$("#hash-secret-key").prop("disabled", true);
+				} else {
+					$("#hash-secret-key").prop("disabled", false);
+
+					if ($("#hash_secret_key").val() === "") {
+						$("#hash-secret-key").prop("checked", true);
+					}
+				}
+			});
+		});
+	</script>
 
 <?= $this->endSection() ?>
