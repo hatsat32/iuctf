@@ -21,7 +21,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://localhost:8080';
+	public $baseURL = 'http://localhost:8080/';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -237,8 +237,8 @@ class App extends BaseConfig
 	| recommended CSRF protection be enabled.
 	|
 	| CSRFTokenName   = The token name
-	| CSRFCookieName  = The cookie name
 	| CSRFHeaderName  = The header name
+	| CSRFCookieName  = The cookie name
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
@@ -265,5 +265,4 @@ class App extends BaseConfig
 	|   - http://www.w3.org/TR/CSP/
 	*/
 	public $CSPEnabled = false;
-
 }
