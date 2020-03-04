@@ -6,6 +6,9 @@
 <?= $this->endSection() ?>
 
 
-<?=$this->section('content')?>
+<?= $this->section('content') ?>
 
-<?=$this->endSection()?>
+	<!-- DO NOT ESCAPE -->
+	<?= $content ?>
+
+<?= $this->endSection() ?>

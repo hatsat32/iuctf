@@ -47,4 +47,9 @@ return [
 	'deletedSuccessfully'  => 'Deleted Successfully',
 	'fileNotExist'         => 'File not exist {file}',
 	'deleteError'          => 'File delete error happen',
+
+	// home page settings
+	'home'                 => 'Home Page',
+	'pageChangeError'      => 'Can not write to disk',
+	'pageChanged'          => 'Home page changed successfully',
 ];

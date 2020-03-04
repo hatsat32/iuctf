@@ -47,4 +47,9 @@ return [
 	'deletedSuccessfully'  => 'Başarıyla silindi',
 	'fileNotExist'         => 'Dosya bulunamadı {file}',
 	'deleteError'          => 'Dosya silerken bir hata oldu',
+
+	// home page settings
+	'home'                 => 'Anasayfa',
+	'pageChangeError'      => 'Anasayfa değiştirilemedi',
+	'pageChanged'          => 'Anasayfa başarıyla değiştirildi',
 ];
