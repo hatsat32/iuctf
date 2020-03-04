@@ -6,14 +6,14 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=7.2",
-		"codeigniter4/framework": "^4@rc",
-		"myth/auth": "^1.0-beta.2",
+		"codeigniter4/framework": "^4",
 		"codeigniter4/translations": "^4@rc",
+		"myth/auth": "^1.0-beta.2",
 		"ext-zip": "*"
 	},
 	"require-dev": {
 		"mikey179/vfsstream": "1.6.*",
-		"phpunit/phpunit": "^7.0"
+		"phpunit/phpunit": "8.5.*"
 	},
 	"autoload-dev": {
 		"psr-4": {
@@ -21,6 +21,7 @@
 		}
 	},
 	"scripts": {
+		"test": "phpunit",
 		"post-update-cmd": [
 			"@composer dump-autoload"
 		]

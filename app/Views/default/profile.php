@@ -1,5 +1,11 @@
 <?= $this->extend("templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('Home.profile') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<div class="my-4 text-center">
@@ -18,13 +24,13 @@
 
 			<?php if (session()->has('profile-errors')) : ?>
 				<ul class="alert alert-danger">
-				<?php foreach (session('profile-errors') as $error) : ?>
-					<li><?= $error ?></li>
-				<?php endforeach ?>
+					<?php foreach (session('profile-errors') as $error) : ?>
+						<li><?= $error ?></li>
+					<?php endforeach ?>
 				</ul>
 			<?php endif ?>
 
-			<form action="/profile" method="post">
+			<form action="<?= route_to('profile') ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
 					<label for="username"><?= lang('Home.enterUsername') ?></label>
@@ -59,13 +65,13 @@
 
 			<?php if (session()->has('errors')) : ?>
 				<ul class="alert alert-danger">
-				<?php foreach (session('errors') as $error) : ?>
-					<li><?= $error ?></li>
-				<?php endforeach ?>
+					<?php foreach (session('errors') as $error) : ?>
+						<li><?= $error ?></li>
+					<?php endforeach ?>
 				</ul>
 			<?php endif ?>
 
-			<form action="/profile/change-password" method="post">
+			<form action="<?= route_to('change-password') ?>" method="post">
 				<?= csrf_field() ?>
 				<input type="hidden" name="email" value="<?= user()->email ?>">
 				<div class="form-group">

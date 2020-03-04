@@ -1,5 +1,11 @@
 <?= $this->extend("templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('General.notifications') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<div class="my-4 text-center">
@@ -7,6 +13,7 @@
 	</div>
 
 	<?php $time = new  CodeIgniter\I18n\Time() ?>
+
 	<?php foreach($notifications as $notf) : ?>
 		<div class="card m-2">
 			<div class="card-body">
