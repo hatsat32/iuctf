@@ -52,4 +52,6 @@ return [
 	'home'                 => 'Home Page',
 	'pageChangeError'      => 'Can not write to disk',
 	'pageChanged'          => 'Home page changed successfully',
+	'note'                 => 'Note',
+	'noteContent'          => 'You can use Jquery and Bootstrap 4 in here.'
 ];

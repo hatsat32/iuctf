@@ -18,11 +18,14 @@
 			<?= lang('admin/Settings.settings') ?></div>
 		<div class="card-body">
 			<?= $this->include('admin/templates/message_block') ?>
+			<div class="alert alert-info" role="alert">
+				<h4 class="alert-heading"><?= lang('admin/Settings.note') ?></h4>
+				<p class="mb-0"><?= lang('admin/Settings.noteContent') ?></p>
+			</div>
 			<form action="<?= route_to('admin-settings-home') ?>" method="post">
 				<?= csrf_field() ?>
 				<div class="form-group">
-					<label for="content"><?= lang('General.edit') ?></label>
-					<textarea class="form-control" name="content" id="content" rows="20"><?= esc($content) ?? old('description') ?></textarea>
+					<textarea class="form-control" name="content" id="content" rows="20" style="tab-size: 2;"><?= esc($content) ?? old('description') ?></textarea>
 				</div>
 				<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
 			</form>

@@ -52,4 +52,6 @@ return [
 	'home'                 => 'Anasayfa',
 	'pageChangeError'      => 'Anasayfa değiştirilemedi',
 	'pageChanged'          => 'Anasayfa başarıyla değiştirildi',
+	'note'                 => 'Not',
+	'noteContent'          => 'Burada Jquery ve Bootstrap 4 kullanabilirsiniz.'
 ];
