@@ -53,5 +53,7 @@ return [
 	'pageChangeError'      => 'Anasayfa değiştirilemedi',
 	'pageChanged'          => 'Anasayfa başarıyla değiştirildi',
 	'note'                 => 'Not',
-	'noteContent'          => 'Burada Jquery ve Bootstrap 4 kullanabilirsiniz.'
+	'noteContent'          => 'Burada Jquery ve Bootstrap 4 kullanabilirsiniz.',
+	'warning'              => 'Uyarı',
+	'jsWarning'            => 'Lütfen burada javascript kodu koyarken dikkatli olun. Bu içerik herhangi bir koruma olmadan anasayfada kullanılacak!',
 ];

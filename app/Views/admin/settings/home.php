@@ -19,8 +19,18 @@
 		<div class="card-body">
 			<?= $this->include('admin/templates/message_block') ?>
 			<div class="alert alert-info" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 				<h4 class="alert-heading"><?= lang('admin/Settings.note') ?></h4>
 				<p class="mb-0"><?= lang('admin/Settings.noteContent') ?></p>
+			</div>
+			<div class="alert alert-warning" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="alert-heading"><?= lang('admin/Settings.warning') ?></h4>
+				<p class="mb-0"><?= lang('admin/Settings.jsWarning') ?></p>
 			</div>
 			<form action="<?= route_to('admin-settings-home') ?>" method="post">
 				<?= csrf_field() ?>

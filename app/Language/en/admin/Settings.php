@@ -53,5 +53,7 @@ return [
 	'pageChangeError'      => 'Can not write to disk',
 	'pageChanged'          => 'Home page changed successfully',
 	'note'                 => 'Note',
-	'noteContent'          => 'You can use Jquery and Bootstrap 4 in here.'
+	'noteContent'          => 'You can use Jquery and Bootstrap 4 in here.',
+	'warning'              => 'Warning',
+	'jsWarning'            => 'Please be careful when you put javascript code in here! This content will NOT be escaped in homepage!',
 ];
