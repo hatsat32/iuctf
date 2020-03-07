@@ -88,6 +88,7 @@ $routes->group('', ['namespace' => 'App\Controllers\User', 'filter' => 'login'],
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'role:admin'], function(RouteCollection $routes) {
 	$routes->get('/', 'DashboardController::index', ['as' => 'admin-dashboard']);
+	$routes->get('/', 'DashboardController::index', ['as' => 'admin']);
 
 	$routes->group('teams', function(RouteCollection $routes) {
 		$routes->get('/',              'TeamController::index',   ['as' => 'admin-teams']);
@@ -186,6 +187,9 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('data/backup',            'SettingsController::backupData');
 		$routes->post('data/backup/(:segment)', 'SettingsController::delete/$1');
 		$routes->post('data/reset',             'SettingsController::resetData');
+
+		$routes->get('home-page', 'SettingsController::homePage', ['as' => 'admin-settings-homepage']);
+		$routes->post('home-page', 'SettingsController::homePageUpdate');
 	});
 
 	$routes->group('logs', function(RouteCollection $routes) {

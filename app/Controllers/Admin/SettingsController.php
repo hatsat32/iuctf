@@ -256,4 +256,41 @@ class SettingsController extends AdminController
 	}
 
 	//--------------------------------------------------------------------
+
+	public function homePage()
+	{
+		if (file_exists(WRITEPATH.'home_page_custom.html'))
+		{
+			$content = file_get_contents(WRITEPATH.'home_page_custom.html');
+			return $this->render('settings/home', ['content' => $content]);
+		}
+
+		if (file_exists(WRITEPATH.'home_page.html'))
+		{
+			$content = file_get_contents(WRITEPATH.'home_page.html');
+			return $this->render('settings/home', ['content' => $content]);
+		}
+
+		return $this->render('settings/home', ['content' => '']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function homePageUpdate()
+	{
+		helper('filesystem');
+
+		$filePath = WRITEPATH.'home_page_custom.html';
+
+		$content = $this->request->getPost('content');
+
+		if (! write_file($filePath, $content))
+		{
+			return redirect('admin-settings-homepage')->withInput()->with('error', lang('admin/Settings.pageChangeError'));
+		}
+
+		return redirect('admin-settings-homepage')->with('message', lang('admin/Settings.pageChanged'));
+	}
+
+	//--------------------------------------------------------------------
 }

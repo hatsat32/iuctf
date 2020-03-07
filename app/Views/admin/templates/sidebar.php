@@ -54,6 +54,7 @@
 			<a class="dropdown-item" href="/admin/settings/general"><?= lang('admin/Settings.general') ?></a>
 			<a class="dropdown-item" href="/admin/settings/timer"><?= lang('admin/Settings.timer') ?></a>
 			<a class="dropdown-item" href="/admin/settings/data"><?= lang('admin/Settings.data') ?></a>
+			<a class="dropdown-item" href="<?= route_to('admin-settings-homepage') ?>"><?= lang('admin/Settings.home') ?></a>
 		</div>
 	</li>
 </ul>
