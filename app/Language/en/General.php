@@ -5,6 +5,8 @@ return [
 	'edit'			=> 'Edit',
 	'delete'		=> 'Delete',
 	'update'		=> 'Update',
+	'upload'        => 'Upload',
+	'download'      => 'Download',
 
 	'id'			=> 'ID',
 	'name'			=> 'Name',

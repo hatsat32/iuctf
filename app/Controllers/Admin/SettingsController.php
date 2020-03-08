@@ -205,16 +205,39 @@ class SettingsController extends AdminController
 	public function backupData()
 	{
 		$zip = new ZipArchive();
+		$db = db_connect();
+		$db_backup = [];
 
-		$path = WRITEPATH.'backups'.DIRECTORY_SEPARATOR.'backup_'.date('d-m-Y_H-i-s').'.zip';
-		if ($zip->open($path, ZipArchive::CREATE) === true)
+		// fetch all database
+		foreach ($db->listTables() as $table)
 		{
-			$zip->addGlob(
-				FCPATH.'uploads'.DIRECTORY_SEPARATOR.'*',
-				GLOB_BRACE,
-				['add_path' => 'uploads/', 'remove_all_path' => TRUE]
-			);
+			$table_data = $db->table($table)->get()->getResultArray();
+			$db_backup[$table] = $table_data;
 		}
+
+		// create zip file
+		$path = WRITEPATH.'backups'.DIRECTORY_SEPARATOR.'backup_'.date('d-m-Y_H-i-s').'.zip';
+		if ($zip->open($path, ZipArchive::CREATE) !== true)
+		{
+			return redirect('admin-settings-data')->with('error', lang('admin/Settings.zipOpenErr'));
+		}
+
+		// backup uploaded files
+		$zip->addGlob(
+			FCPATH.'uploads'.DIRECTORY_SEPARATOR.'*',
+			GLOB_BRACE,
+			['add_path' => 'uploads/', 'remove_all_path' => TRUE]
+		);
+
+		// backup database
+		$zip->addFromString('database.json', json_encode($db_backup));
+
+		// if home page customized, back it up
+		if (fileExists(WRITEPATH.'home_page_custom.html'))
+		{
+			$zip->addFile(WRITEPATH.'home_page_custom.html', 'home_page_custom.html');
+		}
+
 		$zip->close();
 
 		return redirect('admin-settings-data')->with('message', lang('admin/Settings.backupSuccessful'));

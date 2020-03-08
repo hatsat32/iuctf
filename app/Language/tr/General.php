@@ -5,6 +5,8 @@ return [
 	'edit'			=> 'Düzenle',
 	'delete'		=> 'Sil',
 	'update'		=> 'Güncelle',
+	'upload'        => 'Yükle',
+	'download'      => 'İndir',
 
 	'id'			=> 'ID',
 	'name'			=> 'İsim',
