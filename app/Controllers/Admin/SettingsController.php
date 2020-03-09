@@ -27,14 +27,17 @@ class SettingsController extends AdminController
 
 	public function general()
 	{
-		$settings = new \stdClass();
+		helper('filesystem');
+		$settings = ss();
 
-		foreach ($this->SettingsModel->findAll() as $row)
-		{
-			$settings->{$row->key} = $row->value;
-		}
+		$themes = array_map(function($theme) {
+			return rtrim($theme, '/');
+		}, directory_map(ROOTPATH.'themes', 1));
 
-		return $this->render('settings/general', ['settings' => $settings]);
+		return $this->render('settings/general', [
+			'settings' => $settings,
+			'themes'   => $themes,
+		]);
 	}
 
 	//--------------------------------------------------------------------

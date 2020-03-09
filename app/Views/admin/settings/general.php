@@ -53,7 +53,6 @@
 
 				<hr>
 
-				
 				<div class="row">
 					<div class="col-md-6">
 						<h3><?= lang('admin/Settings.themeTitle') ?></h3>
@@ -63,7 +62,14 @@
 						<div class="form-group">
 							<label for="theme"><?= lang('admin/Settings.theme') ?></label>
 							<select name="theme" class="form-control" id="theme">
-								<option value="default"><?= lang('admin/Settings.default') ?></option>
+								<option value="default" <?= ss()->theme === 'default' ? 'selected':'' ?>>
+									<?= lang('admin/Settings.default') ?>
+								</option>
+								<?php foreach ($themes as $theme) : ?>
+									<option value="<?= esc($theme, 'attr') ?>" <?= ss()->theme === $theme ? 'selected':'' ?>>
+										<?= esc($theme) ?>
+									</option>
+								<?php endforeach ?>
 							</select>
 						</div>
 					</div>
