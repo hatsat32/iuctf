@@ -30,9 +30,7 @@ class SettingsController extends AdminController
 		helper('filesystem');
 		$settings = ss();
 
-		$themes = array_map(function($theme) {
-			return rtrim($theme, '/');
-		}, directory_map(ROOTPATH.'themes', 1));
+		$themes = \App\Core\ThemeTrait::list();
 
 		return $this->render('settings/general', [
 			'settings' => $settings,
@@ -293,6 +291,97 @@ class SettingsController extends AdminController
 		}
 
 		return redirect('admin-settings-homepage')->with('message', lang('admin/Settings.pageChanged'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function theme()
+	{
+		$themes = \App\Core\ThemeTrait::list();
+
+		return $this->render('settings/theme', ['themes' => $themes]);
+	}
+	//--------------------------------------------------------------------
+
+	public function themeUpdate()
+	{
+		if(ss()->theme === $this->request->getPost('theme'))
+		{
+			return redirect('admin-settings-theme');
+		}
+
+		$rules = [
+			'theme' => [
+				'label' => lang('admin/Settings.theme'),
+				'rules' => 'required'
+			],
+		];
+
+		if (! $this->validate($rules))
+		{
+			return redirect('admin-settings-theme')->withInput()->with('errors', $this->validator->getErrors());
+		}
+
+		$result = $this->SettingsModel->skipValidation()->where('key', 'theme')
+				->set('value', $this->request->getPost('theme'))->update();
+
+		if(! $result)
+		{
+			return redirect('admin-settings-theme')->with('errors', $this->SettingsModel->errors());
+		}
+
+		return redirect('admin-settings-theme')->with('message', lang('admin/Settings.updatedSuccessfully'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function themeImport()
+	{
+		// check file is zip
+		// check file paths
+		// NO BACK SHASH
+		return redirect('admin-settings-theme')->with('theme-error', lang('General.notImplemented'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function themeDelete()
+	{
+		$theme = $this->request->getPost('theme');
+
+		// can not delete default theme
+		if ($theme == 'default')
+		{
+			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.defaultThemeErr'));
+		}
+
+		// validation
+		if (! in_array($theme, \App\Core\ThemeTrait::list()))
+		{
+			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.themeValidationErr'));
+		}
+
+		// can not delete current theme
+		if ($theme == ss()->theme)
+		{
+			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.currentThemeErr'));
+		}
+
+		helper('filesystem');
+
+		if (file_exists(THEMEPATH.$theme) && is_dir(THEMEPATH.$theme))
+		{
+			delete_files(THEMEPATH.$theme, true);
+			rmdir(THEMEPATH.$theme);
+		}
+
+		if (file_exists(THEMEPUBPATH.$theme) && is_dir(THEMEPUBPATH.$theme))
+		{
+			delete_files(THEMEPUBPATH.$theme, true);
+			rmdir(THEMEPUBPATH.$theme);
+		}
+
+		return redirect('admin-settings-theme')->with('theme-message', lang('admin/Settings.themeDeleted'));
 	}
 
 	//--------------------------------------------------------------------

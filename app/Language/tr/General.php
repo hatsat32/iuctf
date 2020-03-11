@@ -51,4 +51,6 @@ return [
 	'on'            => 'Açık',
 	'off'           => 'Kapalı',
 	'banned'        => 'Banlandı',
+
+	'notImplemented' => 'HENÜZ TAMAMLANMADI',
 ];

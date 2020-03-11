@@ -178,6 +178,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->get('general',  'SettingsController::general', ['as' => 'admin-settings-general']);
 		$routes->post('general', 'SettingsController::generalUpdate');
 
+		$routes->get('theme', 'SettingsController::theme', ['as' => 'admin-settings-theme']);
+		$routes->post('theme', 'SettingsController::themeUpdate');
+		$routes->post('theme/delete', 'SettingsController::themeDelete', ['as' => 'admin-theme-delete']);
+		$routes->post('theme/import', 'SettingsController::themeImport', ['as' => 'admin-theme-import']);
 
 		$routes->get('timer',    'SettingsController::timer',   ['as' => 'admin-settings-timer']);
 		$routes->post('timer',   'SettingsController::timerUpdate');

@@ -38,6 +38,16 @@ return [
 	'startTime'            => 'Başlama Zamanı',
 	'endTime'              => 'Bitiş Zamanı',
 
+	// theme settings
+	'themes'               => 'Temalar',
+	'deleteTheme'          => 'Temayı sil',
+	'importTheme'          => 'Temayı içeri aktar',
+	'themeChanged'         => 'Tema başarıyla değiştirildi',
+	'defaultThemeErr'      => 'Varsayılan tema silinemez!',
+	'themeValidationErr'   => 'Tema geçerli bir tema değil!',
+	'currentThemeErr'      => 'Mevcut tema silinemez. Lütfen önce temayı değiştirin!',
+	'themeDeleted'         => 'Tema başarıyla silindi',
+
 	// data settings
 	'backup'               => 'Yedekle',
 	'reset'                => 'Sıfırla',

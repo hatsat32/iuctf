@@ -51,4 +51,6 @@ return [
 	'on'            => 'On',
 	'off'           => 'Off',
 	'banned'        => 'Banned',
+
+	'notImplemented' => 'NOT IMPLEMENTED YET',
 ];
