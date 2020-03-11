@@ -12,51 +12,55 @@
 		<li class="breadcrumb-item active"><?= lang('admin/Settings.timer') ?></li>
 	</ol>
 
-	<div class="m-2">
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-chart-area"></i>
+			<?= lang('admin/Settings.timer') ?></div>
+		<div class="card-body">
+			<?= $this->include('admin/templates/message_block') ?>
 
-		<?= $this->include('admin/templates/message_block') ?>
-
-		<form action="/admin/settings/timer" method="post">
-			<?= csrf_field() ?>
-			<div class="row">
-				<div class="col-6">
-					<h3><?= lang('admin/Settings.timerTitle') ?></h3>
-					<p><?= lang('admin/Settings.timerDesc') ?></p>
-				</div>
-				<div class="col-6">
-					<div class="form-group">
-						<label class="col-form-label" for="ctf_timer"><?= lang('admin/Settings.ctfTimer') ?></label>
-						<select class="custom-select " id="ctf_timer" name="ctf_timer">
-							<?php if($settings->ctf_timer === true) : ?>
-								<option selected value="on"><?= lang('General.on') ?></option>
-								<option value="off"><?= lang('General.off') ?></option>
-							<?php else : ?>
-								<option value="on"><?= lang('General.on') ?></option>
-								<option selected value="off"><?= lang('General.off') ?></option>
-							<?php endif ?>
-						</select>
+			<form action="/admin/settings/timer" method="post">
+				<?= csrf_field() ?>
+				<div class="row">
+					<div class="col-6">
+						<h3><?= lang('admin/Settings.timerTitle') ?></h3>
+						<p><?= lang('admin/Settings.timerDesc') ?></p>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label class="col-form-label" for="ctf_timer"><?= lang('admin/Settings.ctfTimer') ?></label>
+							<select class="custom-select " id="ctf_timer" name="ctf_timer">
+								<?php if($settings->ctf_timer === true) : ?>
+									<option selected value="on"><?= lang('General.on') ?></option>
+									<option value="off"><?= lang('General.off') ?></option>
+								<?php else : ?>
+									<option value="on"><?= lang('General.on') ?></option>
+									<option selected value="off"><?= lang('General.off') ?></option>
+								<?php endif ?>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<hr>
+				<hr>
 
-			<fieldset id="timer-box" <?= $settings->ctf_timer === false ? 'disabled' : '' ?>>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="start_time"><?= lang('admin/Settings.startTime') ?></label>
-						<input type="datetime-local" class="form-control" id="start_time" name="ctf_start_time"
-								value="<?= $settings->ctf_start_time ?>">
+				<fieldset id="timer-box" <?= $settings->ctf_timer === false ? 'disabled' : '' ?>>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="start_time"><?= lang('admin/Settings.startTime') ?></label>
+							<input type="datetime-local" class="form-control" id="start_time" name="ctf_start_time"
+									value="<?= $settings->ctf_start_time ?>">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="end_time"><?= lang('admin/Settings.endTime') ?></label>
+							<input type="datetime-local" class="form-control" id="end_time" name="ctf_end_time"
+									value="<?= $settings->ctf_end_time ?>">
+						</div>
 					</div>
-					<div class="form-group col-md-6">
-						<label for="end_time"><?= lang('admin/Settings.endTime') ?></label>
-						<input type="datetime-local" class="form-control" id="end_time" name="ctf_end_time"
-								value="<?= $settings->ctf_end_time ?>">
-					</div>
-				</div>
-			</fieldset>
-			<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
-		</form>
+				</fieldset>
+				<button type="submit" class="btn btn-primary btn-block"><?= lang('General.update') ?></button>
+			</form>
+		</div>
 	</div>
 
 	<script>
