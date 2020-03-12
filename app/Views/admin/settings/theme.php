@@ -70,7 +70,7 @@
 					</form>
 				</div>
 				<div class="col-md-6">
-					<form action="<?= route_to('admin-theme-import') ?>" method="post">
+					<form action="<?= route_to('admin-theme-import') ?>" method="post" enctype="multipart/form-data">
 						<?= csrf_field() ?>
 						<h3><?= lang('admin/Settings.importTheme') ?></h3>
 						<div class="form-group">

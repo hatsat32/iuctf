@@ -337,10 +337,39 @@ class SettingsController extends AdminController
 
 	public function themeImport()
 	{
-		// check file is zip
+		$zip = new ZipArchive();
+		$file = $this->request->getFile('file');
+
+		if (! $file->isValid())
+		{
+			throw new \RuntimeException($file->getErrorString().'('.$file->getError().')');
+		}
+
+		// check file is zip and validate
+		$rules = [
+			'file' => 'uploaded[file]|mime_in[file,application/zip]|ext_in[file,zip]'
+		];
+		if (! $this->validate($rules))
+		{
+			return redirect('admin-settings-theme')->with('theme-errors', $this->validator->getErrors() );
+		}
+
+		if (! $zip->open($file->getRealPath()))
+		{
+			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.fileOpenErr'));
+		}
+
+		if (! $zip->extractTo(THEMEPATH))
+		{
+			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.fileMoveErr'));
+		}
+
+		$zip->close();
+
 		// check file paths
 		// NO BACK SHASH
-		return redirect('admin-settings-theme')->with('theme-error', lang('General.notImplemented'));
+
+		return redirect('admin-settings-theme')->with('theme-message', lang('admin/Settings.themeImported'));
 	}
 
 	//--------------------------------------------------------------------
