@@ -16,6 +16,24 @@ trait ThemeTrait
 
 	//--------------------------------------------------------------------
 
+	public static function list(bool $default = false)
+	{
+		helper('filesystem');
+
+		$themes = array_map(function($theme) {
+			return rtrim($theme, '/');
+		}, directory_map(THEMEPATH, 1));
+
+		if ($default)
+		{
+			$themes[] = 'default';
+		}
+
+		return $themes;
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Same as the global view() helper, but uses our instance of the
 	 * renderer so we can render themes.
@@ -60,7 +78,7 @@ trait ThemeTrait
 		}
 		else
 		{
-			$path = ROOTPATH .'themes'.DIRECTORY_SEPARATOR."{$this->theme}";
+			$path = THEMEPATH . "{$this->theme}";
 		}
 
 		$this->renderer = Services::renderer($path, null, false);

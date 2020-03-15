@@ -38,6 +38,16 @@ return [
 	'startTime'            => 'Start Time',
 	'endTime'              => 'End Time',
 
+	// theme settings
+	'themes'               => 'Themes',
+	'deleteTheme'          => 'Delete the theme',
+	'importTheme'          => 'Import a Theme',
+	'themeChanged'         => 'Theme changed successfully',
+	'defaultThemeErr'      => 'Default theme newer be deleted',
+	'themeValidationErr'   => 'Theme not valid',
+	'currentThemeErr'      => 'Current theme can not be deleted. Please change theme first',
+	'themeDeleted'         => 'Theme successfully deleted',
+
 	// data settings
 	'backup'               => 'Backup',
 	'reset'                => 'Reset',

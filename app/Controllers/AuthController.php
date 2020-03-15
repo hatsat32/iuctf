@@ -1,6 +1,6 @@
 <?php namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Core\ThemeTrait;
 use Config\Email;
 use Config\Services;
 use Myth\Auth\Entities\User;
@@ -9,6 +9,8 @@ use App\Models\TeamModel;
 
 class AuthController extends BaseController
 {
+	use ThemeTrait;
+
 	protected $auth;
 	/**
 	 * @var Auth
@@ -20,8 +22,10 @@ class AuthController extends BaseController
 	 */
 	protected $session;
 
-	public function __construct()
+	public function initController($request, $response, $logger)
 	{
+		parent::initController($request, $response, $logger);
+
 		// Most services in this controller require
 		// the session to be started - so fire it up!
 		$this->session = Services::session();
@@ -30,6 +34,7 @@ class AuthController extends BaseController
 		$this->auth = Services::authentication();
 
 		$this->config->allowRegistration = ss()->allow_register;
+		$this->theme = ss()->theme;
 	}
 
 	//--------------------------------------------------------------------
@@ -353,21 +358,4 @@ class AuthController extends BaseController
 	}
 
 	//--------------------------------------------------------------------
-
-	protected function render(string $name, array $data = [], array $options = [])
-	{
-		$path = APPPATH.'Views'.DIRECTORY_SEPARATOR.ss()->theme;
-		// d($path);
-		// dd($name);
-		$renderer = \Config\Services::renderer($path, null, false);
-
-		$saveData = null;
-		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
-		{
-			$saveData = (bool) $options['saveData'];
-			unset($options['saveData']);
-		}
-
-		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
-	}
 }

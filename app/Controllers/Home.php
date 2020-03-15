@@ -8,6 +8,15 @@ class Home extends BaseController
 
 	//--------------------------------------------------------------------
 
+	public function initController($request, $response, $logger)
+	{
+		parent::initController($request, $response, $logger);
+
+		$this->theme = ss()->theme;
+	}
+
+	//--------------------------------------------------------------------
+
 	public function index()
 	{
 		$content = null;

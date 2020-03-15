@@ -14,6 +14,9 @@
  * @link: https://codeigniter4.github.io/CodeIgniter4/
  */
 
+define('THEMEPUBPATH', FCPATH . 'themes' . DIRECTORY_SEPARATOR);
+define('THEMEPATH', WRITEPATH . 'themes' . DIRECTORY_SEPARATOR);
+
 use Config\Services;
 use Config\Settings;
 
