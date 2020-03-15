@@ -367,7 +367,7 @@ class SettingsController extends AdminController
 		$zip->close();
 
 		// check file paths
-		// NO BACK SHASH
+		// NO DIRECTORY TRAVERSAL
 
 		return redirect('admin-settings-theme')->with('theme-message', lang('admin/Settings.themeImported'));
 	}
