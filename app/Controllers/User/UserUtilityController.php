@@ -30,7 +30,8 @@ class UserUtilityController extends UserController
 			return $this->render('hash');
 		}
 
-		$hash =  hash('sha256', $this->request->getPost('hash'));
+		$flaglib = new \App\Libraries\Flag();
+		$hash =  $flaglib->hash($this->request->getPost('hash'));
 
 		return $this->render('hash', ['hash' => $hash]);
 	}

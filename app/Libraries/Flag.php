@@ -1,70 +1,82 @@
 <?php namespace App\Libraries;
 
 use App\Models\SubmissionModel;
+use App\Models\SolvesModel;
 
 class Flag
 {
+	/** @param float **/
 	protected $dynamicRate = 0.5;
+
+	/** @param string **/
+	protected $hashSecret = '';
+
+	/** @param bool **/
+	protected $needHash = false;
+
+	//--------------------------------------------------------------------
+
+	public function __construct()
+	{
+		$this->secret = ss()->hash_secret_key;
+		$this->needHash = ss()->need_hash;
+	}
 
 	//--------------------------------------------------------------------
 
 	public function check(string $submited_flag, array $flags): bool
 	{
-		$result = false;
-
 		foreach ($flags as $flag)
 		{
-			if ($flag->type === 'static' && $flag->content === $submited_flag)
+			if ($flag->type === 'static')
 			{
-				$result = true;
-				break;
+				if ($this->needHash && $submited_flag === $this->hash($flag->content))
+				{
+					return true;
+				}
+				else if (!$this->needHash && $flag->content === $submited_flag)
+				{
+					return true;
+				}
 			}
 			else if ($flag->type === 'regex' && preg_match("/{$flag->content}/", $submited_flag))
 			{
-				$result = true;
-				break;
-			}
-			else
-			{
-				return false;
+				return true;
 			}
 		}
 
-		return $result;
+		return false;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function log($data)
+	public function log($data): bool
 	{
 		$submissionModel = new SubmissionModel();
 		$result = $submissionModel->insert($data);
-
-		if (! $result)
-		{
-			return false;
-		}
-
-		return true;
+		return (bool) $result;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function isAlreadySolved($challengeID, $teamID)
+	public function isAlreadySolved($challengeID, $teamID): bool
 	{
+		$solvesModel = new SolvesModel();
 		$data = [
 			'challenge_id' => $challengeID,
 			'team_id'      => $teamID
 		];
 
-		$solved_before = $this->solvesModel->where($data)->find();
+		$solved_before = $solvesModel->where($data)->find();
 
-		if (empty($solved_before))
-		{
-			return false;
-		}
+		return ! empty($solved_before);
+	}
 
-		return true;
+	//--------------------------------------------------------------------
+
+	public function hash(string $flag): string
+	{
+		return hash('sha256', $flag . $this->secret);
 	}
 
 	//--------------------------------------------------------------------

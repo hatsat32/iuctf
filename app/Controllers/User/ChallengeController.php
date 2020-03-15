@@ -118,62 +118,44 @@ class ChallengeController extends UserController
 
 	public function flagSubmit($challengeID = null)
 	{
+		$flaglib = new \App\Libraries\Flag();
 		$flags = $this->flagModel->where('challenge_id', $challengeID)->findAll();
 		$submited_flag = $this->request->getPost('flag');
 
 		$result = false;
-		foreach ($flags as $flag)
-		{
-			if ($flag->type === 'static' && $flag->content === $submited_flag)
-			{
-				$result = true;
-				break;
-			}
-			else if ($flag->type === 'regex' && preg_match("/{$flag->content}/", $submited_flag))
-			{
-				$result = true;
-				break;
-			}
-		}
+		$result = $flaglib->check($submited_flag, $flags);
 
-		$submissionModel = new \App\Models\SubmissionModel();
-		$data = [
+		$flaglib->log([
 			'challenge_id' => $challengeID,
 			'user_id'      => user()->id,
 			'team_id'      => user()->team_id,
 			'ip'           => $this->request->getIPAddress(),
 			'provided'     => $submited_flag,
-			'type'         => $result ? '1':'0',
-		];
-		$submissionModel->insert($data);
+			'type'         => $result ? '1' : '0',
+		]);
 
 		if (! $result)
 		{
 			return redirect()->to("/challenges/$challengeID")->with('result', $result);
 		}
 
-		$data = [
+		$solved_before = $flaglib->isAlreadySolved($challengeID, user()->team_id);
+
+		if ($solved_before === true || user()->team_id === null)
+		{
+			return redirect()->to("/challenges/$challengeID")->with('result', $result);
+		}
+
+		$db_result = $this->solvesModel->insert([
 			'challenge_id' => $challengeID,
 			'team_id'      => user()->team_id,
-		];
+			'user_id'      => user()->id,
+		]);
 
-		$solved_before = $this->solvesModel->where($data)->find();
-
-		if (empty($solved_before) && user()->team_id !== null)
+		if (! $db_result)
 		{
-			$data['user_id'] = user()->id;
-
-			$db_result = $this->solvesModel->insert($data);
-
-			if ($db_result)
-			{
-				return redirect()->to("/challenges/$challengeID")->with('result', $result);
-			}
-			else
-			{
-				$errors = $this->solvesModel->errors();
-				return redirect()->to("/challenges/$challengeID")->with('result', $result)->with('errors', $errors);
-			}
+			$errors = $this->solvesModel->errors();
+			return redirect()->to("/challenges/$challengeID")->with('result', $result)->with('errors', $errors);
 		}
 
 		return redirect()->to("/challenges/$challengeID")->with('result', $result);
