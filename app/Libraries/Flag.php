@@ -24,6 +24,14 @@ class Flag
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Check flas is correct or not
+	 * 
+	 * @param string $submited_flag
+	 * @param array $flags
+	 * 
+	 * @return bool - if flag is correct true, false otherwise
+	 */
 	public function check(string $submited_flag, array $flags): bool
 	{
 		foreach ($flags as $flag)
@@ -50,6 +58,11 @@ class Flag
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Log flag submit action
+	 * 
+	 * @param array $data
+	 */
 	public function log($data): bool
 	{
 		$submissionModel = new SubmissionModel();
@@ -59,7 +72,15 @@ class Flag
 
 	//--------------------------------------------------------------------
 
-	public function isAlreadySolved($challengeID, $teamID): bool
+	/**
+	 * If team team solved the challenge return true, false otherwise
+	 * 
+	 * @param int $challengeID
+	 * @param int $teamID
+	 * 
+	 * @return bool
+	 */
+	public function isAlreadySolved(int $challengeID, int $teamID): bool
 	{
 		$solvesModel = new SolvesModel();
 		$data = [
@@ -74,6 +95,15 @@ class Flag
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Get flags hash
+	 * 
+	 * This method adds secret key enf of the flag and gets sha256 sum
+	 * 
+	 * @param string $flag
+	 * 
+	 * @return string
+	 */
 	public function hash(string $flag): string
 	{
 		return hash('sha256', $flag . $this->secret);
