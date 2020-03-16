@@ -134,6 +134,18 @@ class ChallengeController extends UserController
 			'type'         => $result ? '1' : '0',
 		]);
 
+		$submission_count = (new \App\Models\SubmissionModel())->where([
+			'team_id'      => user()->team_id,
+			'challenge_id' => $challengeID,
+		])->countAllResults();
+		
+		$challenge = $this->challengeModel->find($challengeID);
+		if ($result || ($challenge->max_attempts != '0' && $submission_count > $challenge->max_attempts))
+		{
+			return redirect()->route('challenge-detail', [$challengeID])
+					->with('result', $result)->with('error', lang('Home.maxAttemptReached'));
+		}
+
 		if (! $result)
 		{
 			return redirect()->to("/challenges/$challengeID")->with('result', $result);

@@ -92,6 +92,10 @@
 						<?php endif ?>
 					<?php endif ?>
 
+					<div class="mx-2">
+						<?= $this->include('templates/message_block') ?>
+					</div>
+
 					<div class="card-footer text-muted">
 						<div class="w-100">
 							<form action="<?= route_to('challenge-detail', $challenge->id) ?>" method="post">
