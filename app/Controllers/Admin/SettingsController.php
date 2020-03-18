@@ -234,7 +234,7 @@ class SettingsController extends AdminController
 		$zip->addFromString('database.json', json_encode($db_backup));
 
 		// if home page customized, back it up
-		if (fileExists(WRITEPATH.'home_page_custom.html'))
+		if (file_exists(WRITEPATH.'home_page_custom.html'))
 		{
 			$zip->addFile(WRITEPATH.'home_page_custom.html', 'home_page_custom.html');
 		}
