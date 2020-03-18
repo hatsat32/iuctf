@@ -74,7 +74,7 @@ class ChallengeController extends UserController
 	public function challenge($id = null)
 	{
 		$challenge = $this->challengeModel->find($id);
-		if ($challenge->is_active !== '1')
+		if ($challenge->is_active !== true)
 		{
 			return redirect('challenges');
 		}

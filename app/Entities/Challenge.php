@@ -16,6 +16,13 @@ class Challenge extends Entity
 
 	protected $dates = ['created_at', 'updated_at'];
 
+	protected $casts = [
+		'category_id'  => 'int',
+		'point'        => 'int',
+		'max_attempts' => 'int',
+		'is_active'    => 'boolean',
+	];
+
 	//--------------------------------------------------------------------
 
 	public function setMaxAttempts(string $attempts)
