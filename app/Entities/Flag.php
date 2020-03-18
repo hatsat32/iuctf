@@ -9,4 +9,8 @@ class Flag extends Entity
 		'type'         => null,
 		'content'      => null,
 	];
+
+	protected $casts = [
+		'challenge_id'  => 'int',
+	];
 }

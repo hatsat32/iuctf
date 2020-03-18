@@ -12,6 +12,11 @@ class Team extends Entity
 		'is_banned' => null,
 	];
 
+	protected $casts = [
+		'leader_id' => 'int',
+		'is_banned' => 'boolean',
+	];
+
 	public function leader()
 	{
 		$userModel = new \App\Models\UserModel();
