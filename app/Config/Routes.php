@@ -119,6 +119,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ro
 		$routes->post('(:num)/rmadmin',  'UserController::rmAdmin/$1', ['as' => 'admin-users-rmadmin']);
 		$routes->post('(:num)/ban',      'UserController::ban/$1', ['as' => 'admin-users-ban']);
 		$routes->post('(:num)/unban',    'UserController::unban/$1', ['as' => 'admin-users-unban']);
+		$routes->post('(:num)/activate', 'UserController::activate/$1', ['as' => 'admin-users-activate']);
 		$routes->post('(:num)/remove-from-team', 'UserController::removeFromTeam/$1', ['as' => 'admin-users-rmfromteam']);
 	});
 

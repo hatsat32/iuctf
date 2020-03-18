@@ -19,6 +19,8 @@ return [
 	'makeAdmin'			=> 'Admin Grubuna Ekle',
 	'unmakeAdmin'		=> 'Admin Grubundan Çıkar',
 	'rmadminError'      => 'Bir admin kullanıcı kendisini admin grubundan çıkaramaz!',
+	'activateUser'      => 'Kullanıcıyı Aktif Et',
+	'activated'         => 'Kullanıcı Aktifleştirildi',
 
 	'pickATeam'			=> 'Bir Takım Seçebilirsin',
 
@@ -34,4 +36,5 @@ return [
 	'addToAdminConfirm'      => 'Kullanıcı {0} \'ı admin grubuna eklemek istediğinizden emin misiniz ?',
 	'unbanUserConfirm'       => 'Kullanıcı {0} \'ı yasaklamak istediğinizden emin misiniz ?',
 	'banUserConfirm'         => 'Kullanıcı {0} \'ı yasağını kaldırmak istediğinizden emin misiniz ?',
+	'activateUserConfirm'    => 'Kullanıcı {0} \'ı aktif etmek istediğinizden emin misiniz ?',
 ];

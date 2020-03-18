@@ -223,6 +223,22 @@ class UserController extends AdminController
 
 	//--------------------------------------------------------------------
 
+	public function activate($id = null)
+	{
+		$authUserModel = new \Myth\Auth\Models\UserModel();
+		$user = $authUserModel->find($id);
+		$user->activate();
+
+		if (! $authUserModel->save($user))
+		{
+			return redirect()->route('admin-users-show', [$id])->with('errors', $authUserModel->errors());
+		}
+
+		return redirect()->route('admin-users-show', [$id])->with('message', lang('admin/User.activated'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function removeFromTeam($id = null)
 	{
 		$user = $this->userModel->find($id);
