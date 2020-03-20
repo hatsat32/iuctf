@@ -57,6 +57,16 @@ return [
 	'deletedSuccessfully'  => 'Deleted Successfully',
 	'fileNotExist'         => 'File not exist {file}',
 	'deleteError'          => 'File delete error happen',
+	'reseted'              => 'Reset successfull',
+	'resetConfirm'         => 'Are you sure you want to procedure. THIS ACTION IS NOT IRREVERSIBLE !!!',
+	'confirmCheckbox'      => 'I am sure I want to reset the IUCTF',
+	'resetWarningTitle'    => 'This action is <b>NOT irrevertible</b>. Do not make mistake.',
+	'resetWarningList' => [
+		'All categories, challenges flags hints will be deleted',
+		'All users (except members of admin group) will be deleted',
+		'All uploaded files will be deleted',
+	],
+	'resetWarning2' => 'Are you sure you want to continue ???',
 
 	// home page settings
 	'home'                 => 'Home Page',

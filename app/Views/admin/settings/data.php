@@ -28,7 +28,7 @@
 					</form>
 
 					<div class="table-responsive mt-4">
-						<table class="table table-bordered" id="teams-table" width="100%" cellspacing="0">
+						<table class="table table-bordered table-striped" id="teams-table" width="100%" cellspacing="0">
 							<thead>
 								<tr>
 									<th><?= lang('General.name') ?></th>
@@ -40,12 +40,12 @@
 								<?php foreach($backups as $backup) : ?>
 									<tr>
 										<td><?= esc($backup) ?></td>
-										<td>
+										<td class="p-1">
 											<a class="btn btn-info btn-block" href="/admin/settings/data/backup/<?= esc(str_replace('.zip', '', $backup)) ?>">
 												<?= lang('admin/Settings.download') ?>
 											</a>
 										</td>
-										<td>
+										<td class="p-1">
 											<form action="/admin/settings/data/backup/<?= esc(str_replace('.zip', '', $backup)) ?>" method="post">
 												<?= csrf_field() ?>
 												<button class="btn btn-danger btn-block"><?= lang('General.delete') ?></button>
@@ -66,22 +66,41 @@
 			<i class="fas fa-chart-area"></i>
 			<?= lang('admin/Settings.settings') ?></div>
 		<div class="card-body">
-			<?php if (session()->has('reset-error')) : ?>
-				<div class="alert alert-danger">
-					<?= session('reset-error') ?>
-				</div>
-			<?php endif ?>
 			<div class="row">
 				<div class="col">
-					<h1><?= lang('admin/Settings.reset') ?></h1>
-
-					<form action="/admin/settings/data/reset" method="post">
+					<div class="alert alert-danger" role="alert">
+						<h1 class="alert-heading"><?= lang('admin/Settings.reset') ?></h1>
+						<p><?= lang('admin/Settings.resetWarningTitle') ?></p>
+						<ul>
+							<?php foreach(lang('admin/Settings.resetWarningList') as $warn) : ?>
+								<li><?= esc($warn) ?></li>
+							<?php endforeach ?>
+						</ul>
+						<hr>
+						<p class="mb-0"><?= lang('admin/Settings.resetWarning2') ?></p>
+					</div>
+					<?= $this->setData(['name' => 'reset'])->include('admin/templates/message_block') ?>
+					<form action="/admin/settings/data/reset" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/Settings.resetConfirm') ?>">
 						<?= csrf_field() ?>
-						<button class="btn btn-danger btn-block"><?= lang('admin/Settings.reset') ?></button>
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="reset-checkbox" name="reset-checkbox">
+								<label class="custom-control-label" for="reset-checkbox"><?= lang('admin/Settings.confirmCheckbox') ?></label>
+							</div>
+						</div>
+						<button class="btn btn-danger btn-block" id="reset-btn" disabled><?= lang('admin/Settings.reset') ?></button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script>
+		$("#reset-checkbox").click(function() {
+			$("#reset-btn").prop("disabled", !$(this).is(":checked"));
+		});
+	</script>
 
 <?= $this->endSection() ?>

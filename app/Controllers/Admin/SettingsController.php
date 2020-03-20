@@ -234,7 +234,7 @@ class SettingsController extends AdminController
 		$zip->addFromString('database.json', json_encode($db_backup));
 
 		// if home page customized, back it up
-		if (fileExists(WRITEPATH.'home_page_custom.html'))
+		if (file_exists(WRITEPATH.'home_page_custom.html'))
 		{
 			$zip->addFile(WRITEPATH.'home_page_custom.html', 'home_page_custom.html');
 		}
@@ -276,7 +276,57 @@ class SettingsController extends AdminController
 
 	public function resetData()
 	{
-		return redirect('admin-settings-data')->with('reset-error', 'NOT IMPLEMENTED YET');
+		if ($this->request->getPost('reset-checkbox') !== 'on')
+		{
+			return redirect('admin-settings-data');
+		}
+
+		$db = db_connect();
+
+		// truncate tables
+		$db->disableForeignKeyChecks();
+		$db->table('auth_logins')->truncate();
+		$db->table('categories')->truncate();
+		$db->table('challenges')->truncate();
+		$db->table('files')->truncate();
+		$db->table('flags')->truncate();
+		$db->table('hints')->truncate();
+		$db->table('hint_unlocks')->truncate();
+		$db->table('notifications')->truncate();
+		$db->table('solves')->truncate();
+		$db->table('submissions')->truncate();
+		$db->table('teams')->truncate();
+
+		// delete users not in admin group
+		$adm_id = \Config\Services::authorization()->group('admin')->id;
+		$admins = $db->table('auth_groups_users')->select('user_id')
+				->where('group_id', $adm_id)->get()->getResultArray();
+		$admins = array_column($admins, 'user_id');
+		$db->table('users')->whereNotIn('id', $admins)->delete();
+
+		// delete not admin user-groups
+		$db->table('auth_groups_users')->whereNotIn('group_id', [$adm_id])->delete();
+
+		helper('filesystem');
+		$upload_path = FCPATH . 'uploads' . DIRECTORY_SEPARATOR;
+		foreach (directory_map($upload_path, 1) as $file) {
+			if ($file === '.htaccess' || $file === 'index.html')
+			{
+				continue;
+			}
+
+			if (is_dir($upload_path . $file))
+			{
+				delete_files($upload_path . $file, true);
+				rmdir($upload_path . $file);
+			}
+			else
+			{
+				unlink($upload_path . $file);
+			}
+		}
+
+		return redirect('admin-settings-data')->with('reset-message', lang('admin/Settings.reseted'));
 	}
 
 	//--------------------------------------------------------------------

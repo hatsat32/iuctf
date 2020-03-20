@@ -12,6 +12,11 @@ class User extends Entity
 		'name'      => null,
 	];
 
+	protected $casts = [
+		'id'      => 'int',
+		'team_id' => 'int',
+	];
+
 	public function team()
 	{
 		$teamModel = new \App\Models\TeamModel();

@@ -19,6 +19,8 @@ return [
 	'makeAdmin'			=> 'Add To Admin Group',
 	'unmakeAdmin'		=> 'Remove From Admin Group',
 	'rmadminError'      => 'You are admin. So you can not remove yourself from admin group!',
+	'activateUser'      => 'Activate User',
+	'activated'         => 'User Activated',
 
 	'pickATeam'			=> 'You Can Pick A Team',
 
@@ -34,4 +36,5 @@ return [
 	'addToAdminConfirm'      => 'Are you sure you want to add user {0} to admin group ?',
 	'unbanUserConfirm'       => 'Are you sure you want to unban the user: {0} ?',
 	'banUserConfirm'         => 'Are you sure you want to ban the user: {0} ?',
+	'activateUserConfirm'    => 'Are you sure you want to activate the user: {0} ?',
 ];

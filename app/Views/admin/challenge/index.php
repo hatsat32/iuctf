@@ -43,7 +43,7 @@
 								<td><?= esc($challenge->name) ?></td>
 								<td><?= esc($challenge->point) ?></td>
 								<td>
-									<?php if ($challenge->is_active == '1') : ?>
+									<?php if ($challenge->is_active === true) : ?>
 										<?= lang('General.active') ?>
 									<?php else : ?>
 										<?= lang('General.passive') ?>

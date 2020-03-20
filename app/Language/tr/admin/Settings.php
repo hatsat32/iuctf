@@ -57,6 +57,16 @@ return [
 	'deletedSuccessfully'  => 'Başarıyla silindi',
 	'fileNotExist'         => 'Dosya bulunamadı {file}',
 	'deleteError'          => 'Dosya silerken bir hata oldu',
+	'reseted'              => 'Başarıyla sıfırlandı',
+	'resetConfirm'         => 'Devam etmek istediğinden eminmisin. BU İŞLEM GERİ ALINAMAZ !!!',
+	'confirmCheckbox'      => 'Iuctf\'i sıfırlamak istediğime eminim.',
+	'resetWarningTitle'    => 'Bu işlem <b>geri alınamaz</b>. Lütfen hata yapmayın.',
+	'resetWarningList' => [
+		'Bütün kategoriler, sorular, bayraklar, ipuçları SİLİNECEK',
+		'Bütün kullanıcılar (admin grubundaki kullanıcılar hariç) SİLİNECEK',
+		'Bütün yüklenen dosyalar SİLİNECEK',
+	],
+	'resetWarning2' => 'Devam etmek istediğinden emin misin ???',
 
 	// home page settings
 	'home'                 => 'Anasayfa',

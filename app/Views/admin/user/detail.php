@@ -85,6 +85,18 @@
 				</div>
 			<?php endif ?>
 
+			<!-- ACTIVATE THE USER IF NOT YET -->
+			<?php if ($user->active !== '1') : ?>
+				<div class="mt-4">
+					<form action="<?= route_to('admin-users-activate', $user->id) ?>" method="post"
+							onsubmit="return confirm(this.getAttribute('confirm_message'))"
+							confirm_message="<?= lang('admin/User.activateUserConfirm', [$user->username]) ?>">
+						<?= csrf_field() ?>
+						<button type="submit" class="btn btn-info btn-block"><?= lang('admin/User.activateUser') ?></button>
+					</form>
+				</div>
+			<?php endif ?>
+
 			<!-- BAN/UNBAN THE USER -->
 			<div class="mt-4">
 				<?php if ($user->status == 'banned') : ?>
