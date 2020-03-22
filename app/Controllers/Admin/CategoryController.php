@@ -20,8 +20,10 @@ class CategoryController extends AdminController
 
 	public function index()
 	{
-		$viewData['categories'] = $this->categoryModel->findAll();
-		return $this->render('category/index', $viewData);
+		return $this->render('category/index', [
+			'categories' => $this->categoryModel->paginate(20),
+			'pager'      => $this->categoryModel->pager,
+		]);
 	}
 
 	//--------------------------------------------------------------------

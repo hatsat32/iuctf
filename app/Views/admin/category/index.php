@@ -46,6 +46,7 @@
 					</tbody>
 				</table>
 			</div>
+			<?= $pager->links('default', 'admin_pager') ?>
 		</div>
 	</div>
 

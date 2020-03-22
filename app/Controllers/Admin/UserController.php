@@ -26,9 +26,12 @@ class UserController extends AdminController
 	{
 		$users = $this->userModel
 				->select(['users.*', 'teams.name AS team_name'])
-				->join('teams', 'users.team_id = teams.id', 'left')
-				->findAll();
-		return $this->render('user/index', ['users' => $users]);
+				->join('teams', 'users.team_id = teams.id', 'left');
+
+		return $this->render('user/index', [
+			'users' => $users->paginate(20),
+			'pager' => $users->pager,
+		]);
 	}
 
 	//--------------------------------------------------------------------
