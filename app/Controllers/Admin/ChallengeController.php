@@ -27,11 +27,11 @@ class ChallengeController extends AdminController
 		$challenges = $this->challengeModel
 				->select(['challenges.id', 'categories.id AS cat_id', 'categories.name AS cat_name',
 						'challenges.name', 'challenges.point', 'challenges.is_active'])
-				->join('categories', 'challenges.category_id = categories.id', 'left')
-				->findAll();
+				->join('categories', 'challenges.category_id = categories.id', 'left');
 
 		return $this->render('challenge/index', [
-			'challenges' => $challenges,
+			'challenges' => $challenges->paginate(20),
+			'pager'      => $challenges->pager,
 		]);
 	}
 

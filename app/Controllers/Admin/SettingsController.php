@@ -112,6 +112,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-general')->with('errors', $this->SettingsModel->errors());
 		}
 
+		cache()->delete("settings");
 		return redirect('admin-settings-general')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
@@ -182,6 +183,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-timer')->with('errors', $this->SettingsModel->errors());
 		}
 
+		cache()->delete("settings");
 		return redirect('admin-settings-timer')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
@@ -298,14 +300,16 @@ class SettingsController extends AdminController
 		$db->table('teams')->truncate();
 
 		// delete users not in admin group
-		$adm_id = \Config\Services::authorization()->group('admin')->id;
+		$admin_group_id = \Config\Services::authorization()->group('admin')->id;
 		$admins = $db->table('auth_groups_users')->select('user_id')
-				->where('group_id', $adm_id)->get()->getResultArray();
+				->where('group_id', $admin_group_id)->get()->getResultArray();
 		$admins = array_column($admins, 'user_id');
+
 		$db->table('users')->whereNotIn('id', $admins)->delete();
+		$db->table('users')->whereIn('id', $admins)->set('team_id', null)->update();
 
 		// delete not admin user-groups
-		$db->table('auth_groups_users')->whereNotIn('group_id', [$adm_id])->delete();
+		$db->table('auth_groups_users')->whereNotIn('group_id', [$admin_group_id])->delete();
 
 		helper('filesystem');
 		$upload_path = FCPATH . 'uploads' . DIRECTORY_SEPARATOR;
@@ -403,6 +407,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-theme')->with('errors', $this->SettingsModel->errors());
 		}
 
+		cache()->delete("settings");
 		return redirect('admin-settings-theme')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 

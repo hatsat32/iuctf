@@ -48,10 +48,4 @@
 		</div>
 	</div>
 
-	<script>
-		$(document).ready(function() {
-			$("#notification-table").DataTable();
-		});
-	</script>
-
 <?= $this->endSection() ?>

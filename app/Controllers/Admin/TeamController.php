@@ -32,11 +32,11 @@ class TeamController extends AdminController
 	{
 		$teams = $this->teamModel
 				->select(['teams.id', 'teams.leader_id', 'users.name AS leader_name', 'teams.name', 'teams.is_banned'])
-				->join('users', 'teams.leader_id = users.id', 'left')
-				->findAll();
+				->join('users', 'teams.leader_id = users.id', 'left');
 
 		return $this->render('team/index', [
-			'teams' => $teams
+			'teams' => $teams->paginate(20),
+			'pager' => $teams->pager,
 		]);
 	}
 

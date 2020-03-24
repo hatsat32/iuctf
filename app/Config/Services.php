@@ -38,6 +38,13 @@ class Services extends CoreServices
 			return static::getSharedInstance('settings');
 		}
 
-		return config('Settings');
+		if (! $settings = cache("settings"))
+		{
+			$settings = config('Settings');
+
+			cache()->save("settings", $settings, MINUTE * 5);
+		}
+
+		return $settings;
 	}
 }

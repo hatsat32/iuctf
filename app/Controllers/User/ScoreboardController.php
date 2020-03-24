@@ -29,6 +29,11 @@ class ScoreboardController extends UserController
 		 * but before that time I will research better implementation
 		 */
 
+		if ($scores = cache('scores'))
+		{
+			return $this->render('scoreboard', ['scores' => $scores]);
+		}
+
 		$challenges = $this->challengeModel
 				->select(['challenges.id', 'challenges.name', 'challenges.point', 'challenges.type', 'challenges.is_active'])
 				->selectCount('solves.id', 'solve_count')
@@ -97,8 +102,8 @@ class ScoreboardController extends UserController
 			return $retval;
 		});
 
-		$viewData['scores'] = $teamScores;
-		return $this->render('scoreboard', $viewData);
+		cache()->save("scores", $teamScores, MINUTE * 5);
+		return $this->render('scoreboard', ['scores' => $teamScores]);
 	}
 
 	//--------------------------------------------------------------------

@@ -46,13 +46,8 @@
 					</tbody>
 				</table>
 			</div>
+			<?= $pager->links('default', 'admin_pager') ?>
 		</div>
 	</div>
-
-	<script>
-		$(document).ready(function() {
-			$("#teams-table").DataTable();
-		});
-	</script>
 
 <?= $this->endSection() ?>
