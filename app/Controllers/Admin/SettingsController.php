@@ -112,6 +112,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-general')->with('errors', $this->SettingsModel->errors());
 		}
 
+		cache()->delete("settings");
 		return redirect('admin-settings-general')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
@@ -182,6 +183,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-timer')->with('errors', $this->SettingsModel->errors());
 		}
 
+		cache()->delete("settings");
 		return redirect('admin-settings-timer')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
@@ -405,6 +407,7 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-theme')->with('errors', $this->SettingsModel->errors());
 		}
 
+		cache()->delete("settings");
 		return redirect('admin-settings-theme')->with('message', lang('admin/Settings.updatedSuccessfully'));
 	}
 
