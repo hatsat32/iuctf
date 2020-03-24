@@ -58,10 +58,4 @@
 		</div>
 	</div>
 
-	<script>
-		$(document).ready(function() {
-			$("#users-table").DataTable();
-		});
-	</script>
-
 <?= $this->endSection() ?>

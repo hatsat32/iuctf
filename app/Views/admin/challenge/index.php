@@ -63,10 +63,4 @@
 		</div>
 	</div>
 
-	<script>
-		$(document).ready(function() {
-			$("#challenges-table").DataTable();
-		});
-	</script>
-
 <?= $this->endSection() ?>
