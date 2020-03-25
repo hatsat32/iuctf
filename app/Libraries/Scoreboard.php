@@ -1,5 +1,9 @@
 <?php namespace App\Libraries;
 
+use App\Models\ChallengeModel;
+use App\Models\SolvesModel;
+use App\Models\TeamModel;
+
 class Scoreboard
 {
 	/**
@@ -18,6 +22,22 @@ class Scoreboard
 	{
 		$this->minRate = $minRate;
 		$this->decay   = $decay;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function scores()
+	{
+		$challenges = $this->getChallenges();
+		$teamScores = $this->getTeamScores();
+		$solves     = $this->getSolves();
+
+		$challenges = $this->cacculateChallengePoint($challenges);
+		$teamScores = $this->calculateTeamScores($teamScores, $challenges, $solves);
+
+		$scores = $this->sort($teamScores);
+
+		return $scores;
 	}
 
 	//--------------------------------------------------------------------
@@ -133,6 +153,60 @@ class Scoreboard
 		});
 
 		return $teamSolves;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getChallenges()
+	{
+		$challengeModel = new ChallengeModel();
+
+		$challenges = $challengeModel
+				->select(['challenges.id', 'challenges.name', 'challenges.point', 'challenges.type', 'challenges.is_active'])
+				->selectCount('solves.id', 'solve_count')
+				->join('solves', 'solves.challenge_id = challenges.id', 'left')
+				->join('teams', 'teams.id = solves.team_id', 'left')
+				->where('teams.is_banned', '0')
+				->where('teams.deleted_at', null)
+				->groupBy('challenges.id')
+				->findAll();
+
+				return $challenges;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getTeamScores()
+	{
+		$teamModel = new TeamModel();
+
+		$teamScores = $teamModel
+				->select(['teams.id', 'teams.name', ])->selectSum('hints.cost', 'cost_sum')->selectMax('solves.id', 'lastsolve')
+				->join('hint_unlocks', 'teams.id = hint_unlocks.team_id', 'left')
+				->join('hints', 'hints.id = hint_unlocks.hint_id', 'left')
+				->join('solves', 'solves.team_id = teams.id', 'left')
+				->groupBy('teams.id')
+				->where('teams.is_banned', '0')
+				->where('teams.deleted_at', null)
+				->findAll();
+
+		return $teamScores;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getSolves()
+	{
+		$solvesModel = new SolvesModel();
+
+		$solves = $solvesModel
+				->select(['solves.*'])
+				->join('teams', 'solves.team_id = teams.id', 'left')
+				->where('teams.is_banned', '0')
+				->where('teams.deleted_at', null)
+				->findAll();
+
+		return $solves;
 	}
 
 	//--------------------------------------------------------------------
