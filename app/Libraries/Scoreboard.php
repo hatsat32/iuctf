@@ -29,11 +29,11 @@ class Scoreboard
 	public function scores()
 	{
 		$challenges = $this->getChallenges();
-		$teamScores = $this->getTeamScores();
+		$teams      = $this->getTeams();
 		$solves     = $this->getSolves();
 
-		$challenges = $this->cacculateChallengePoint($challenges);
-		$teamScores = $this->calculateTeamScores($teamScores, $challenges, $solves);
+		$challenges = $this->cacculateChallengePoints($challenges);
+		$teamScores = $this->calculateTeamScores($teams, $challenges, $solves);
 
 		$scores = $this->sort($teamScores);
 
@@ -48,6 +48,7 @@ class Scoreboard
 		usort($scores, function($a, $b) {
 			$retval =  $b->final <=> $a->final;
 
+			// if points are equal, team who solves before considered as tie-winner
 			if ($retval == 0)
 			{
 				$retval = $a->lastsolve <=> $b->lastsolve;
@@ -61,15 +62,23 @@ class Scoreboard
 
 	//--------------------------------------------------------------------
 
-	public function calculateTeamScores($teamScores, $challenges, $solves)
+	/**
+	 * calculate teams points
+	 * 
+	 * @param array $teams
+	 * @param array $challenges
+	 * @param array $solves
+	 * @return array
+	 */
+	public function calculateTeamScores($teams, $challenges, $solves)
 	{
-		foreach ($teamScores as $tm => $team)
+		foreach ($teams as $i => $team)
 		{
 			$total_point = 0;
 
 			$team_solves = array_column($this->teamSolves($solves, $team->id), 'challenge_id');
 
-			foreach ($challenges as $ch => $challenge)
+			foreach ($challenges as $challenge)
 			{
 				if (in_array($challenge->id, $team_solves))
 				{
@@ -84,17 +93,23 @@ class Scoreboard
 				}
 			}
 
-			$teamScores[$tm]->total_point = $total_point;
+			$teams[$i]->total_point = $total_point;
 
-			$teamScores[$tm]->final = $teamScores[$tm]->total_point - $teamScores[$tm]->cost_sum;
+			$teams[$i]->final = $teams[$i]->total_point - $teams[$i]->cost_sum;
 		}
 
-		return $teamScores;
+		return $teams;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function cacculateChallengePoint($challenges)
+	/**
+	 * calculated each challenges points
+	 * 
+	 * @param array $challenges
+	 * @return array
+	 */
+	public function cacculateChallengePoints($challenges)
 	{
 		foreach ($challenges as $i => $challenge)
 		{
@@ -111,7 +126,6 @@ class Scoreboard
 	 * 
 	 * @param int $point
 	 * @param int $solveCount
-	 * @param int $decay
 	 * 
 	 * @return int
 	 */
@@ -140,10 +154,10 @@ class Scoreboard
 
 	/**
 	 * return solved challenges for certain team
-	 * 
+	 *
 	 * @param array $solves
 	 * @param int $teamID
-	 * 
+	 *
 	 * @return array
 	 */
 	public function teamSolves(array $solves, int $teamID)
@@ -157,6 +171,19 @@ class Scoreboard
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * get challenges and each challenge's solve count
+	 *
+	 * each challenge has fallowing fields
+	 *   - id    -> id
+	 *   - name  -> name
+	 *   - point -> point
+	 *   - type  -> static or dynamic
+	 *   - is_active   -> 1 or 0
+	 *   - solve_count -> number of solves
+	 *
+	 * @return array
+	 */
 	public function getChallenges()
 	{
 		$challengeModel = new ChallengeModel();
@@ -171,17 +198,30 @@ class Scoreboard
 				->groupBy('challenges.id')
 				->findAll();
 
-				return $challenges;
+		return $challenges;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function getTeamScores()
+	/**
+	 * get teams and sum of hint costs for each team
+	 *
+	 * each team has fallowing fields
+	 *   - id -> team id
+	 *   - name -> team name
+	 *   - cost_sum -> sum of hint costs
+	 *   - lastsolve -> last solve id. Required for sorting
+	 *
+	 * @return array
+	 */
+	public function getTeams()
 	{
 		$teamModel = new TeamModel();
 
 		$teamScores = $teamModel
-				->select(['teams.id', 'teams.name', ])->selectSum('hints.cost', 'cost_sum')->selectMax('solves.id', 'lastsolve')
+				->select(['teams.id', 'teams.name', ])
+				->selectSum('hints.cost', 'cost_sum')
+				->selectMax('solves.id', 'lastsolve')
 				->join('hint_unlocks', 'teams.id = hint_unlocks.team_id', 'left')
 				->join('hints', 'hints.id = hint_unlocks.hint_id', 'left')
 				->join('solves', 'solves.team_id = teams.id', 'left')
@@ -195,6 +235,12 @@ class Scoreboard
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Get all solves
+	 * - Except deleted and banned team solves
+	 *
+	 * @return array
+	 */
 	public function getSolves()
 	{
 		$solvesModel = new SolvesModel();
