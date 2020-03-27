@@ -48,22 +48,37 @@ class ChallengeController extends UserController
 	
 	public function challenges()
 	{
-		$challenges = $this->challengeModel->where('is_active', '1')->findAll();
-		$categories = $this->categorygeModel->findAll();
-		$viewData['solves'] = $this->solvesModel->where('team_id', user()->team_id)
-				->findColumn('challenge_id') ?? [];
-
-		foreach ($categories as $c_key => $c_val) {
-			$arr = array_filter($challenges, function($challenge) use ($c_val) {
-				return $challenge->category_id == $c_val->id;
-			});
-
-			if(! empty($arr))
-			{
-				$categories[$c_key]->challenges = $arr;
-			}
+		if (! $challenges = cache('active_challenges'))
+		{
+			$challenges = $this->challengeModel->where('is_active', '1')->findAll();
+			cache()->save("active_challenges", $challenges, MINUTE * 5);
 		}
 
+		if (! $categories = cache('categories'))
+		{
+			$categories = $this->categorygeModel->findAll();
+			cache()->save('categories', $categories, MINUTE * 5);
+		}
+
+		$team_id = user()->team_id;
+		if (! $solves = cache("teams-{$team_id}_solves"))
+		{
+			$solves = $this->solvesModel->where('team_id', user()->team_id)
+					->findColumn('challenge_id') ?? [];
+			cache()->save("teams-{$team_id}_solves", $solves, MINUTE * 5);
+		}
+		$viewData['solves'] = $solves;
+
+		foreach ($categories as $i => $category) {
+			$category_challenges = array_filter($challenges, function($challenge) use ($category) {
+				return $challenge->category_id == $category->id;
+			});
+
+			if(! empty($category_challenges))
+			{
+				$categories[$i]->challenges = $category_challenges;
+			}
+		}
 		$viewData['categories'] = $categories;
 
 		return $this->render('challenges', $viewData);
@@ -172,6 +187,9 @@ class ChallengeController extends UserController
 			$errors = $this->solvesModel->errors();
 			return redirect()->to("/challenges/$challengeID")->with('result', $result)->with('errors', $errors);
 		}
+
+		$team_id = user()->team_id;
+		cache()->delete("teams-{$team_id}_solves");
 
 		return redirect()->to("/challenges/$challengeID")->with('result', $result);
 	}
