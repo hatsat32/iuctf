@@ -48,10 +48,10 @@ class ChallengeController extends UserController
 	
 	public function challenges()
 	{
-		if (! $challenges = cache('active_challenges'))
+		if (! $challenges = cache('challenges-active'))
 		{
 			$challenges = $this->challengeModel->where('is_active', '1')->findAll();
-			cache()->save("active_challenges", $challenges, MINUTE * 5);
+			cache()->save("challenges-active", $challenges, MINUTE * 5);
 		}
 
 		if (! $categories = cache('categories'))
