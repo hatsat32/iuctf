@@ -64,10 +64,10 @@
 
 					<div class="card-footer bg-dark">
 						<div class="row">
-							<div class="col-9 row">
-								<div class="col-sm-6 text-danger"><?= lang('Home.firstBlood') ?></div>
+							<div class="col-9 row align-items-center">
+								<div class="col-sm-6 h4 mb-0 text-danger"><?= lang('Home.firstBlood') ?></div>
 								<?php if(! empty($firstblood)) : ?>
-									<div class="col-sm-6 text-success"><?= esc($firstblood->name) ?></div>
+									<div class="col-sm-6 h4 mb-0 text-success"><?= esc($firstblood->name) ?></div>
 								<?php endif ?>
 							</div>
 							<div class="col-3">
