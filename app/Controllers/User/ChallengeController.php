@@ -88,7 +88,12 @@ class ChallengeController extends UserController
 
 	public function challenge($id = null)
 	{
-		$challenge = $this->challengeModel->find($id);
+		if (! $challenge = cache("challenge-{$id}"))
+		{
+			$challenge = $this->challengeModel->find($id);
+			cache()->save("challenge-{$id}", $challenge, MINUTE * 5);
+		}
+
 		if ($challenge->is_active !== true)
 		{
 			return redirect('challenges');
@@ -97,7 +102,6 @@ class ChallengeController extends UserController
 		$isSolved = $this->solvesModel->isSolved(user()->team_id, $id);
 		$hints = $this->hintModel->where('challenge_id', $id)
 				->where('is_active', '1')
-				->orderBy('id')
 				->findAll();
 		$hints_unlocks = (new HintUnlockModel())
 				->where('challenge_id', $id)
@@ -133,6 +137,13 @@ class ChallengeController extends UserController
 
 	public function flagSubmit($challengeID = null)
 	{
+		$challenge = $this->challengeModel->find($challengeID);
+
+		if ($challenge->is_active !== true)
+		{
+			return redirect('challenges');
+		}
+
 		$flaglib = new \App\Libraries\Flag();
 		$flags = $this->flagModel->where('challenge_id', $challengeID)->findAll();
 		$submited_flag = $this->request->getPost('flag');
@@ -153,8 +164,7 @@ class ChallengeController extends UserController
 			'team_id'      => user()->team_id,
 			'challenge_id' => $challengeID,
 		])->countAllResults();
-		
-		$challenge = $this->challengeModel->find($challengeID);
+
 		if ($challenge->max_attempts != '0' && $submission_count > $challenge->max_attempts)
 		{
 			if (! $result)
