@@ -48,22 +48,37 @@ class ChallengeController extends UserController
 	
 	public function challenges()
 	{
-		$challenges = $this->challengeModel->where('is_active', '1')->findAll();
-		$categories = $this->categorygeModel->findAll();
-		$viewData['solves'] = $this->solvesModel->where('team_id', user()->team_id)
-				->findColumn('challenge_id') ?? [];
-
-		foreach ($categories as $c_key => $c_val) {
-			$arr = array_filter($challenges, function($challenge) use ($c_val) {
-				return $challenge->category_id == $c_val->id;
-			});
-
-			if(! empty($arr))
-			{
-				$categories[$c_key]->challenges = $arr;
-			}
+		if (! $challenges = cache('challenges-active'))
+		{
+			$challenges = $this->challengeModel->where('is_active', '1')->findAll();
+			cache()->save("challenges-active", $challenges, MINUTE * 5);
 		}
 
+		if (! $categories = cache('categories'))
+		{
+			$categories = $this->categorygeModel->findAll();
+			cache()->save('categories', $categories, MINUTE * 5);
+		}
+
+		$team_id = user()->team_id;
+		if (! $solves = cache("teams-{$team_id}_solves"))
+		{
+			$solves = $this->solvesModel->where('team_id', user()->team_id)
+					->findColumn('challenge_id') ?? [];
+			cache()->save("teams-{$team_id}_solves", $solves, MINUTE * 5);
+		}
+		$viewData['solves'] = $solves;
+
+		foreach ($categories as $i => $category) {
+			$category_challenges = array_filter($challenges, function($challenge) use ($category) {
+				return $challenge->category_id == $category->id;
+			});
+
+			if(! empty($category_challenges))
+			{
+				$categories[$i]->challenges = $category_challenges;
+			}
+		}
 		$viewData['categories'] = $categories;
 
 		return $this->render('challenges', $viewData);
@@ -73,7 +88,12 @@ class ChallengeController extends UserController
 
 	public function challenge($id = null)
 	{
-		$challenge = $this->challengeModel->find($id);
+		if (! $challenge = cache("challenge-{$id}"))
+		{
+			$challenge = $this->challengeModel->find($id);
+			cache()->save("challenge-{$id}", $challenge, MINUTE * 5);
+		}
+
 		if ($challenge->is_active !== true)
 		{
 			return redirect('challenges');
@@ -82,7 +102,6 @@ class ChallengeController extends UserController
 		$isSolved = $this->solvesModel->isSolved(user()->team_id, $id);
 		$hints = $this->hintModel->where('challenge_id', $id)
 				->where('is_active', '1')
-				->orderBy('id')
 				->findAll();
 		$hints_unlocks = (new HintUnlockModel())
 				->where('challenge_id', $id)
@@ -118,6 +137,13 @@ class ChallengeController extends UserController
 
 	public function flagSubmit($challengeID = null)
 	{
+		$challenge = $this->challengeModel->find($challengeID);
+
+		if ($challenge->is_active !== true)
+		{
+			return redirect('challenges');
+		}
+
 		$flaglib = new \App\Libraries\Flag();
 		$flags = $this->flagModel->where('challenge_id', $challengeID)->findAll();
 		$submited_flag = $this->request->getPost('flag');
@@ -138,8 +164,7 @@ class ChallengeController extends UserController
 			'team_id'      => user()->team_id,
 			'challenge_id' => $challengeID,
 		])->countAllResults();
-		
-		$challenge = $this->challengeModel->find($challengeID);
+
 		if ($challenge->max_attempts != '0' && $submission_count > $challenge->max_attempts)
 		{
 			if (! $result)
@@ -172,6 +197,9 @@ class ChallengeController extends UserController
 			$errors = $this->solvesModel->errors();
 			return redirect()->to("/challenges/$challengeID")->with('result', $result)->with('errors', $errors);
 		}
+
+		$team_id = user()->team_id;
+		cache()->delete("teams-{$team_id}_solves");
 
 		return redirect()->to("/challenges/$challengeID")->with('result', $result);
 	}
