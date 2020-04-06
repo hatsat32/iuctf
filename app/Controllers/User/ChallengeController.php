@@ -200,6 +200,7 @@ class ChallengeController extends UserController
 
 		$team_id = user()->team_id;
 		cache()->delete("teams-{$team_id}_solves");
+		cache()->delete("scores");
 
 		return redirect()->to("/challenges/$challengeID")->with('result', $result);
 	}
