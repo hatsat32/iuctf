@@ -48,4 +48,5 @@ return [
 	'teamName'			=> 'Team Name',
 
 	'getHash'			=> 'Get Hash',
+	'tooMantAttempts'   => 'Too many failed login attempts detected. Please try again later!',
 ];

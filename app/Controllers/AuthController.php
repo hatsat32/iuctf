@@ -88,6 +88,23 @@ class AuthController extends BaseController
 		// Determine credential type
 		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
+		// protect against brute force
+		$time = new \CodeIgniter\I18n\Time();
+		$time = $time->subMinutes(10)->toDateTimeString();
+
+		$login_attempts = db_connect()->table('auth_logins')
+				->where([
+					'email'   => $login,
+					'success' => 0,
+					'date >=' => $time
+				])
+				->get()->getResultArray();
+
+		if (count($login_attempts) > 10)
+		{
+			return redirect()->back()->with('error', lang('Home.tooMantAttempts'));
+		}
+
 		// if user or team has been banned, kick them out!
 		if ($user = $this->auth->validate([$type => $login, 'password' => $password], true))
 		{

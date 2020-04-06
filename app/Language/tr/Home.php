@@ -48,4 +48,5 @@ return [
 	'teamName'			=> 'Takım Adı',
 
 	'getHash'			=> 'Hash Al',
+	'tooMantAttempts'   => 'Çok fazla başarısız giriş denemesi testit ettik. Lütfen daha sonra tekrar dene!',
 ];
