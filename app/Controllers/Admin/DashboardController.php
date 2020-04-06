@@ -1,7 +1,6 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use App\Models\SolvesModel;
 
 class DashboardController extends AdminController
 {
@@ -10,18 +9,20 @@ class DashboardController extends AdminController
 	public function index()
 	{
 		$db = db_connect();
-		$status = $db->query('SHOW TABLE STATUS')->getResult();
 
-		foreach ($status as $key => $value) {
-			$status[$value->Name] = $value;
-			unset($status[$key]);
+		if (! $statistics = cache('statistics'))
+		{
+			$statistics = [
+				'users'       => $db->table('users')->countAll(),
+				'teams'       => $db->table('teams')->countAll(),
+				'submissions' => $db->table('submissions')->countAll(),
+				'solves'      => $db->table('solves')->countAll(),
+			];
+
+			cache()->save('statistics', $statistics, MINUTE);
 		}
 
-		$viewData = [
-			'status' => $status,
-		];
-
-		return $this->render('dashboard', $viewData);
+		return $this->render('dashboard', ['statistics' => $statistics]);
 	}
 
 	//--------------------------------------------------------------------
