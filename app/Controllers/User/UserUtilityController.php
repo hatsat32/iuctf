@@ -9,11 +9,7 @@ class UserUtilityController extends UserController
 	{
 		$notificationModel = new NotificationModel();
 
-		if (! $notifications = cache('notifications'))
-		{
-			$notifications = $notificationModel->orderBy('created_at', 'DESC')->findAll();
-			cache()->save("notifications", $notifications, MINUTE * 5);
-		}
+		$notifications = $notificationModel->orderBy('created_at', 'DESC')->findAll();
 
 		return $this->render('notifications', ['notifications' => $notifications]);
 	}
