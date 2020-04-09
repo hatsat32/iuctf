@@ -12,7 +12,9 @@ class Category extends Entity
 		'description' => null,
 	];
 
-	protected $dates = ['created_at', 'updated_at'];
+	protected $casts = [
+		'id' => 'int',
+	];
 
 	//--------------------------------------------------------------------
 

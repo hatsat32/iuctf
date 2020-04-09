@@ -5,7 +5,6 @@ use CodeIgniter\Entity;
 class User extends Entity
 {
 	protected $attributes = [
-		'id'        => null,
 		'team_id'   => null,
 		'username'  => null,
 		'email'     => null,
@@ -15,6 +14,7 @@ class User extends Entity
 	protected $casts = [
 		'id'      => 'int',
 		'team_id' => 'int',
+		'active'  => 'boolean',
 	];
 
 	public function team()
