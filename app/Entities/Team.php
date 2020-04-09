@@ -13,6 +13,7 @@ class Team extends Entity
 	];
 
 	protected $casts = [
+		'id'        => 'int',
 		'leader_id' => 'int',
 		'is_banned' => 'boolean',
 	];
