@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'dashboard'     => 'Panel',
 	'add'			=> 'Ekle',
 	'edit'			=> 'Düzenle',
 	'delete'		=> 'Sil',

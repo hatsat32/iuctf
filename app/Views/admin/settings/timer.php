@@ -4,7 +4,7 @@
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="/admin"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item">
 			<a href="/admin/settings"><?= lang('admin/Settings.settings') ?></a>

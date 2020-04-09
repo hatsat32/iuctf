@@ -4,7 +4,7 @@
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="<?= route_to('admin-dashboard') ?>">Dashboard</a>
+			<a href="<?= route_to('admin-dashboard') ?>"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item active"><?= lang('General.categories') ?></li>
 	</ol>

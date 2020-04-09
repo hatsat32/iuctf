@@ -4,7 +4,7 @@
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="<?= route_to('admin') ?>">Dashboard</a>
+			<a href="<?= route_to('admin') ?>"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item">
 			<a href="/admin/settings"><?= lang('admin/Settings.settings') ?></a>
