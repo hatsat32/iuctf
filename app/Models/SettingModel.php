@@ -1,13 +1,13 @@
 <?php namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Entities\Settings;
+use App\Entities\Setting;
 
-class SettingsModel extends Model
+class SettingModel extends Model
 {
 	protected $table      = 'settings';
 	protected $primaryKey = 'id';
-	protected $returnType = Settings::class;
+	protected $returnType = Setting::class;
 
 	protected $allowedFields = [
 		'key', 'value'
