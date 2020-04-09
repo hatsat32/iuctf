@@ -2,14 +2,14 @@
 
 
 use CodeIgniter\Model;
-use CodeIgniter\Entity;
+use App\Entities\Notification;
 
 
 class NotificationModel extends Model
 {
 	protected $table      = 'notifications';
 	protected $primaryKey = 'id';
-	protected $returnType = Entity::class;
+	protected $returnType = Notification::class;
 
 	protected $allowedFields = [
 		'title', 'content',
