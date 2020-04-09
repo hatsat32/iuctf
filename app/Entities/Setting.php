@@ -3,7 +3,7 @@
 use CodeIgniter\Entity;
 use CodeIgniter\I18n\Time;
 
-class Settings extends Entity
+class Setting extends Entity
 {
 	protected $attributes = [
 		'key'   => null,

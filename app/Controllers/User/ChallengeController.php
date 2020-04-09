@@ -176,14 +176,14 @@ class ChallengeController extends UserController
 
 		if (! $result)
 		{
-			return redirect()->to("/challenges/$challengeID")->with('result', $result);
+			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
 		}
 
 		$solved_before = $flaglib->isAlreadySolved($challengeID, user()->team_id);
 
 		if ($solved_before === true || user()->team_id === null)
 		{
-			return redirect()->to("/challenges/$challengeID")->with('result', $result);
+			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
 		}
 
 		$db_result = $this->solvesModel->insert([
@@ -195,14 +195,14 @@ class ChallengeController extends UserController
 		if (! $db_result)
 		{
 			$errors = $this->solvesModel->errors();
-			return redirect()->to("/challenges/$challengeID")->with('result', $result)->with('errors', $errors);
+			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result)->with('errors', $errors);
 		}
 
 		$team_id = user()->team_id;
 		cache()->delete("teams-{$team_id}_solves");
 		cache()->delete("scores");
 
-		return redirect()->to("/challenges/$challengeID")->with('result', $result);
+		return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -223,10 +223,10 @@ class ChallengeController extends UserController
 		if (! $result)
 		{
 			$errors = $hintUnlockModel->errors();
-			return redirect()->to("/challenges/$challengeID")->with('errors', $errors);
+			return redirect()->route('challenge-detail', [$challengeID])->with('errors', $errors);
 		}
 
-		return redirect()->to("/challenges/$challengeID");
+		return redirect()->route('challenge-detail', [$challengeID]);
 	}
 
 	//--------------------------------------------------------------------

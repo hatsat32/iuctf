@@ -5,7 +5,6 @@ use CodeIgniter\Entity;
 class Team extends Entity
 {
 	protected $attributes = [
-		'id'        => null,
 		'leader_id' => null,
 		'name'      => null,
 		'auth_code' => null,
@@ -13,6 +12,7 @@ class Team extends Entity
 	];
 
 	protected $casts = [
+		'id'        => 'int',
 		'leader_id' => 'int',
 		'is_banned' => 'boolean',
 	];

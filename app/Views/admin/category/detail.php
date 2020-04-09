@@ -1,10 +1,16 @@
 <?= $this->extend("admin/templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= esc($category->name) ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="<?= route_to('admin-dashboard') ?>">Dashboard</a>
+			<a href="<?= route_to('admin-dashboard') ?>"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item"><?= esc($category->name) ?></li>
 		<li class="breadcrumb-item active"><?= lang('admin/Category.editCategory') ?></li>

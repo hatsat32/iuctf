@@ -1,10 +1,16 @@
 <?= $this->extend("admin/templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('admin/Settings.settings') .' - '. lang('admin/Settings.home') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="<?= route_to('admin') ?>">Dashboard</a>
+			<a href="<?= route_to('admin') ?>"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item">
 			<a href="/admin/settings"><?= lang('admin/Settings.settings') ?></a>

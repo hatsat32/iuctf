@@ -2,7 +2,7 @@
 
 
 use CodeIgniter\Config\BaseConfig;
-use App\Models\SettingsModel;
+use App\Models\SettingModel;
 
 
 class Settings extends BaseConfig
@@ -12,7 +12,7 @@ class Settings extends BaseConfig
 	{
 		parent::__construct();
 
-		foreach ((new SettingsModel)->findAll() as $setting) {
+		foreach ((new SettingModel)->findAll() as $setting) {
 			$this->{$setting->key} = $setting->value;
 		}
 	}

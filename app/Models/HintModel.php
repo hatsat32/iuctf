@@ -1,13 +1,13 @@
 <?php namespace App\Models;
 
 use CodeIgniter\Model;
-use CodeIgniter\Entity;
+use App\Entities\Hint;
 
 class HintModel extends Model
 {
 	protected $table      = 'hints';
 	protected $primaryKey = 'id';
-	protected $returnType = Entity::class;
+	protected $returnType = Hint::class;
 
 	protected $allowedFields = [
 		'challenge_id', 'content', 'cost', 'is_active'

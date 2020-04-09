@@ -2,16 +2,19 @@
 
 use CodeIgniter\Entity;
 
-class Flag extends Entity
+class Hint extends Entity
 {
 	protected $attributes = [
 		'challenge_id' => null,
-		'type'         => null,
 		'content'      => null,
+		'cost'         => null,
+		'is_active'    => null,
 	];
 
 	protected $casts = [
 		'id'           => 'int',
 		'challenge_id' => 'int',
+		'cost'         => 'int',
+		// 'is_active'    => 'boolean',
 	];
 }

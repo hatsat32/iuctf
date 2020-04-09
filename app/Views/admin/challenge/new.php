@@ -1,10 +1,16 @@
 <?= $this->extend("admin/templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('admin/Challenge.addChallenge') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="/admin"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item">
 			<a href="/admin/challenges"><?= lang('General.challenges') ?></a>

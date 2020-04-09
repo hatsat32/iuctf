@@ -1,19 +1,19 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Core\AdminController;
-use App\Models\SettingsModel;
+use App\Models\SettingModel;
 use ZipArchive;
 
 class SettingsController extends AdminController
 {
-	/** @var SettingsModel */
-	protected $SettingsModel;
+	/** @var SettingModel */
+	protected $SettingModel;
 
 	public function initController($request, $response, $logger)
 	{
 		parent::initController($request, $response, $logger);
 
-		$this->SettingsModel = new SettingsModel();
+		$this->SettingModel = new SettingModel();
 	}
 
 	//--------------------------------------------------------------------
@@ -105,11 +105,11 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-general')->withInput()->with('errors', $this->validator->getErrors());
 		}
 
-		$result = $this->SettingsModel->skipValidation()->updateBatch($data, 'key');
+		$result = $this->SettingModel->skipValidation()->updateBatch($data, 'key');
 
 		if(! $result)
 		{
-			return redirect('admin-settings-general')->with('errors', $this->SettingsModel->errors());
+			return redirect('admin-settings-general')->with('errors', $this->SettingModel->errors());
 		}
 
 		cache()->delete("settings");
@@ -176,11 +176,11 @@ class SettingsController extends AdminController
 			]);
 		}
 
-		$result = $this->SettingsModel->skipValidation()->updateBatch($updateData, 'key');
+		$result = $this->SettingModel->skipValidation()->updateBatch($updateData, 'key');
 
 		if (! $result)
 		{
-			return redirect('admin-settings-timer')->with('errors', $this->SettingsModel->errors());
+			return redirect('admin-settings-timer')->with('errors', $this->SettingModel->errors());
 		}
 
 		cache()->delete("settings");
@@ -399,12 +399,12 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-theme')->withInput()->with('errors', $this->validator->getErrors());
 		}
 
-		$result = $this->SettingsModel->skipValidation()->where('key', 'theme')
+		$result = $this->SettingModel->skipValidation()->where('key', 'theme')
 				->set('value', $this->request->getPost('theme'))->update();
 
 		if(! $result)
 		{
-			return redirect('admin-settings-theme')->with('errors', $this->SettingsModel->errors());
+			return redirect('admin-settings-theme')->with('errors', $this->SettingModel->errors());
 		}
 
 		cache()->delete("settings");

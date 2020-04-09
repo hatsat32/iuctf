@@ -1,10 +1,16 @@
 <?= $this->extend("admin/templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= esc($challenge->name) ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/admin">Dashboard</a>
+			<a href="/admin"><?= lang('General.dashboard') ?></a>
 		</li>
 		<li class="breadcrumb-item">
 			<a href="/admin/challenges"><?= lang('General.challenges') ?></a>
@@ -196,7 +202,7 @@
 					<div class="form-row">
 						<div class="form-group col-6">
 							<select name="is_active" class="form-control" id="is_active_hint">
-								<?php if($hint->is_active === false): ?>
+								<?php if($hint->is_active == '0'): ?>
 									<option selected value="0"><?= lang('General.passive') ?></option>
 									<option value="1"><?= lang('General.active') ?></option>
 								<?php else: ?>
