@@ -1,5 +1,11 @@
 <?= $this->extend("admin/templates/base") ?>
 
+
+<?= $this->section('title') ?>
+	<?= lang('General.dashboard') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('content') ?>
 
 <ol class="breadcrumb">
