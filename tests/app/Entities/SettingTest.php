@@ -1,7 +1,7 @@
 <?php namespace App\Entities;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use App\Entities\Settings;
+use App\Entities\Setting;
 use CodeIgniter\I18n\Time;
 
 class SettingTest extends CIUnitTestCase
@@ -25,7 +25,7 @@ class SettingTest extends CIUnitTestCase
 	 */
 	public function testGetBoolValue($data, $result)
 	{
-		$setting = new Settings($data);
+		$setting = new Setting($data);
 
 		$this->assertIsBool($setting->value);
 		$this->assertSame($setting->value, $result);
@@ -56,7 +56,7 @@ class SettingTest extends CIUnitTestCase
 	 */
 	public function testGetIntValue($data, $result)
 	{
-		$setting = new Settings($data);
+		$setting = new Setting($data);
 
 		$this->assertIsInt($setting->value);
 		$this->assertSame($setting->value, $result);
@@ -79,7 +79,7 @@ class SettingTest extends CIUnitTestCase
 	 */
 	public function testDateValue($data, $result)
 	{
-		$setting = new Settings($data);
+		$setting = new Setting($data);
 
 		$this->assertTrue($setting->value instanceof Time);
 		$this->assertTrue($setting->value->equals($result));
@@ -105,7 +105,7 @@ class SettingTest extends CIUnitTestCase
 	 */
 	public function testDateNullValue($data, $result)
 	{
-		$setting = new Settings($data);
+		$setting = new Setting($data);
 
 		$this->assertSame($result, $setting->value);
 	}
