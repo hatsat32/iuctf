@@ -37,4 +37,17 @@ class ChallengeTest extends FeatureTestCase
 		$response = $this->get(route_to('challenge-detail', 1));
 		$response->assertOk();
 	}
+
+	public function testSubmitFlag()
+	{
+		$this->post('/challenges/1', [
+			'flag' => 'linux100',
+		]);
+
+		$this->seeInDatabase('solves', [
+			'team_id'      => $this->user->team_id,
+			'challenge_id' => 1,
+			'user_id'      => $this->user->id,
+		]);
+	}
 }
