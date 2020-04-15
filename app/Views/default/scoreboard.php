@@ -42,8 +42,8 @@
 	<div id="bar-chart-data" style="display: none"><?= esc($bar_chart_scores) ?></div>
 	<div id="line-chart-data" style="display: none"><?= esc($line_chart_scores) ?></div>
 
-	<script src="/js/moment.min.js"></script>
-	<script src="/_admin/js/Chart.min.js"></script>
+	<script src="/lib/moment/moment.min.js"></script>
+	<script src="/lib/Chart/Chart.min.js"></script>
 
 	<script>
 

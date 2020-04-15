@@ -9,13 +9,11 @@
 	<meta name="author" content="">
 	<title><?= $this->renderSection("title") ?> · IUCTF</title>
 
-	<!-- Custom fonts for this template-->
-	<link href="/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
-	<!-- Page level plugin CSS-->
-	<link href="/_admin/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-	<!-- Custom styles for this template-->
-	<link href="/_admin/css/sb-admin.min.css" rel="stylesheet">
-	<script src="/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="/lib/fontawesome/css/all.min.css">
+	<link rel="stylesheet" href="/lib/DataTables/datatables.min.css">
+	<link rel="stylesheet" href="/lib/sb-admin/css/sb-admin.min.css">
+	<link rel="stylesheet" href="/css/admin.css">
+	<script src="/lib/jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -34,7 +32,6 @@
 			<?= $this->include('admin/templates/footer') ?>
 		</div>
 	</div>
-	<!-- /#wrapper -->
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top">
@@ -42,26 +39,19 @@
 	</a>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="/js/popper.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+	<script src="/lib/popper/popper.min.js"></script>
+	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
 	<!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
 
 	<!-- Page level plugin JavaScript-->
-	<script src="/_admin/js/Chart.min.js"></script>
-	<script src="/_admin/js/jquery.dataTables.min.js"></script>
-	<script src="/_admin/js/dataTables.bootstrap4.min.js"></script>
+	<script src="/lib/Chart/Chart.min.js"></script>
+	<script src="/lib/DataTables/datatables.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="/_admin/js/sb-admin.min.js"></script>
+	<script src="/lib/sb-admin/js/sb-admin.min.js"></script>
 	<script src="/js/admin.js"></script>
-
-	<style>
-		body {
-			font-family: monospace;
-		}
-	</style>
 </body>
 
 </html>

@@ -6,8 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title><?= $this->renderSection("title") ?></title>
 
-	<link rel="stylesheet" href="/css/bootstrap.darky.min.css">
-	<script src="/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="/lib/bootswatch/darkly/bootstrap.min.css">
+	<script src="/lib/jquery/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 	<?= $this->include('templates/header') ?>
@@ -16,7 +16,7 @@
 		<?= $this->renderSection("content") ?>
 	</div>
 
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/popper.min.js"></script>
+	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/lib/popper/popper.min.js"></script>
 </body>
 </html>
