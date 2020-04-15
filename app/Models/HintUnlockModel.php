@@ -2,14 +2,14 @@
 
 
 use CodeIgniter\Model;
-use CodeIgniter\Entity;
+use App\Entities\HintUnlock;
 
 
 class HintUnlockModel extends Model
 {
 	protected $table      = 'hint_unlocks';
 	protected $primaryKey = 'id';
-	protected $returnType = Entity::class;
+	protected $returnType = HintUnlock::class;
 
 	protected $allowedFields = [
 		'hint_id', 'user_id', 'team_id', 'challenge_id'
@@ -21,4 +21,7 @@ class HintUnlockModel extends Model
 		'team_id'      => 'required|numeric',
 		'challenge_id' => 'required|numeric',
 	];
+
+	protected $useTimestamps = true;
+	protected $updatedField  = null; // no need for update_at when logs solves
 }

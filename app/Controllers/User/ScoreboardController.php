@@ -11,13 +11,21 @@ class ScoreboardController extends UserController
 	{
 		$scoreboard = new Scoreboard();
 
-		if (! $scores = cache('scores'))
-		{
-			$scores = $scoreboard->scores();
-			cache()->save("scores", $scores, MINUTE * 5);
-		}
+		$scores = $scoreboard->scores();
 
-		return $this->render('scoreboard', ['scores' => $scores]);
+		$line_chart_scores = array_map(function($score) {
+			return $score->toArray();
+		}, $scores);
+
+		$bar_chart_scores = array_map(function($score) {
+			return ['name' => $score->name, 'score' => $score->final];
+		}, $scores);
+
+		return $this->render('scoreboard', [
+			'scores'            => $scores,
+			'bar_chart_scores'  => json_encode($bar_chart_scores),
+			'line_chart_scores' => json_encode($line_chart_scores),
+		]);
 	}
 
 	//--------------------------------------------------------------------
