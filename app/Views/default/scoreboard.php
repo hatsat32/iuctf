@@ -13,7 +13,11 @@
 	</div>
 
 	<div class="my-2">
-		<canvas id="scoreboard-chart" height="100"></canvas>
+		<canvas id="scoreboard-bar-chart" height="100"></canvas>
+	</div>
+
+	<div class="my-2">
+		<canvas id="scoreboard-line-chart" height="100"></canvas>
 	</div>
 
 	<div class="m-2">
@@ -35,8 +39,10 @@
 		</table>
 	</div>
 
-	<div id="chart-data" style="display: none"><?= esc($chartdata) ?></div>
+	<div id="bar-chart-data" style="display: none"><?= esc($bar_chart_scores) ?></div>
+	<div id="line-chart-data" style="display: none"><?= esc($line_chart_scores) ?></div>
 
+	<script src="/js/moment.min.js"></script>
 	<script src="/_admin/js/Chart.min.js"></script>
 
 	<script>
@@ -88,11 +94,11 @@
 			]
 		}
 
-		data = JSON.parse($("#chart-data").text()).slice(0, 20);
+		data = JSON.parse($("#bar-chart-data").text()).slice(0, 20);
 		team_names  = data.map((d) => { return d.name });
 		team_scores = data.map((d) => { return d.score });
 
-		var myChart = new Chart($("#scoreboard-chart"), {
+		var barChart = new Chart($("#scoreboard-bar-chart"), {
 			type: 'bar',
 			data: {
 				labels: team_names,
@@ -116,6 +122,47 @@
 				},
 			}
 		});
+
+		linechartdata = JSON.parse($("#line-chart-data").text());
+		linechartdata.map( (team, i) => {
+			return {
+				label: team.name,
+				borderColor: colors.border[i],
+				fill: false,
+				data: team.solves.map(solve => {
+					console.log({t: new moment(solve.date), y: solve.sub_point});
+					return {t: new moment(solve.date), y: solve.sub_point}
+				}),
+			}
+		})
+
+		config = {
+			type: 'line',
+			data: {
+				datasets: linechartdata.map( (team, i) => {
+					return {
+						label: team.name,
+						borderColor: colors.border[i],
+						fill: false,
+						data: team.solves.map(solve => {
+							console.log({t: new moment(solve.date), y: solve.sub_point});
+							return {t: new moment(solve.date), y: solve.sub_point}
+						}),
+					}
+				})
+			},
+			options: {
+				responsive: true,
+				scales: {
+					xAxes: [{
+						type: 'time',
+					}],
+				}
+			}
+		}
+
+		var lineChart = new Chart($("#scoreboard-line-chart"), config);
+
 	</script>
 
 <?= $this->endSection() ?>

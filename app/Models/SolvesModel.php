@@ -1,14 +1,14 @@
 <?php namespace App\Models;
 
 use CodeIgniter\Model;
-use CodeIgniter\Entity;
+use App\Entities\Solve;
 
 
 class SolvesModel extends Model
 {
 	protected $table      = 'solves';
 	protected $primaryKey = 'id';
-	protected $returnType = Entity::class;
+	protected $returnType = Solve::class;
 
 	protected $allowedFields = [
 		'challenge_id', 'user_id', 'team_id'

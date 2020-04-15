@@ -28,16 +28,22 @@ class Scoreboard
 
 	public function scores()
 	{
-		$challenges = $this->getChallenges();
-		$teams      = $this->getTeams();
-		$solves     = $this->getSolves();
+		$teams = $this->getTeams();
+		$hintUnlocks = $this->getHintUnlocks();
+		$solves = $this->getSolves();
 
-		$challenges = $this->cacculateChallengePoints($challenges);
-		$teamScores = $this->calculateTeamScores($teams, $challenges, $solves);
+		$subscores = $this->subSolves($teams, $solves, $hintUnlocks);
 
-		$scores = $this->sort($teamScores);
+		// $challenges = $this->cacculateChallengePoints($challenges);
+		// $teamScores = $this->calculateTeamScores($teams, $challenges, $solves);
 
-		return $scores;
+		$subscores = $this->sort($subscores);
+
+		$subscores = array_filter($subscores, function($score) {
+			return $score->final != 0;
+		});
+
+		return $subscores;
 	}
 
 	//--------------------------------------------------------------------
@@ -220,14 +226,10 @@ class Scoreboard
 
 		$teamScores = $teamModel
 				->select(['teams.id', 'teams.name', ])
-				->selectSum('hints.cost', 'cost_sum')
 				->selectMax('solves.id', 'lastsolve')
-				->join('hint_unlocks', 'teams.id = hint_unlocks.team_id', 'left')
-				->join('hints', 'hints.id = hint_unlocks.hint_id', 'left')
 				->join('solves', 'solves.team_id = teams.id', 'left')
 				->groupBy('teams.id')
 				->where('teams.is_banned', '0')
-				->where('teams.deleted_at', null)
 				->findAll();
 
 		return $teamScores;
@@ -246,13 +248,86 @@ class Scoreboard
 		$solvesModel = new SolvesModel();
 
 		$solves = $solvesModel
-				->select(['solves.*'])
-				->join('teams', 'solves.team_id = teams.id', 'left')
-				->where('teams.is_banned', '0')
-				->where('teams.deleted_at', null)
+				->select(['solves.*', 'challenges.point', 'challenges.type'])
+				->join('challenges', 'solves.challenge_id = challenges.id', 'left')
 				->findAll();
 
 		return $solves;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getHintUnlocks()
+	{
+		$hintUnlockModel = (new \App\Models\HintUnlockModel());
+
+		$hintUnlocks = $hintUnlockModel
+				->select(['hint_unlocks.*', 'hints.cost'])
+				->join('hints', 'hint_unlocks.hint_id = hints.id', 'left')
+				->findAll();
+
+		return $hintUnlocks;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function subSolves(array $teams, array $solves, array $hintUnlocks)
+	{
+		$entities = array_merge($solves, $hintUnlocks);
+
+		usort($entities, function($a, $b) {
+			return $b->created_at->isBefore($a->created_at);
+		});
+
+		if (count($entities) > 0)
+		{
+			$first_time = $entities[0]->created_at->subDays(1)->toDateTimeString();
+		}
+
+		foreach ($teams as $team)
+		{
+			$solves = [[
+				'sub_point' => 0,
+				'event'     => 0,
+				'date'      => $first_time,
+			]];
+			$tmp_point = 0;
+			$tmp_cost = 0;
+			$tmp_score = 0;
+
+			foreach ($entities as $entiti)
+			{
+				if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\Solve)
+				{
+					array_push($solves, [
+						'sub_point' => $tmp_point + $entiti->point,
+						'event'     => (int)$entiti->point,
+						'date'      => $entiti->created_at->toDateTimeString(),
+					]);
+
+					$tmp_point += $entiti->point;
+					$tmp_score += $entiti->point; 
+				}
+				else if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\HintUnlock)
+				{
+					array_push($solves, [
+						'sub_point' => $tmp_point - $entiti->cost,
+						'event'     => -(int)$entiti->cost,
+						'date'      => $entiti->created_at->toDateTimeString(),
+					]);
+
+					$tmp_point -= $entiti->cost;
+					$tmp_cost += $entiti->cost;
+				}
+			}
+
+			$team->solves = $solves;
+			$team->cost_sum = $tmp_cost;
+			$team->point_sum = $tmp_score;
+			$team->final = $tmp_point;
+		}
+
+		return $teams;
 	}
 
 	//--------------------------------------------------------------------
