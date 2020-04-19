@@ -281,7 +281,11 @@ class Scoreboard
 
 		if (count($entities) > 0)
 		{
-			$first_time = $entities[0]->created_at->subDays(1)->toDateTimeString();
+			$first_time = $entities[0]->created_at->subHours(1)->toDateTimeString();
+		}
+		else
+		{
+			$first_time = (new \CodeIgniter\I18n\Time())->now()->subHours(1)->toDateTimeString();
 		}
 
 		foreach ($teams as $team)
