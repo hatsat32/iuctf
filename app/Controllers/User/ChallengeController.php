@@ -35,7 +35,7 @@ class ChallengeController extends UserController
 	public function initController($request, $response, $logger)
 	{
 		parent::initController($request, $response, $logger);
-		
+
 		$this->challengeModel  = new ChallengeModel();
 		$this->categorygeModel = new CategoryModel();
 		$this->solvesModel     = new SolvesModel();
@@ -45,7 +45,7 @@ class ChallengeController extends UserController
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function challenges()
 	{
 		if (! $challenges = cache('challenges-active'))
@@ -148,7 +148,6 @@ class ChallengeController extends UserController
 		$flags = $this->flagModel->where('challenge_id', $challengeID)->findAll();
 		$submited_flag = $this->request->getPost('flag');
 
-		$result = false;
 		$result = $flaglib->check($submited_flag, $flags);
 
 		$flaglib->log([
@@ -169,7 +168,8 @@ class ChallengeController extends UserController
 		{
 			if (! $result)
 			{
-				redirect()->with('error', lang('Home.maxAttemptReached'));
+				return redirect()->route('challenge-detail', [$challengeID])
+						->with('error', lang('Home.maxAttemptReached'));
 			}
 			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
 		}
@@ -179,9 +179,14 @@ class ChallengeController extends UserController
 			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
 		}
 
-		$solved_before = $flaglib->isAlreadySolved($challengeID, user()->team_id);
 
-		if ($solved_before === true || user()->team_id === null)
+		if (user()->team_id === null)
+		{
+			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
+		}
+
+		$solved_before = $flaglib->isAlreadySolved($challengeID, user()->team_id);
+		if ($solved_before === true)
 		{
 			return redirect()->route('challenge-detail', [$challengeID])->with('result', $result);
 		}
