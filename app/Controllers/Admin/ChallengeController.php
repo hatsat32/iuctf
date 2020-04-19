@@ -82,6 +82,7 @@ class ChallengeController extends AdminController
 			return redirect()->route('admin-challenges-new')->withInput()->with('errors', $errors);
 		}
 
+		cache()->delete('challenges-active');
 		return redirect()->route('admin-challenges-show', [$result])->with('message', lang('admin/Challenge.created'));
 	}
 
@@ -96,6 +97,7 @@ class ChallengeController extends AdminController
 			return redirect()->route('admin-challenges-show', [$id])->with('errors', $this->challengeModel->errors());
 		}
 
+		cache()->delete('challenges-active');
 		return redirect('admin-challenges')->with('message', lang('admin/Challenge.deleted'));
 	}
 
@@ -114,6 +116,7 @@ class ChallengeController extends AdminController
 			return redirect()->route('admin-challenges-show', [$id])->with('errors', $this->challengeModel->errors());
 		}
 
+		cache()->delete('challenges-active');
 		return redirect()->route('admin-challenges-show', [$id])->with('message', lang('admin/Challenge.updated'));
 	}
 }
