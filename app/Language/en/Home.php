@@ -39,13 +39,13 @@ return [
 
 	'wrongAnswer'		=> 'Wrong Answer',
 	'rightAnswer'		=> 'Right Answer',
+	'maxAttemptReached' => 'Sorry, you have exceeded the maximum number of attempts',
 	'watchOut'			=> 'Watch Out !!!',
 	'findTeamToComp'	=> 'Find a team to join competition!',
 	'visitTeamPage'		=> 'Visit Team Page',
 	'hintUnlock'		=> 'Unlock Hint',
 	'firstBlood'		=> 'First Blood',
 	'solves'			=> 'Solves',
-	'teamName'			=> 'Team Name',
 
 	'getHash'			=> 'Get Hash',
 	'tooMantAttempts'   => 'Too many failed login attempts detected. Please try again later!',
