@@ -92,7 +92,7 @@
 			<?php endif ?>
 
 			<!-- ACTIVATE THE USER IF NOT YET -->
-			<?php if ($user->active !== '1') : ?>
+			<?php if ($user->active !== true) : ?>
 				<div class="mt-4">
 					<form action="<?= route_to('admin-users-activate', $user->id) ?>" method="post"
 							onsubmit="return confirm(this.getAttribute('confirm_message'))"
