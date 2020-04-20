@@ -58,6 +58,7 @@ class NotificationController extends AdminController
 			return redirect('admin-notf-new')->withInput()->with('errors', $errors);
 		}
 
+		cache()->delete('notifications');
 		return redirect()->route('admin-notf-show', [$result])->with('message', lang('admin/Notification.created'));
 	}
 
@@ -73,6 +74,7 @@ class NotificationController extends AdminController
 			return redirect()->route("admin-notf-show", [$id])->with('errors', $errors);
 		}
 
+		cache()->delete('notifications');
 		return redirect('admin-notf')->with('message', lang('admin/Notification.deleted'));
 	}
 
@@ -93,6 +95,7 @@ class NotificationController extends AdminController
 			return redirect()->route('admin-notf-show', [$id])->with('errors', $errors);
 		}
 
+		cache()->delete('notifications');
 		return redirect()->route('admin-notf-show', [$id])->with('message', lang('admin/Notification.updated'));
 	}
 }
