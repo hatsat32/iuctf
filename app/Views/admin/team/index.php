@@ -42,7 +42,7 @@
 						<tr>
 							<td><?= esc($team->id) ?></td>
 							<td>
-								<a href="<?= route_to('admin-users-show', $team->leader_id) ?>"><?= esc($team->leader_name) ?></a>
+								<a href="<?= route_to('admin-users-show', $team->leader_id) ?>"><?= esc($team->leader_username) ?></a>
 							</td>
 							<td><?= esc($team->name) ?></td>
 							<?php if ($team->is_banned == '1') : ?>

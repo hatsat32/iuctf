@@ -31,7 +31,7 @@ class TeamController extends AdminController
 	public function index()
 	{
 		$teams = $this->teamModel
-				->select(['teams.id', 'teams.leader_id', 'users.name AS leader_name', 'teams.name', 'teams.is_banned'])
+				->select(['teams.*', 'users.username AS leader_username'])
 				->join('users', 'teams.leader_id = users.id', 'left');
 
 		return $this->render('team/index', [
