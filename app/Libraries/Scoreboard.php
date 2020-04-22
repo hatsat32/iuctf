@@ -32,10 +32,9 @@ class Scoreboard
 		$hintUnlocks = $this->getHintUnlocks();
 		$solves = $this->getSolves();
 
-		$subscores = $this->subSolves($teams, $solves, $hintUnlocks);
+		$solves = $this->cacculateChallengePoints($solves);
 
-		// $challenges = $this->cacculateChallengePoints($challenges);
-		// $teamScores = $this->calculateTeamScores($teams, $challenges, $solves);
+		$subscores = $this->calculateTeamScores($teams, $solves, $hintUnlocks);
 
 		$subscores = $this->sort($subscores);
 
@@ -70,38 +69,72 @@ class Scoreboard
 
 	/**
 	 * calculate teams points
-	 * 
+	 *
 	 * @param array $teams
 	 * @param array $challenges
 	 * @param array $solves
 	 * @return array
 	 */
-	public function calculateTeamScores($teams, $challenges, $solves)
+	public function calculateTeamScores(array $teams, array $solves, array $hintUnlocks)
 	{
-		foreach ($teams as $i => $team)
+		$entities = array_merge($solves, $hintUnlocks);
+
+		usort($entities, function($a, $b) {
+			return $b->created_at->isBefore($a->created_at);
+		});
+
+		if (count($entities) > 0)
 		{
-			$total_point = 0;
+			$first_time = $entities[0]->created_at->subHours(1)->toDateTimeString();
+		}
+		else
+		{
+			$first_time = (new \CodeIgniter\I18n\Time())->now()->subHours(1)->toDateTimeString();
+		}
 
-			$team_solves = array_column($this->teamSolves($solves, $team->id), 'challenge_id');
+		foreach ($teams as $team)
+		{
+			$solves = [[
+				'sub_point' => 0,
+				'event'     => 0,
+				'date'      => $first_time,
+			]];
+			$tmp_point = 0;
+			$tmp_cost = 0;
+			$tmp_score = 0;
 
-			foreach ($challenges as $challenge)
+			foreach ($entities as $entiti)
 			{
-				if (in_array($challenge->id, $team_solves))
+				if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\Solve)
 				{
-					if ($challenge->type === 'dynamic')
-					{
-						$total_point += $challenge->d_point;
-					}
-					else
-					{
-						$total_point += $challenge->point;
-					}
+					$point = $entiti->type === 'dynamic' ? $entiti->d_point : $entiti->point;
+
+					array_push($solves, [
+						'sub_point' => $tmp_point + $point,
+						'event'     => (int)$point,
+						'date'      => $entiti->created_at->toDateTimeString(),
+					]);
+
+					$tmp_point += $point;
+					$tmp_score += $point;
+				}
+				else if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\HintUnlock)
+				{
+					array_push($solves, [
+						'sub_point' => $tmp_point - $entiti->cost,
+						'event'     => -(int)$entiti->cost,
+						'date'      => $entiti->created_at->toDateTimeString(),
+					]);
+
+					$tmp_point -= $entiti->cost;
+					$tmp_cost += $entiti->cost;
 				}
 			}
 
-			$teams[$i]->total_point = $total_point;
-
-			$teams[$i]->final = $teams[$i]->total_point - $teams[$i]->cost_sum;
+			$team->solves = $solves;
+			$team->cost_sum = $tmp_cost;
+			$team->point_sum = $tmp_score;
+			$team->final = $tmp_point;
 		}
 
 		return $teams;
@@ -111,28 +144,27 @@ class Scoreboard
 
 	/**
 	 * calculated each challenges points
-	 * 
-	 * @param array $challenges
+	 *
+	 * @param array $solves
 	 * @return array
 	 */
-	public function cacculateChallengePoints($challenges)
+	public function cacculateChallengePoints($solves)
 	{
-		foreach ($challenges as $i => $challenge)
-		{
-			$challenges[$i]->d_point = $this->calculatePoint($challenge->point, $challenge->solve_count);
+		foreach ($solves as $i => $solve) {
+			$solves[$i]->d_point = $this->calculatePoint($solve->point, $solve->solve_count);
 		}
 
-		return $challenges;
+		return $solves;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * calculates dynamic point for challenge.
-	 * 
+	 *
 	 * @param int $point
 	 * @param int $solveCount
-	 * 
+	 *
 	 * @return int
 	 */
 	public function calculatePoint(int $point, int $solveCount)
@@ -168,43 +200,9 @@ class Scoreboard
 	 */
 	public function teamSolves(array $solves, int $teamID)
 	{
-		$teamSolves = array_filter($solves, function ($solve) use ($teamID) {
+		return array_filter($solves, function ($solve) use ($teamID) {
 			return $solve->team_id == $teamID;
 		});
-
-		return $teamSolves;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * get challenges and each challenge's solve count
-	 *
-	 * each challenge has fallowing fields
-	 *   - id    -> id
-	 *   - name  -> name
-	 *   - point -> point
-	 *   - type  -> static or dynamic
-	 *   - is_active   -> 1 or 0
-	 *   - solve_count -> number of solves
-	 *
-	 * @return array
-	 */
-	public function getChallenges()
-	{
-		$challengeModel = new ChallengeModel();
-
-		$challenges = $challengeModel
-				->select(['challenges.id', 'challenges.name', 'challenges.point', 'challenges.type', 'challenges.is_active'])
-				->selectCount('solves.id', 'solve_count')
-				->join('solves', 'solves.challenge_id = challenges.id', 'left')
-				->join('teams', 'teams.id = solves.team_id', 'left')
-				->where('teams.is_banned', '0')
-				->where('teams.deleted_at', null)
-				->groupBy('challenges.id')
-				->findAll();
-
-		return $challenges;
 	}
 
 	//--------------------------------------------------------------------
@@ -224,114 +222,49 @@ class Scoreboard
 	{
 		$teamModel = new TeamModel();
 
-		$teamScores = $teamModel
+		return $teamModel
 				->select(['teams.id', 'teams.name', ])
 				->selectMax('solves.id', 'lastsolve')
 				->join('solves', 'solves.team_id = teams.id', 'left')
 				->groupBy('teams.id')
 				->where('teams.is_banned', '0')
 				->findAll();
-
-		return $teamScores;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Get all solves
-	 * - Except deleted and banned team solves
+	 * Get all solves with related challenge point and solve count of each challenge
 	 *
-	 * @return array
+	 * @return array|null
 	 */
 	public function getSolves()
 	{
 		$solvesModel = new SolvesModel();
 
-		$solves = $solvesModel
-				->select(['solves.*', 'challenges.point', 'challenges.type'])
-				->join('challenges', 'solves.challenge_id = challenges.id', 'left')
-				->findAll();
-
-		return $solves;
+		return $solvesModel->select(['solves.*', 'challenges.name', 'challenges.point', 'challenges.type'])
+			->selectCount('S.id', 'solve_count')
+			->join('challenges', 'solves.challenge_id = challenges.id', 'left')
+			->join('solves S', 'S.challenge_id = challenges.id', 'left')
+			->groupBy('solves.id, challenges.id, solves.team_id')
+			->findAll();
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns all hint unlocks with hint cost
+	 *
+	 * @return array|null
+	 */
 	public function getHintUnlocks()
 	{
-		$hintUnlockModel = (new \App\Models\HintUnlockModel());
+		$hintUnlockModel = new \App\Models\HintUnlockModel();
 
-		$hintUnlocks = $hintUnlockModel
+		return $hintUnlockModel
 				->select(['hint_unlocks.*', 'hints.cost'])
 				->join('hints', 'hint_unlocks.hint_id = hints.id', 'left')
 				->findAll();
-
-		return $hintUnlocks;
-	}
-
-	//--------------------------------------------------------------------
-
-	public function subSolves(array $teams, array $solves, array $hintUnlocks)
-	{
-		$entities = array_merge($solves, $hintUnlocks);
-
-		usort($entities, function($a, $b) {
-			return $b->created_at->isBefore($a->created_at);
-		});
-
-		if (count($entities) > 0)
-		{
-			$first_time = $entities[0]->created_at->subHours(1)->toDateTimeString();
-		}
-		else
-		{
-			$first_time = (new \CodeIgniter\I18n\Time())->now()->subHours(1)->toDateTimeString();
-		}
-
-		foreach ($teams as $team)
-		{
-			$solves = [[
-				'sub_point' => 0,
-				'event'     => 0,
-				'date'      => $first_time,
-			]];
-			$tmp_point = 0;
-			$tmp_cost = 0;
-			$tmp_score = 0;
-
-			foreach ($entities as $entiti)
-			{
-				if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\Solve)
-				{
-					array_push($solves, [
-						'sub_point' => $tmp_point + $entiti->point,
-						'event'     => (int)$entiti->point,
-						'date'      => $entiti->created_at->toDateTimeString(),
-					]);
-
-					$tmp_point += $entiti->point;
-					$tmp_score += $entiti->point; 
-				}
-				else if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\HintUnlock)
-				{
-					array_push($solves, [
-						'sub_point' => $tmp_point - $entiti->cost,
-						'event'     => -(int)$entiti->cost,
-						'date'      => $entiti->created_at->toDateTimeString(),
-					]);
-
-					$tmp_point -= $entiti->cost;
-					$tmp_cost += $entiti->cost;
-				}
-			}
-
-			$team->solves = $solves;
-			$team->cost_sum = $tmp_cost;
-			$team->point_sum = $tmp_score;
-			$team->final = $tmp_point;
-		}
-
-		return $teams;
 	}
 
 	//--------------------------------------------------------------------
