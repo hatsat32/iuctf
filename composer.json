@@ -9,7 +9,8 @@
 		"codeigniter4/framework": "^4",
 		"codeigniter4/translations": "^4@rc",
 		"myth/auth": "^1.0-beta.2",
-		"ext-zip": "*"
+		"ext-zip": "*",
+		"ext-json": "*"
 	},
 	"require-dev": {
 		"mikey179/vfsstream": "1.6.*",
