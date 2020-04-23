@@ -1,8 +1,11 @@
 <?php namespace App\Libraries;
 
-use App\Models\ChallengeModel;
+use App\Models\HintUnlockModel;
 use App\Models\SolvesModel;
 use App\Models\TeamModel;
+use App\Entities\HintUnlock;
+use App\Entities\Solve;
+use CodeIgniter\I18n\Time;
 
 class Scoreboard
 {
@@ -95,7 +98,7 @@ class Scoreboard
 		}
 		else
 		{
-			$first_time = (new \CodeIgniter\I18n\Time())->now()->subHours(1)->toDateTimeString();
+			$first_time = (new Time())->now()->subHours(1)->toDateTimeString();
 		}
 
 		foreach ($teams as $team)
@@ -111,7 +114,7 @@ class Scoreboard
 
 			foreach ($entities as $entiti)
 			{
-				if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\Solve)
+				if ($team->id == $entiti->team_id && $entiti instanceof Solve)
 				{
 					$point = $entiti->type === 'dynamic' ? $entiti->d_point : $entiti->point;
 
@@ -124,7 +127,7 @@ class Scoreboard
 					$tmp_point += $point;
 					$tmp_score += $point;
 				}
-				else if ($team->id == $entiti->team_id && $entiti instanceof \App\Entities\HintUnlock)
+				else if ($team->id == $entiti->team_id && $entiti instanceof HintUnlock)
 				{
 					array_push($solves, [
 						'sub_point' => $tmp_point - $entiti->cost,
@@ -265,7 +268,7 @@ class Scoreboard
 	 */
 	public function getHintUnlocks()
 	{
-		$hintUnlockModel = new \App\Models\HintUnlockModel();
+		$hintUnlockModel = new HintUnlockModel();
 
 		return $hintUnlockModel
 				->select(['hint_unlocks.*', 'hints.cost'])
