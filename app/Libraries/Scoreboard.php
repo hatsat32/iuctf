@@ -28,9 +28,9 @@ class Scoreboard
 
 	public function scores()
 	{
-		$teams = $this->getTeams();
+		$teams       = $this->getTeams();
 		$hintUnlocks = $this->getHintUnlocks();
-		$solves = $this->getSolves();
+		$solves      = $this->getSolves();
 
 		$solves = $this->cacculateChallengePoints($solves);
 
@@ -47,7 +47,11 @@ class Scoreboard
 
 	//--------------------------------------------------------------------
 
-	public function sort($scores)
+	/**
+	 * @param array $scores
+	 * @return array
+	 */
+	public function sort(array $scores)
 	{
 		// sort by rating or solve time
 		usort($scores, function($a, $b) {
@@ -67,13 +71,15 @@ class Scoreboard
 
 	//--------------------------------------------------------------------
 
+
 	/**
-	 * calculate teams points
+	 * Calculates team scores
 	 *
 	 * @param array $teams
-	 * @param array $challenges
 	 * @param array $solves
+	 * @param array $hintUnlocks
 	 * @return array
+	 * @throws \Exception
 	 */
 	public function calculateTeamScores(array $teams, array $solves, array $hintUnlocks)
 	{
