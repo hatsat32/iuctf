@@ -116,9 +116,9 @@ class ChallengeController extends UserController
 				->first();
 		$files = $this->fileModel->where('challenge_id', $id)->findAll();
 		$solvers = $this->solvesModel
-				->where('teams.id', 'solves.team_id', false)
 				->select(['teams.id', 'teams.name', 'solves.created_at AS date'])
 				->where('solves.challenge_id', $id)
+				->join('teams', 'solves.team_id = teams.id')
 				->orderBy('solves.created_at')
 				->findAll();
 
