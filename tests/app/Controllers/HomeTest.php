@@ -21,11 +21,15 @@ class HomeTest extends FeatureTestCase
 		$response->assertSee(lang('General.challenges'));
 	}
 
-	public function testGetLanguage()
+	public function testChangeLanguage()
 	{
-		#ERROR: fix parameter pass error and validation error
 		$response = $this->get('/language?language=tr');
+		$response->assertSessionHas('language', 'tr');
+	}
 
+	public function testChangeLanguageInvalidLocale()
+	{
+		$response = $this->withSession(['language' => 'tr'])->get('/language?language=gg');
 		$response->assertSessionHas('language', 'tr');
 	}
 }
