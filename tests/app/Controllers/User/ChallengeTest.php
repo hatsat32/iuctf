@@ -30,12 +30,14 @@ class ChallengeTest extends FeatureTestCase
 	{
 		$response = $this->get(route_to('challenges'));
 		$response->assertOk();
+		$response->assertSee('linux100');
 	}
 
 	public function testGetChallenge()
 	{
-		$response = $this->get(route_to('challenge-detail', 1));
+		$response = $this->get('/challenges/1');
 		$response->assertOk();
+		$response->assertSee('linux100', 'h3');
 	}
 
 	public function testSubmitFlag()
@@ -49,5 +51,19 @@ class ChallengeTest extends FeatureTestCase
 			'challenge_id' => 1,
 			'user_id'      => $this->user->id,
 		]);
+	}
+
+	public function testSubmitWrongFlag()
+	{
+		$response = $this->post('/challenges/1', [
+			'flag' => 'InvalidFlag',
+		]);
+
+		$this->dontSeeInDatabase('solves', [
+			'team_id'      => $this->user->team_id,
+			'challenge_id' => 1,
+			'user_id'      => $this->user->id,
+		]);
+		$response->assertSessionHas('result', false);
 	}
 }
