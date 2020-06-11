@@ -54,11 +54,11 @@ class Services extends CoreServices
 	 * 
 	 * @return \League\CommonMark\CommonMarkConverter
 	 */
-	public static function markdown($secure = false, $getShared = true)
+	public static function markdown(bool $secure = true, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('markdown');
+			return static::getSharedInstance('markdown', $secure);
 		}
 
 		$config = (! $secure) ? [] : [
