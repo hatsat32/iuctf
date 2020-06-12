@@ -90,7 +90,7 @@ class ChallengeController extends UserController
 	{
 		helper('iuctf');
 
-		if ($challenge = cache("challenge-{$id}"))
+		if (! $challenge = cache("challenge-{$id}"))
 		{
 			$challenge = $this->challengeModel->find($id);
 			cache()->save("challenge-{$id}", $challenge, MINUTE * 5);
