@@ -88,6 +88,8 @@ class ChallengeController extends UserController
 
 	public function challenge($id = null)
 	{
+		helper('iuctf');
+
 		if (! $challenge = cache("challenge-{$id}"))
 		{
 			$challenge = $this->challengeModel->find($id);

@@ -23,7 +23,7 @@
 					<h3 class="card-title text-center text-info my-2"><?= esc($challenge->point).' '.lang('General.point')?></h3>
 
 					<div class="card-body">
-						<p class="card-text lead"><?= esc($challenge->description) ?></p>
+						<p class="card-text lead"><?= markdown($challenge->description) ?></p>
 					</div>
 
 					<?php if(! empty($files)) : ?>

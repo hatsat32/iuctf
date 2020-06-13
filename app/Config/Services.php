@@ -1,6 +1,7 @@
 <?php namespace Config;
 
 use CodeIgniter\Config\Services as CoreServices;
+use League\CommonMark\CommonMarkConverter;
 
 require_once SYSTEMPATH . 'Config/Services.php';
 
@@ -45,5 +46,26 @@ class Services extends CoreServices
 		}
 
 		return $settings;
+	}
+
+	/**
+	 * @param boolean $secure - secure markdown processing
+	 * @param boolean $getShared
+	 * 
+	 * @return \League\CommonMark\CommonMarkConverter
+	 */
+	public static function markdown(bool $secure = true, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('markdown', $secure);
+		}
+
+		$config = (! $secure) ? [] : [
+			'html_input' => 'strip',
+			'allow_unsafe_links' => false,
+		];
+
+		return new CommonMarkConverter($config);
 	}
 }
