@@ -109,6 +109,11 @@ class ChallengeController extends AdminController
 
 		$challange->fill($this->request->getPost());
 
+		if (! $challange->hasChanged())
+		{
+			return redirect()->route('admin-challenges-show', [$id])->with('warning', lang('General.notChanged'));
+		}
+
 		$result = $this->challengeModel->save($challange);
 
 		if (! $result)

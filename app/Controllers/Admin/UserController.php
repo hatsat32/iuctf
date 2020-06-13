@@ -118,7 +118,14 @@ class UserController extends AdminController
 	{
 		$user = $this->userModel->find($id);
 
-		$user->fill($this->request->getPost());
+		$user->fill($this->request->getPost([
+			'username', 'email', 'name', 'team_id'
+		]));
+
+		if (! $user->hasChanged())
+		{
+			return redirect()->route('admin-users-show', [$id])->with('warning', lang('General.notChanged'));
+		}
 
 		$result = $this->userModel->update($id, $user);
 

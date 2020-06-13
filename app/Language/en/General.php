@@ -56,4 +56,5 @@ return [
 	'banned'        => 'Banned',
 
 	'notImplemented' => 'NOT IMPLEMENTED YET',
+	'notChanged'     => 'No data to change!',
 ];
