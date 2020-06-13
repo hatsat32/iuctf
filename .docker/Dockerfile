@@ -1,4 +1,4 @@
-# docker build -t iuctf .
+# docker build -t iuctf -f .docker/Dockerfile .
 
 FROM alpine:3.12
 
@@ -29,12 +29,11 @@ RUN composer install
 COPY env /var/www/localhost/htdocs/.env
 RUN sed -i "s|# database.default.database = ci4|database.default.database = ../writable/iuctf.sqlite|g" /var/www/localhost/htdocs/.env
 RUN sed -i "s|# database.default.DBDriver = MySQLi|database.default.DBDriver = SQLite3|g" /var/www/localhost/htdocs/.env
-RUN sed -i "s|# app.baseURL = ''|app.baseURL = 'http://localhost/'|g" /var/www/localhost/htdocs/.env
 
 RUN sed -i "s|/var/www/localhost/htdocs|/var/www/localhost/htdocs/public|g" /etc/apache2/httpd.conf
 RUN sed -i "s|#LoadModule rewrite_module|LoadModule rewrite_module|g" /etc/apache2/httpd.conf
 RUN sed -i "s|#ServerName www.example.com:80|ServerName localhost|g" /etc/apache2/httpd.conf
-RUN sed -i 's#AllowOverride [Nn]one#AllowOverride All#' /etc/apache2/httpd.conf
+RUN sed -i 's|AllowOverride [Nn]one|AllowOverride All|' /etc/apache2/httpd.conf
 
 EXPOSE 80
 VOLUME /var/www/localhost/htdocs
