@@ -48,7 +48,7 @@
 				</div>
 				<div class="form-group">
 					<label for="description"><?= lang('General.description') ?></label>
-					<textarea class="form-control" name="description" id="description" rows="3"><?= old('description') ?></textarea>
+					<textarea class="form-control" name="description" id="description" rows="15"><?= old('description') ?></textarea>
 				</div>
 				<div class="form-group">
 					<label for="point"><?= lang('General.point') ?></label>

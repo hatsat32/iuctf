@@ -50,7 +50,7 @@
 				</div>
 				<div class="form-group">
 					<label for="description"><?= lang('General.description') ?></label>
-					<textarea class="form-control" name="description" id="description" rows="3"><?= esc($challenge->description) ?></textarea>
+					<textarea class="form-control" name="description" id="description" rows="15"><?= esc($challenge->description) ?></textarea>
 				</div>
 				<div class="form-group">
 					<label for="point"><?= lang('General.point') ?></label>
