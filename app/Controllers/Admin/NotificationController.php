@@ -84,8 +84,12 @@ class NotificationController extends AdminController
 	{
 		$notification = $this->notificationModel->find($id);
 
-		$notification->title = $this->request->getPost('title');
-		$notification->content = $this->request->getPost('content');
+		$notification->fill($this->request->getPost(['title', 'content']));
+
+		if (! $notification->hasChanged())
+		{
+			return redirect()->route('admin-notf-show', [$id])->with('warning', lang('General.notChanged'));
+		}
 
 		$result = $this->notificationModel->save($notification);
 

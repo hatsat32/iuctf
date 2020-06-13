@@ -91,7 +91,14 @@ class CategoryController extends AdminController
 	{
 		$category = $this->categoryModel->find($id);
 
-		$category->fill($this->request->getPost());
+		$category->fill($this->request->getPost([
+			'name', 'description'
+		]));
+
+		if (! $category->hasChanged())
+		{
+			return redirect()->route('admin-categories-show', [$id])->with('warning', lang('General.notChanged'));
+		}
 
 		$result = $this->categoryModel->save($category);
 

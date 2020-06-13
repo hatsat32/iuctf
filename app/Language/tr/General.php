@@ -56,4 +56,5 @@ return [
 	'banned'        => 'Banlandı',
 
 	'notImplemented' => 'HENÜZ TAMAMLANMADI',
+	'notChanged'     => 'Hiç bir değişiklik yok!',
 ];
