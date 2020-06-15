@@ -47,6 +47,7 @@ return [
 	'themeValidationErr'   => 'Theme not valid',
 	'currentThemeErr'      => 'Current theme can not be deleted. Please change theme first',
 	'themeDeleted'         => 'Theme successfully deleted',
+	'themeImported'        => 'Theme Imported',
 
 	// data settings
 	'backup'               => 'Backup',

@@ -47,6 +47,7 @@ return [
 	'themeValidationErr'   => 'Tema geçerli bir tema değil!',
 	'currentThemeErr'      => 'Mevcut tema silinemez. Lütfen önce temayı değiştirin!',
 	'themeDeleted'         => 'Tema başarıyla silindi',
+	'themeImported'        => 'Tema içeri aktarıldı.',
 
 	// data settings
 	'backup'               => 'Yedekle',
