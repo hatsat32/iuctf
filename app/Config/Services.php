@@ -3,8 +3,6 @@
 use CodeIgniter\Config\Services as CoreServices;
 use League\CommonMark\CommonMarkConverter;
 
-require_once SYSTEMPATH . 'Config/Services.php';
-
 /**
  * Services Configuration file.
  *

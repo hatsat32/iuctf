@@ -28,7 +28,7 @@ class FeatureTestCase extends \CodeIgniter\Test\FeatureTestCase
 		parent::tearDown();
 	}
 
-	public function withSession(array $values)
+	public function withSession(array $values = NULL)
 	{
 		$this->session = $values;
 
