@@ -8,7 +8,7 @@
 		"php": ">=7.2",
 		"codeigniter4/framework": "^4",
 		"codeigniter4/translations": "^4",
-		"myth/auth": "^1.0-beta.2",
+		"myth/auth": "dev-develop",
 		"league/commonmark": "^1.4",
 
 		"ext-curl": "*",
