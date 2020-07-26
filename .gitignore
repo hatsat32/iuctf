@@ -134,5 +134,7 @@ nb-configuration.xml
 
 writable/home_page_custom.html
 
-themes/
-public/themes/
+# Themes
+writable/themes/
+public/themes/*
+!public/themes/.htaccess
