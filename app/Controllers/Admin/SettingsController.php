@@ -2,7 +2,7 @@
 
 use App\Core\AdminController;
 use App\Models\SettingModel;
-use ZipArchive;
+use PhpZip\ZipFile;
 
 class SettingsController extends AdminController
 {
@@ -207,7 +207,7 @@ class SettingsController extends AdminController
 
 	public function backupData()
 	{
-		$zip = new ZipArchive();
+		$zipfile = new ZipFile();
 		$db = db_connect();
 		$db_backup = [];
 
@@ -218,30 +218,30 @@ class SettingsController extends AdminController
 			$db_backup[$table] = $table_data;
 		}
 
-		// create zip file
-		$path = WRITEPATH.'backups'.DIRECTORY_SEPARATOR.'backup_'.date('d-m-Y_H-i-s').'.zip';
-		if ($zip->open($path, ZipArchive::CREATE) !== true)
+		try
+		{
+			// backup uploaded files
+			$zipfile->addDir(FCPATH.'uploads'.DIRECTORY_SEPARATOR, 'uploads/');
+
+			// backup database
+			$zipfile->addFromString('database.json', json_encode($db_backup));
+
+			// if home page customized, back it up
+			if (file_exists(WRITEPATH.'home_page_custom.html'))
+			{
+				$zipfile->addFile(WRITEPATH.'home_page_custom.html', 'home_page_custom.html');
+			}
+
+			$zipfile->saveAsFile(WRITEPATH.'backups'.DIRECTORY_SEPARATOR.'backup_'.date('d-m-Y_H-i-s').'.zip');
+		}
+		catch (\PhpZip\Exception\ZipException $e)
 		{
 			return redirect('admin-settings-data')->with('error', lang('admin/Settings.zipOpenErr'));
 		}
-
-		// backup uploaded files
-		$zip->addGlob(
-			FCPATH.'uploads'.DIRECTORY_SEPARATOR.'*',
-			GLOB_BRACE,
-			['add_path' => 'uploads/', 'remove_all_path' => TRUE]
-		);
-
-		// backup database
-		$zip->addFromString('database.json', json_encode($db_backup));
-
-		// if home page customized, back it up
-		if (file_exists(WRITEPATH.'home_page_custom.html'))
+		finally
 		{
-			$zip->addFile(WRITEPATH.'home_page_custom.html', 'home_page_custom.html');
+			$zipfile->close();
 		}
-
-		$zip->close();
 
 		return redirect('admin-settings-data')->with('message', lang('admin/Settings.backupSuccessful'));
 	}
@@ -415,7 +415,7 @@ class SettingsController extends AdminController
 
 	public function themeImport()
 	{
-		$zip = new ZipArchive();
+		$zipfile = new ZipFile();
 		$file = $this->request->getFile('file');
 
 		if (! $file->isValid())
@@ -432,17 +432,25 @@ class SettingsController extends AdminController
 			return redirect('admin-settings-theme')->with('theme-errors', $this->validator->getErrors() );
 		}
 
-		if (! $zip->open($file->getRealPath()))
+		if (! $zipfile->openFile($file->getRealPath()))
 		{
 			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.fileOpenErr'));
 		}
 
-		if (! $zip->extractTo(THEMEPATH))
+		if (! $zipfile->extractTo(THEMEPATH))
 		{
 			return redirect('admin-settings-theme')->with('theme-error', lang('admin/Settings.fileMoveErr'));
 		}
 
-		$zip->close();
+		$theme_name = $zipfile->getListFiles()[0];
+		$asset_path = $theme_name . 'themes' . DIRECTORY_SEPARATOR . $theme_name;
+
+		if (file_exists(THEMEPATH.$asset_path) && is_dir(THEMEPATH.$asset_path))
+		{
+			rename(THEMEPATH.$asset_path, THEMEPUBPATH . $theme_name);
+		}
+
+		$zipfile->close();
 
 		// check file paths
 		// NO DIRECTORY TRAVERSAL
