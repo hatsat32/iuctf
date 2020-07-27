@@ -10,12 +10,12 @@
 		"codeigniter4/translations": "^4",
 		"myth/auth": "dev-develop",
 		"league/commonmark": "^1.4",
+		"nelexa/zip": "^3.3",
 
 		"ext-curl": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
-		"ext-mbstring": "*",
-		"ext-zip": "*"
+		"ext-mbstring": "*"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "^1.9@dev",
