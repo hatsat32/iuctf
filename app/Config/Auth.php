@@ -214,7 +214,7 @@ class Auth extends \Myth\Auth\Config\Auth
 	 *
 	 * @var string|int
 	 */
-	public $hashAlgorithm = PASSWORD_DEFAULT;
+	public $hashAlgorithm = PASSWORD_ARGON2ID;
 
 	/*
 	 * --------------------------------------------------------------------
