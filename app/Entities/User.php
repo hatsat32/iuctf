@@ -14,9 +14,9 @@ class User extends MythUserEntity
 	protected $casts = [
 		'id'               => 'int',
 		'team_id'          => 'int',
-        'active'           => 'boolean',
-        'force_pass_reset' => 'boolean',
-    ];
+		'active'           => 'boolean',
+		'force_pass_reset' => 'boolean',
+	];
 
 	public function team()
 	{
