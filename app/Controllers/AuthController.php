@@ -1,24 +1,25 @@
 <?php namespace App\Controllers;
 
-use App\Core\ThemeTrait;
-use Config\Email;
-use Config\Services;
+use CodeIgniter\Session\Session;
+use Myth\Auth\Config\Auth as AuthConfig;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 use App\Models\TeamModel;
+use App\Core\ThemeTrait;
 
 class AuthController extends BaseController
 {
 	use ThemeTrait;
 
 	protected $auth;
+
 	/**
-	 * @var Auth
+	 * @var AuthConfig
 	 */
 	protected $config;
 
 	/**
-	 * @var \CodeIgniter\Session\Session
+	 * @var Session
 	 */
 	protected $session;
 
@@ -28,10 +29,10 @@ class AuthController extends BaseController
 
 		// Most services in this controller require
 		// the session to be started - so fire it up!
-		$this->session = Services::session();
+		$this->session = service('session');
 
 		$this->config = config('Auth');
-		$this->auth = Services::authentication();
+		$this->auth = service('authentication');
 
 		$this->config->allowRegistration = ss()->allow_register;
 		$this->theme = ss()->theme;
@@ -52,11 +53,14 @@ class AuthController extends BaseController
 		// is already logged in.
 		if ($this->auth->check())
 		{
-			$redirectURL = session('redirect_url') ?? '/';
+			$redirectURL = session('redirect_url') ?? site_url('/');
 			unset($_SESSION['redirect_url']);
 
 			return redirect()->to($redirectURL);
 		}
+
+        // Set a return URL if none is specified
+        $_SESSION['redirect_url'] = session('redirect_url') ?? previous_url() ?? site_url('/');
 
 		return $this->render($this->config->views['login'], ['config' => $this->config]);
 	}
@@ -125,13 +129,13 @@ class AuthController extends BaseController
 		// Is the user being forced to reset their password?
 		if ($this->auth->user()->force_pass_reset === true)
 		{
-			return redirect('change_pass');
+			return redirect()->to(route_to('reset-password') .'?token='. $this->auth->user()->reset_hash)->withCookies();
 		}
 
-		$redirectURL = session('redirect_url') ?? '/';
+		$redirectURL = session('redirect_url') ?? site_url('/');
 		unset($_SESSION['redirect_url']);
 
-		return redirect()->to($redirectURL)->with('message', lang('Auth.loginSuccess'));
+		return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
 	}
 
 	/**
@@ -144,7 +148,7 @@ class AuthController extends BaseController
 			$this->auth->logout();
 		}
 
-		return redirect()->to('/');
+		return redirect()->to(site_url('/'));
 	}
 
 	//--------------------------------------------------------------------
@@ -156,7 +160,13 @@ class AuthController extends BaseController
 	 */
 	public function register()
 	{
-		// Check if registration is allowed
+        // check if already logged in.
+		if ($this->auth->check())
+		{
+			return redirect()->back();
+		}
+
+        // Check if registration is allowed
 		if (! $this->config->allowRegistration)
 		{
 			return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
@@ -176,36 +186,43 @@ class AuthController extends BaseController
 			return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
 		}
 
-		$users = new UserModel();
+		$users = model(UserModel::class);
 
 		// Validate here first, since some things,
 		// like the password, can only be validated properly here.
-		$rules = array_merge($users->getValidationRules(['only' => ['username']]), [
-			'email'		=> 'required|valid_email|is_unique[users.email]',
-			'password'	 => 'required|strong_password',
-			'pass_confirm' => 'required|matches[password]',
-		]);
-
+		$rules = [
+			'username'  	=> 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
+			'email'			=> 'required|valid_email|is_unique[users.email]',
+			'password'	 	=> 'required|strong_password',
+			'pass_confirm' 	=> 'required|matches[password]',
+		];
+		
 		if (! $this->validate($rules))
 		{
-			return redirect()->back()->withInput()->with('errors', $users->errors());
+			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
-
+		
 		// Save the user
-		$user = new User($this->request->getPost());
-
-		$this->config->requireActivation !== false ? $user->generateActivateHash() : $user->activate();
+		$allowedPostFields = array_merge(['password'], $this->config->validFields, $this->config->personalFields);
+		$user = new User($this->request->getPost($allowedPostFields));
+		
+		$this->config->requireActivation === null ? $user->activate : $user->generateActivateHash();
+		
+		// Ensure default group gets assigned if set
+        if (! empty($this->config->defaultUserGroup)) {
+			$users = $users->withGroup($this->config->defaultUserGroup);
+        }
 
 		if (! $users->save($user))
 		{
 			return redirect()->back()->withInput()->with('errors', $users->errors());
 		}
 
-		if ($this->config->requireActivation !== false)
+		if ($this->config->requireActivation !== null)
 		{
-			$activator = Services::activator();
+			$activator = service('activator');
 			$sent = $activator->send($user);
-			
+
 			if (! $sent)
 			{
 				return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
@@ -228,6 +245,11 @@ class AuthController extends BaseController
 	 */
 	public function forgotPassword()
 	{
+		if ($this->config->activeResetter === null)
+		{
+			return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+		}
+
 		return $this->render($this->config->views['forgot'], ['config' => $this->config]);
 	}
 
@@ -237,7 +259,12 @@ class AuthController extends BaseController
 	 */
 	public function attemptForgot()
 	{
-		$users = new UserModel();
+		if ($this->config->activeResetter === null)
+		{
+			return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+		}
+
+		$users = model(UserModel::class);
 
 		$user = $users->where('email', $this->request->getPost('email'))->first();
 
@@ -250,20 +277,12 @@ class AuthController extends BaseController
 		$user->generateResetHash();
 		$users->save($user);
 
-		$email = Services::email();
-		$config = new Email();
-
-		$sent = $email->setFrom($config->fromEmail, $config->fromEmail)
-			  ->setTo($user->email)
-			  ->setSubject(lang('Auth.forgotSubject'))
-			  ->setMessage($this->render($this->config->views['emailForgot'], ['hash' => $user->reset_hash]))
-			  ->setMailType('html')
-			  ->send();
+		$resetter = service('resetter');
+		$sent = $resetter->send($user);
 
 		if (! $sent)
 		{
-			log_message('error', "Failed to send forgotten password email to: {$user->email}");
-			return redirect()->back()->withInput()->with('error', lang('Auth.unknownError'));
+			return redirect()->back()->withInput()->with('error', $resetter->error() ?? lang('Auth.unknownError'));
 		}
 
 		return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
@@ -274,6 +293,11 @@ class AuthController extends BaseController
 	 */
 	public function resetPassword()
 	{
+		if ($this->config->activeResetter === null)
+		{
+			return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+		}
+
 		$token = $this->request->getGet('token');
 
 		return $this->render($this->config->views['reset'], [
@@ -290,7 +314,12 @@ class AuthController extends BaseController
 	 */
 	public function attemptReset()
 	{
-		$users = new UserModel();
+		if ($this->config->activeResetter === null)
+		{
+			return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+		}
+
+		$users = model(UserModel::class);
 
 		// First things first - log the reset attempt.
 		$users->logResetAttempt(
@@ -309,7 +338,7 @@ class AuthController extends BaseController
 
 		if (! $this->validate($rules))
 		{
-			return redirect()->back()->withInput()->with('errors', $users->errors());
+			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
 		$user = $users->where('email', $this->request->getPost('email'))
@@ -332,6 +361,7 @@ class AuthController extends BaseController
 		$user->reset_hash 		= null;
 		$user->reset_at 		= date('Y-m-d H:i:s');
 		$user->reset_expires    = null;
+        $user->force_pass_reset = false;
 		$users->save($user);
 
 		return redirect()->route('login')->with('message', lang('Auth.resetSuccess'));
@@ -339,10 +369,12 @@ class AuthController extends BaseController
 
 	/**
 	 * Activate account.
+	 *
+	 * @return mixed
 	 */
 	public function activateAccount()
 	{
-		$users = new UserModel();
+		$users = model(UserModel::class);
 
 		// First things first - log the activation attempt.
 		$users->logActivationAttempt(
@@ -351,11 +383,11 @@ class AuthController extends BaseController
 			(string) $this->request->getUserAgent()
 		);
 
-		$throttler = Services::throttler();
+		$throttler = service('throttler');
 
 		if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false)
         {
-			return Services::response()->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+			return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
         }
 
 		$user = $users->where('activate_hash', $this->request->getGet('token'))
@@ -374,5 +406,54 @@ class AuthController extends BaseController
 		return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Resend activation account.
+	 *
+	 * @return mixed
+	 */
+	public function resendActivateAccount()
+	{
+		if ($this->config->requireActivation === null)
+		{
+			return redirect()->route('login');
+		}
+
+		$throttler = service('throttler');
+
+		if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false)
+		{
+			return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+		}
+
+		$login = urldecode($this->request->getGet('login'));
+		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+		$users = model(UserModel::class);
+
+		$user = $users->where($type, $login)
+					  ->where('active', 0)
+					  ->first();
+
+		if (is_null($user))
+		{
+			return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+		}
+
+		$activator = service('activator');
+		$sent = $activator->send($user);
+
+		if (! $sent)
+		{
+			return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+		}
+
+		// Success!
+		return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+
+	}
+
+	protected function _render(string $view, array $data = [])
+	{
+		return view($view, $data);
+	}
 }

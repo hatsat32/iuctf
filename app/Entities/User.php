@@ -1,8 +1,8 @@
 <?php namespace App\Entities;
 
-use CodeIgniter\Entity;
+use Myth\Auth\Entities\User as MythUserEntity;
 
-class User extends Entity
+class User extends MythUserEntity
 {
 	protected $attributes = [
 		'team_id'   => null,
@@ -12,10 +12,11 @@ class User extends Entity
 	];
 
 	protected $casts = [
-		'id'      => 'int',
-		'team_id' => 'int',
-		'active'  => 'boolean',
-	];
+		'id'               => 'int',
+		'team_id'          => 'int',
+        'active'           => 'boolean',
+        'force_pass_reset' => 'boolean',
+    ];
 
 	public function team()
 	{

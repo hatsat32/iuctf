@@ -138,3 +138,6 @@ writable/home_page_custom.html
 writable/themes/
 public/themes/*
 !public/themes/.htaccess
+
+# tmp
+/tmp/
