@@ -1,44 +1,35 @@
 <?php namespace Tests\Support;
 
-use CodeIgniter\Test\Mock\MockSession;
-use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
-class FeatureTestCase extends \CodeIgniter\Test\FeatureTestCase
+class FeatureTestCase extends CIUnitTestCase
 {
+	use DatabaseTestTrait, FeatureTestTrait;
+
 	/**
 	 * @var SessionHandler
 	 */
 	protected $session;
 
+	/**
+	 * @var boolean
+	 */
 	protected $refresh = true;
+
+	/**
+	 * @var string
+	 */
 	protected $seed = 'Tests\Support\Database\Seeds\TestSeeder';
+
+	/**
+	 * @var string
+	 */
 	protected $basePath = SUPPORTPATH . 'Database/';
+
+	/**
+	 * @var string
+	 */
 	protected $namespace = 'App';
-
-	public function setUp(): void
-	{
-		parent::setUp();
-
-		$this->mockSession();
-		$this->withSession([]);
-	}
-
-	public function tearDown(): void
-	{
-		parent::tearDown();
-	}
-
-	public function withSession(array $values = NULL)
-	{
-		$this->session = $values;
-
-		return $this;
-	}
-
-	protected function mockSession()
-	{
-		$config        = config('App');
-		$this->session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
-		\Config\Services::injectMock('session', $this->session);
-	}
 }

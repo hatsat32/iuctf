@@ -1,9 +1,10 @@
 <?php namespace App\Controllers;
 
 use Tests\Support\ControllerTestCase;
+Use Tests\Support\FeatureTestCase;
 use App\Controllers\Home;
 
-class HomeControllerTest extends ControllerTestCase
+class HomeControllerTest extends FeatureTestCase
 {
 	public function setUp(): void
 	{
@@ -12,30 +13,20 @@ class HomeControllerTest extends ControllerTestCase
 
 	public function testGetHome()
 	{
-		$response = $this->withUri(site_url('/'))
-			->controller(Home::class)
-			->execute('index');
-		$this->assertTrue($response->isOk());
+		// $response = $this->withUri(site_url('/'))
+		// 	->controller(Home::class)
+		// 	->execute('index');
+		// $this->assertTrue($response->isOk());
+
+		$response = $this->get("/");
+		$response->assertOK();
 	}
 
 	public function testChangeLanguage()
 	{
-		$data = ['language' => 'tr'];
-
-		$globals = [
-			'request' => $data,
-			'get' => $data,
-		];
-
-		$request = service('request', null, false);
-		$this->setPrivateProperty($request, 'globals', $globals);
-
-		$response = $this->withUri('/language')
-			->withRequest($request)
-			->controller(Home::class)
-			->execute('language');
-
-		$this->assertTrue($response->isRedirect());
-		$this->assertEquals('tr', $_SESSION['language']);
+		$params = ['language' => 'tr'];
+		$response = $this->withSession(['language' => 'en'])->get('/language', $params);
+		$response->assertTrue($response->isRedirect());
+		$response->assertEquals('tr', $params['language']);
 	}
 }
