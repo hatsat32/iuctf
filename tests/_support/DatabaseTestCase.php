@@ -1,9 +1,12 @@
 <?php namespace Tests\Support;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
-class DatabaseTestCase extends CIDatabaseTestCase
+class DatabaseTestCase extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	/**
 	 * Should the database be refreshed before each test?
 	 *
@@ -12,28 +15,42 @@ class DatabaseTestCase extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	/**
-	 * The name of a seed file used for all tests within this test case.
+	 * The seed file(s) used for all tests within this test case.
+	 * Should be fully-namespaced or relative to $basePath
 	 *
-	 * @var string
+	 * @var string|array
 	 */
 	protected $seed = 'Tests\Support\Database\Seeds\TestSeeder';
 
 	/**
-	 * The path to where we can find the test Seeds directory.
+	 * The path to the seeds directory.
+	 * Allows overriding the default application directories.
 	 *
 	 * @var string
 	 */
 	protected $basePath = SUPPORTPATH . 'Database/';
 
 	/**
-	 * The namespace to help us find the migration classes.
+	 * The namespace(s) to help us find the migration classes.
+	 * Empty is equivalent to running `spark migrate -all`.
+	 * Note that running "all" runs migrations in date order,
+	 * but specifying namespaces runs them in namespace order (then date)
 	 *
-	 * @var string
+	 * @var string|array|null
 	 */
 	protected $namespace = 'App';
 
 	public function setUp(): void
 	{
 		parent::setUp();
+
+		// Extra code to run before each test
+	}
+
+	public function tearDown(): void
+	{
+		parent::tearDown();
+
+		// Extra code to run after each test
 	}
 }

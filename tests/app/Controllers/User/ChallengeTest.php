@@ -21,11 +21,6 @@ class ChallengeTest extends FeatureTestCase
 		$this->user = $this->auth->user();
 	}
 
-	public function tearDown(): void
-	{
-		parent::tearDown();
-	}
-
 	public function testGetChallenges()
 	{
 		$response = $this->get(route_to('challenges'));

@@ -28,7 +28,7 @@ class TeamController extends UserController
 
 	public function index()
 	{
-		if (user()->team_id === null)
+		if (empty(user()->team_id))
 		{
 			return $this->render('noteam');
 		}

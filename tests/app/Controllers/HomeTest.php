@@ -4,16 +4,6 @@ use Tests\Support\FeatureTestCase;
 
 class HomeTest extends FeatureTestCase
 {
-	public function setUp(): void
-	{
-		parent::setUp();
-	}
-
-	public function tearDown(): void
-	{
-		parent::tearDown();
-	}
-
 	public function testGetHome()
 	{
 		$response = $this->get('/');
@@ -23,13 +13,16 @@ class HomeTest extends FeatureTestCase
 
 	public function testChangeLanguage()
 	{
-		$response = $this->get('/language?language=tr');
+		$params = ['language' => 'tr'];
+		$response = $this->withSession(['language' => 'en'])->get('/language', $params);
+		$response->assertTrue($response->isRedirect());
 		$response->assertSessionHas('language', 'tr');
 	}
 
 	public function testChangeLanguageInvalidLocale()
 	{
-		$response = $this->withSession(['language' => 'tr'])->get('/language?language=gg');
+		$params = ['language' => 'fr'];
+		$response = $this->withSession(['language' => 'tr'])->get('/language', $params);
 		$response->assertSessionHas('language', 'tr');
 	}
 }
