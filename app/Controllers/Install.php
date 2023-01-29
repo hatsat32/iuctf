@@ -3,7 +3,7 @@
 use CodeIgniter\Controller;
 use Config\Services;
 
-class Install extends Controller
+class Install extends BaseController
 {
 	//--------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ class Install extends Controller
 		];
 		if (! $this->validate($rules))
 		{
-			return redirect()->back()->withInput()->with('errors', $users->errors());
+			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
 		// run database migratios

@@ -1,10 +1,16 @@
-<?php namespace App\Controllers;
+<?php
 
-use Tests\Support\ControllerTestCase;
-use App\Controllers\Home;
+namespace App\Controllers;
 
-class HomeControllerTest extends ControllerTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\ControllerTestTrait;
+use CodeIgniter\Test\DatabaseTestTrait;
+
+class HomeControllerTest extends CIUnitTestCase
 {
+	use ControllerTestTrait;
+    use DatabaseTestTrait;
+
 	public function setUp(): void
 	{
 		parent::setUp();

@@ -1,6 +1,8 @@
-<?php namespace Config;
+<?php
 
-use CodeIgniter\Config\Services as CoreServices;
+namespace Config;
+
+use CodeIgniter\Config\BaseService;
 use League\CommonMark\CommonMarkConverter;
 
 /**
@@ -16,54 +18,54 @@ use League\CommonMark\CommonMarkConverter;
  * method format you should use for your service methods. For more examples,
  * see the core Services file at system/Config/Services.php.
  */
-class Services extends CoreServices
+class Services extends BaseService
 {
+    /*
+     * public static function example($getShared = true)
+     * {
+     *     if ($getShared) {
+     *         return static::getSharedInstance('example');
+     *     }
+     *
+     *     return new \CodeIgniter\Example();
+     * }
+     */
 
-	//    public static function example($getShared = true)
-	//    {
-	//        if ($getShared)
-	//        {
-	//            return static::getSharedInstance('example');
-	//        }
-	//
-	//        return new \CodeIgniter\Example();
-	//    }
+    public static function settings(bool $getShared = true)
+    {
+        if ($getShared)
+        {
+            return static::getSharedInstance('settings');
+        }
 
-	public static function settings(bool $getShared = true)
-	{
-		if ($getShared)
-		{
-			return static::getSharedInstance('settings');
-		}
+        if (! $settings = cache("settings"))
+        {
+            $settings = config('Settings');
 
-		if (! $settings = cache("settings"))
-		{
-			$settings = config('Settings');
+            cache()->save("settings", $settings, MINUTE * 5);
+        }
 
-			cache()->save("settings", $settings, MINUTE * 5);
-		}
+        return $settings;
+    }
 
-		return $settings;
-	}
+    /**
+     * @param boolean $secure - secure markdown processing
+     * @param boolean $getShared
+     * 
+     * @return \League\CommonMark\CommonMarkConverter
+     */
+    public static function markdown(bool $secure = true, bool $getShared = true)
+    {
+        if ($getShared)
+        {
+            return static::getSharedInstance('markdown', $secure);
+        }
 
-	/**
-	 * @param boolean $secure - secure markdown processing
-	 * @param boolean $getShared
-	 * 
-	 * @return \League\CommonMark\CommonMarkConverter
-	 */
-	public static function markdown(bool $secure = true, bool $getShared = true)
-	{
-		if ($getShared)
-		{
-			return static::getSharedInstance('markdown', $secure);
-		}
+        $config = (! $secure) ? [] : [
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ];
 
-		$config = (! $secure) ? [] : [
-			'html_input' => 'strip',
-			'allow_unsafe_links' => false,
-		];
-
-		return new CommonMarkConverter($config);
-	}
+        return new CommonMarkConverter($config);
+    }
 }

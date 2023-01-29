@@ -17,5 +17,5 @@ return [
 	'settings'			=> 'Ayarlar',
 
 	// footer
-	'copyright'			=> 'Tüm Hakları Saklıdır © IUCYBER 2019',
+	'copyright'			=> 'Tüm Hakları Saklıdır © IUCYBER 2019 - &infin;',
 ];
